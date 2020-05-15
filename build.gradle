@@ -1,0 +1,33 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'application'
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+
+def prob_version = "3.10.0"
+mainClassName = "animate/Animate"
+
+
+repositories {
+	mavenCentral()
+	maven {
+		name "snapshot"
+		url "https://oss.sonatype.org/content/repositories/snapshots/"
+	}
+}
+
+dependencies {
+	compile "de.hhu.stups:de.prob2.kernel:${prob_version}"
+}
+
+
+jar {
+	manifest {
+		attributes('Main-Class': 'animate.Animate')
+	}
+	from {
+		configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+	}
+}
