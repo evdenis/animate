@@ -30,6 +30,15 @@ public class Animate {
 		this.api = api;
 	}
 
+	public void printCoverage(StateSpace stateSpace) {
+		ComputeCoverageCommand cmd = new ComputeCoverageCommand();
+		stateSpace.execute(cmd);
+		ComputeCoverageResult coverage = cmd.getResult();
+		System.out.println("Coverage properties:\n\t - " + String.join("\n\t - ", coverage.getNodes()));
+		System.out.println("Covered operations:\n\t - " + String.join("\n\t - ", coverage.getOps()));
+		System.out.println("Uncovered operations:\n\t - " + String.join("\n\t - ", coverage.getUncovered()));
+	}
+
 	public void start(final String model_path, final int steps, final int size, final boolean perf, final String dump_file) throws Exception {
 		System.out.println("ProB version: " + api.getVersion());
 		System.out.println();
@@ -83,14 +92,7 @@ public class Animate {
 
 		System.out.println();
 
-		ComputeCoverageCommand cmd = new ComputeCoverageCommand();
-		stateSpace.execute(cmd);
-		ComputeCoverageResult coverage = cmd.getResult();
-		System.out.println("Total Number of Nodes: " + coverage.getTotalNumberOfNodes());
-		System.out.println("Total Number of Transactions: " + coverage.getTotalNumberOfTransitions());
-		System.out.println("Operations stats: " + coverage.getOps());
-		System.out.println("Nodes stats: " + coverage.getNodes());
-		System.out.println("Uncovered: " + coverage.getUncovered());
+		printCoverage(t.getStateSpace());
 	}
 
 	public static void main(String[] args) throws Exception {
