@@ -101,7 +101,7 @@ public class Animate {
 		int size = 4;
 
 		options.addRequiredOption("m", "model", true, "path to model.bum file");
-		options.addOption("d", "dump", true, "dump prolog model to .eventb file");
+		options.addOption("e", "eventb", true, "dump prolog model to .eventb file");
 		options.addOption("d", "debug", false, "enable debug log (default: off)");
 		options.addOption("s", "steps", true, "number of random steps (default: 5)");
 		options.addOption("z", "size", true, "default size for ProB sets (default: 4)");
