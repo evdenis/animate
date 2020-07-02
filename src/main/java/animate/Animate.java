@@ -92,7 +92,7 @@ public class Animate {
 
 		System.out.println();
 
-		printCoverage(t.getStateSpace());
+		printCoverage(stateSpace);
 	}
 
 	public static void main(String[] args) throws Exception {
