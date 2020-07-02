@@ -75,23 +75,20 @@ public class Animate {
 			}
 		}
 
+		Trace trace = new Trace(stateSpace);
+
 		System.out.println("Animate:");
-
-		Trace t = new Trace(stateSpace);
-
 		try {
 			for (int i = 0; i < steps; i++) {
-				t = t.anyEvent(null);
-				System.out.println(t.getCurrent().getTransition().evaluate().getPrettyRep());
+				trace = trace.anyEvent(null);
+				System.out.println(trace.getCurrent().getTransition().evaluate().getPrettyRep());
 			}
 		} catch (Exception e) {
 			System.out.println("Error: " + e.getMessage());
 		}
 
-		System.out.println(t.getCurrentState().getStateRep());
-
+		System.out.println(trace.getCurrentState().getStateRep());
 		System.out.println();
-
 		printCoverage(stateSpace);
 	}
 
