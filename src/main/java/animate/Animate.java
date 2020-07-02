@@ -1,6 +1,5 @@
 package animate;
 
-import java.io.IOException;
 import java.util.*;
 
 import com.google.inject.Guice;
@@ -29,7 +28,7 @@ public class Animate {
 		this.api = api;
 	}
 
-	public void start(final String model_path, final int steps, final int size, final boolean perf) throws Exception {
+	public void start(final String model_path, final int steps, final int size, final boolean perf, final String dump_file) throws Exception {
 		System.out.println("ProB version: " + api.getVersion());
 		System.out.println();
 		System.out.println("Load Event-B Machine");
@@ -57,16 +56,19 @@ public class Animate {
 			System.exit(3);
 		}
 
+		if (!dump_file.isEmpty()) {
+			try {
+				api.eventb_save(stateSpace, dump_file);
+			} catch (Exception e) {
+				System.out.println("Error saving model: " + e.getMessage());
+			}
+		}
+
 		System.out.println("Animate:");
 
 		Trace t = new Trace(stateSpace);
 
 		try {
-			t = t.execute("$setup_constants");
-			System.out.println(t.getCurrent().getTransition().evaluate().getPrettyRep());
-			t = t.execute("$initialise_machine");
-			System.out.println(t.getCurrent().getTransition().evaluate().getPrettyRep());
-
 			for (int i = 0; i < steps; i++) {
 				t = t.anyEvent(null);
 				System.out.println(t.getCurrent().getTransition().evaluate().getPrettyRep());
@@ -84,6 +86,7 @@ public class Animate {
 		int size = 4;
 
 		options.addRequiredOption("m", "model", true, "path to model.bum file");
+		options.addOption("d", "dump", true, "dump prolog model to .eventb file");
 		options.addOption("d", "debug", false, "enable debug log (default: off)");
 		options.addOption("s", "steps", true, "number of random steps (default: 5)");
 		options.addOption("z", "size", true, "default size for ProB sets (default: 4)");
@@ -107,7 +110,6 @@ public class Animate {
 			root.setLevel(Level.WARN);
 		}
 
-
 		try {
 			if (cmd.hasOption("steps")) {
 				steps = Integer.parseInt(cmd.getOptionValue("steps"));
@@ -123,7 +125,9 @@ public class Animate {
 		}
 
 		Animate m = INJECTOR.getInstance(Animate.class);
-		m.start(cmd.getOptionValue("model"), steps, size, cmd.hasOption("perf"));
+		m.start(cmd.getOptionValue("model"), steps, size,
+				cmd.hasOption("perf"),
+				cmd.getOptionValue("dump", ""));
 
 		System.exit(0);
 	}

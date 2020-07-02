@@ -41,3 +41,5 @@ prob_log.txt
 
 # Idea
 .idea/
+
+*.eventb
