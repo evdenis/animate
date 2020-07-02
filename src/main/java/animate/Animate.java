@@ -7,6 +7,8 @@ import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Stage;
 
+import de.prob.animator.command.ComputeCoverageCommand;
+import de.prob.animator.command.ComputeCoverageCommand.ComputeCoverageResult;
 import de.prob.scripting.Api;
 import de.prob.statespace.StateSpace;
 import de.prob.statespace.Trace;
@@ -78,6 +80,17 @@ public class Animate {
 		}
 
 		System.out.println(t.getCurrentState().getStateRep());
+
+		System.out.println();
+
+		ComputeCoverageCommand cmd = new ComputeCoverageCommand();
+		stateSpace.execute(cmd);
+		ComputeCoverageResult coverage = cmd.getResult();
+		System.out.println("Total Number of Nodes: " + coverage.getTotalNumberOfNodes());
+		System.out.println("Total Number of Transactions: " + coverage.getTotalNumberOfTransitions());
+		System.out.println("Operations stats: " + coverage.getOps());
+		System.out.println("Nodes stats: " + coverage.getNodes());
+		System.out.println("Uncovered: " + coverage.getUncovered());
 	}
 
 	public static void main(String[] args) throws Exception {
