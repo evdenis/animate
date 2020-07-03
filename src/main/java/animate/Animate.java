@@ -34,9 +34,16 @@ public class Animate {
 		ComputeCoverageCommand cmd = new ComputeCoverageCommand();
 		stateSpace.execute(cmd);
 		ComputeCoverageResult coverage = cmd.getResult();
+		List<String> ops = coverage.getOps();
+		List<String> uncovered = coverage.getUncovered();
+
 		System.out.println("Coverage properties:\n\t - " + String.join("\n\t - ", coverage.getNodes()));
-		System.out.println("Covered operations:\n\t - " + String.join("\n\t - ", coverage.getOps()));
-		System.out.println("Uncovered operations:\n\t - " + String.join("\n\t - ", coverage.getUncovered()));
+		if (!ops.isEmpty()) {
+			System.out.println("Covered operations:\n\t - " + String.join("\n\t - ", ops));
+		}
+		if (!uncovered.isEmpty()) {
+			System.out.println("Uncovered operations:\n\t - " + String.join("\n\t - ", uncovered));
+		}
 	}
 
 	public void start(final String model_path, final int steps, final int size, final boolean perf, final String dump_file) throws Exception {
