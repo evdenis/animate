@@ -9,7 +9,11 @@ import com.google.inject.Stage;
 
 import de.prob.animator.command.ComputeCoverageCommand;
 import de.prob.animator.command.ComputeCoverageCommand.ComputeCoverageResult;
+import de.prob.animator.domainobjects.*;
+import de.prob.model.eventb.EventBMachine;;
+import de.prob.model.representation.Invariant;
 import de.prob.scripting.Api;
+import de.prob.statespace.State;
 import de.prob.statespace.StateSpace;
 import de.prob.statespace.Trace;
 
@@ -46,7 +50,39 @@ public class Animate {
 		}
 	}
 
-	public void start(final String model_path, final int steps, final int size, final boolean perf, final String dump_file) throws Exception {
+	class InvariantsViolation extends Exception
+	{
+		public InvariantsViolation() {}
+
+		public InvariantsViolation(String message)
+		{
+			super(message);
+		}
+	}
+
+	public List<String> findViolatedInvariants(StateSpace stateSpace, State state) {
+		List<IEvalElement> invariants = new ArrayList<>();
+		EventBMachine machine = (EventBMachine) stateSpace.getMainComponent();
+		for (Invariant i : machine.getAllInvariants()) {
+			invariants.add(i.getPredicate());
+		}
+		List<AbstractEvalResult> results = state.eval(invariants);
+
+		List<String> violated_invariants = new ArrayList<>();
+		for (int i = 0; i < results.size(); ++i) {
+			EvalResult r = (EvalResult) results.get(i);
+			if (r != EvalResult.TRUE) {
+				violated_invariants.add(invariants.get(i).toString());
+			}
+		}
+
+		return violated_invariants;
+	}
+
+	public void start(final String model_path,
+					  final int steps, final int size,
+					  final boolean checkInv,
+					  final boolean perf, final String dumpFile) {
 		System.out.println("ProB version: " + api.getVersion());
 		System.out.println();
 		System.out.println("Load Event-B Machine");
@@ -74,9 +110,9 @@ public class Animate {
 			System.exit(3);
 		}
 
-		if (!dump_file.isEmpty()) {
+		if (!dumpFile.isEmpty()) {
 			try {
-				api.eventb_save(stateSpace, dump_file);
+				api.eventb_save(stateSpace, dumpFile);
 			} catch (Exception e) {
 				System.out.println("Error saving model: " + e.getMessage());
 			}
@@ -89,12 +125,18 @@ public class Animate {
 			for (int i = 0; i < steps; i++) {
 				trace = trace.anyEvent(null);
 				System.out.println(trace.getCurrent().getTransition().evaluate().getPrettyRep());
+				if (checkInv && !trace.getCurrentState().isInvariantOk()) {
+					throw new InvariantsViolation();
+				}
 			}
+		} catch (InvariantsViolation e) {
+			List<String> inv = findViolatedInvariants(stateSpace, trace.getCurrentState());
+			System.err.println("Error: violated invariants:\n\t - " + String.join("\n\t - ", inv));
 		} catch (Exception e) {
-			System.out.println("Error: " + e.getMessage());
+			System.err.println("Error: " + e.getMessage());
 		}
 
-		System.out.println(trace.getCurrentState().getStateRep());
+		System.out.println("Current state:\n" + trace.getCurrentState().getStateRep());
 		System.out.println();
 		printCoverage(stateSpace);
 	}
@@ -106,6 +148,7 @@ public class Animate {
 
 		options.addRequiredOption("m", "model", true, "path to model.bum file");
 		options.addOption("e", "eventb", true, "dump prolog model to .eventb file");
+		options.addOption("i", "invariants", false, "check invariants");
 		options.addOption("d", "debug", false, "enable debug log (default: off)");
 		options.addOption("s", "steps", true, "number of random steps (default: 5)");
 		options.addOption("z", "size", true, "default size for ProB sets (default: 4)");
@@ -144,9 +187,9 @@ public class Animate {
 		}
 
 		Animate m = INJECTOR.getInstance(Animate.class);
-		m.start(cmd.getOptionValue("model"), steps, size,
-				cmd.hasOption("perf"),
-				cmd.getOptionValue("dump", ""));
+		m.start(cmd.getOptionValue("model"),
+				steps, size, cmd.hasOption("invariants"),
+				cmd.hasOption("perf"), cmd.getOptionValue("eventb", ""));
 
 		System.exit(0);
 	}
