@@ -17,6 +17,7 @@ import de.prob.statespace.State;
 import de.prob.statespace.StateSpace;
 import de.prob.statespace.Trace;
 
+import de.prob.statespace.Transition;
 import org.slf4j.LoggerFactory;
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
@@ -60,6 +61,16 @@ public class Animate {
 		}
 	}
 
+	class DeadlockedState extends Exception
+	{
+		public DeadlockedState() {}
+
+		public DeadlockedState(String message)
+		{
+			super(message);
+		}
+	}
+
 	public List<String> findViolatedInvariants(StateSpace stateSpace, State state) {
 		List<IEvalElement> invariants = new ArrayList<>();
 		EventBMachine machine = (EventBMachine) stateSpace.getMainComponent();
@@ -77,6 +88,15 @@ public class Animate {
 		}
 
 		return violated_invariants;
+	}
+
+	public Trace anyEvent(Trace trace) throws DeadlockedState {
+		List<Transition> ops = trace.getCurrentState().getOutTransitions(true, FormulaExpand.EXPAND);
+		Collections.shuffle(ops);
+		if (ops.isEmpty()) {
+			throw new DeadlockedState("Can't find an event to execute from this state (deadlock)");
+		}
+		return trace.add(ops.get(0).getId());
 	}
 
 	public void start(final String model_path,
@@ -123,8 +143,8 @@ public class Animate {
 		System.out.println("Animate:");
 		try {
 			for (int i = 0; i < steps; i++) {
-				trace = trace.anyEvent(null);
-				System.out.println(trace.getCurrent().getTransition().evaluate().getPrettyRep());
+				trace = anyEvent(trace);
+				System.out.println(trace.getCurrent().getTransition().getPrettyRep());
 				if (checkInv && !trace.getCurrentState().isInvariantOk()) {
 					throw new InvariantsViolation();
 				}
