@@ -1,6 +1,8 @@
 package animate;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import com.google.inject.Guice;
 import com.google.inject.Inject;
@@ -11,13 +13,9 @@ import de.prob.animator.command.ComputeCoverageCommand;
 import de.prob.animator.command.ComputeCoverageCommand.ComputeCoverageResult;
 import de.prob.animator.domainobjects.*;
 import de.prob.model.eventb.EventBMachine;;
-import de.prob.model.representation.Invariant;
 import de.prob.scripting.Api;
-import de.prob.statespace.State;
-import de.prob.statespace.StateSpace;
-import de.prob.statespace.Trace;
+import de.prob.statespace.*;
 
-import de.prob.statespace.Transition;
 import org.slf4j.LoggerFactory;
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
@@ -72,20 +70,18 @@ public class Animate {
 	}
 
 	public List<String> findViolatedInvariants(StateSpace stateSpace, State state) {
-		List<IEvalElement> invariants = new ArrayList<>();
-		EventBMachine machine = (EventBMachine) stateSpace.getMainComponent();
-		for (Invariant i : machine.getAllInvariants()) {
-			invariants.add(i.getPredicate());
-		}
+		List<IEvalElement> invariants = ((EventBMachine) stateSpace.getMainComponent())
+				.getAllInvariants()
+				.stream()
+				.map(i -> i.getPredicate())
+				.collect(Collectors.toList());
 		List<AbstractEvalResult> results = state.eval(invariants);
 
-		List<String> violated_invariants = new ArrayList<>();
-		for (int i = 0; i < results.size(); ++i) {
-			EvalResult r = (EvalResult) results.get(i);
-			if (r != EvalResult.TRUE) {
-				violated_invariants.add(invariants.get(i).toString());
-			}
-		}
+		List<String> violated_invariants = IntStream
+				.range(0, results.size())
+				.filter(i -> results.get(i) != EvalResult.TRUE)
+				.mapToObj(i -> invariants.get(i).toString())
+				.collect(Collectors.toList());
 
 		return violated_invariants;
 	}
