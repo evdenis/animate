@@ -12,7 +12,10 @@ import com.google.inject.Stage;
 import de.prob.animator.command.ComputeCoverageCommand;
 import de.prob.animator.command.ComputeCoverageCommand.ComputeCoverageResult;
 import de.prob.animator.domainobjects.*;
+import de.prob.model.eventb.Event;
+import de.prob.model.eventb.EventBGuard;
 import de.prob.model.eventb.EventBMachine;;
+import de.prob.model.representation.ModelElementList;
 import de.prob.scripting.Api;
 import de.prob.statespace.*;
 
@@ -84,6 +87,66 @@ public class Animate {
 				.collect(Collectors.toList());
 
 		return violated_invariants;
+	}
+
+	public String findFirstViolatedGuard(StateSpace stateSpace, State state,
+										 String opName, final List<String> parameterValues) throws IllegalArgumentException {
+		String params = "1 = 1";
+		if (!opName.equals("$initialise_machine") && !opName.equals("$setup_constants")) {
+			if (!stateSpace.getLoadedMachine().containsOperations(opName)) {
+				throw new IllegalArgumentException("Unknown operation '" + opName + "'");
+			}
+			OperationInfo machineOperationInfo = stateSpace.getLoadedMachine().getMachineOperationInfo(opName);
+			List<String> parameterNames = machineOperationInfo.getParameterNames();
+			if (!parameterNames.isEmpty()) {
+				if (parameterNames.size() != parameterValues.size()) {
+					throw new IllegalArgumentException("Cannot execute operation " + opName
+							+ " because the number of parameters does not match the number of provied values: "
+							+ parameterNames.size() + " vs " + parameterValues.size());
+				}
+				params = String.join(" & ", IntStream
+						.range(0, parameterNames.size())
+						.mapToObj(i -> parameterNames.get(i) + " = " + parameterValues.get(i))
+						.collect(Collectors.toList()));
+			}
+		}
+
+		EventBMachine machine = (EventBMachine) stateSpace.getMainComponent();
+		Event event = machine.getEvent(opName);
+		ModelElementList<EventBGuard> separate_guards = event.getGuards();
+
+		StringJoiner stringJoiner = new StringJoiner(" & ");
+		stringJoiner.add("(" + params + ")");
+
+		/*
+		final String finalParams = params;
+		List<IEvalElement> guards = separate_guards
+				.stream()
+				.map(g -> {
+					return stateSpace.getModel().parseFormula(
+							"(" + finalParams + ") & (" + g.getPredicate().getCode() + ")",
+							FormulaExpand.EXPAND);
+				})
+				.collect(Collectors.toList());
+		*/
+
+		List<IEvalElement> guards = separate_guards
+				.stream()
+				.map(g -> {
+					return stateSpace.getModel().parseFormula(
+							stringJoiner.add("(" + g.getPredicate().getCode() + ")").toString(),
+							FormulaExpand.EXPAND);
+				})
+				.collect(Collectors.toList());
+
+		for (int i = 0; i < guards.size(); ++i) {
+			EvalResult r = (EvalResult) state.eval(guards.get(i));
+			if (!r.getValue().equals("TRUE")) {
+				return separate_guards.get(i).toString();
+			}
+		}
+
+		return null;
 	}
 
 	public Trace anyEvent(Trace trace) throws DeadlockedState {
