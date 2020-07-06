@@ -118,18 +118,6 @@ public class Animate {
 		StringJoiner stringJoiner = new StringJoiner(" & ");
 		stringJoiner.add("(" + params + ")");
 
-		/*
-		final String finalParams = params;
-		List<IEvalElement> guards = separate_guards
-				.stream()
-				.map(g -> {
-					return stateSpace.getModel().parseFormula(
-							"(" + finalParams + ") & (" + g.getPredicate().getCode() + ")",
-							FormulaExpand.EXPAND);
-				})
-				.collect(Collectors.toList());
-		*/
-
 		List<IEvalElement> guards = separate_guards
 				.stream()
 				.map(g -> {
