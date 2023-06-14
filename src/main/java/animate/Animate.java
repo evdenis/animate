@@ -179,7 +179,8 @@ public class Animate {
         int size = 4;
 
         options.addRequiredOption("m", "model", true, "path to model.bum file");
-        options.addOption("e", "eventb", true, "dump prolog model to .eventb file");
+        options.addOption("e", "eventb", true, "dump prolog model to .eventb file and exit");
+        options.addOption("g", "graph", false, "print model dependecy graph and exit");
         options.addOption("i", "invariants", false, "check invariants");
         options.addOption("d", "debug", false, "enable debug log (default: off)");
         options.addOption("s", "steps", true, "number of random steps (default: 5)");
@@ -221,6 +222,13 @@ public class Animate {
         Animate m = INJECTOR.getInstance(Animate.class);
 
         StateSpace stateSpace = m.load_model(cmd.getOptionValue("model"), size, cmd.hasOption("perf"));
+
+        if (cmd.hasOption("graph")) {
+            EventBModel model = (EventBModel) stateSpace.getModel();
+            model = model.calculateDependencies();
+            System.out.print(model.getGraph());
+            System.exit(0);
+        }
 
         if (cmd.hasOption("eventb")) {
             String dumpFile = cmd.getOptionValue("eventb");
