@@ -132,6 +132,8 @@ public class Animate {
 			} catch (Exception e) {
 				System.out.println("Error saving model: " + e.getMessage());
 			}
+			System.out.println("Saving model state to " + dumpFile);
+			return;
 		}
 
 		Trace trace = new Trace(stateSpace);
