@@ -114,15 +114,15 @@ public class Animate {
 		}
 	}
 
-	public void start(final String model_path,
-					  final int steps, final int size,
-					  final boolean checkInv,
-					  final boolean perf, final String dumpFile) {
+	public StateSpace load_model(final String model_path,
+								 final int size,
+								 final boolean perf) throws IOException {
 		System.out.println("ProB version: " + api.getVersion());
 		System.out.println();
 		System.out.println("Load Event-B Machine");
 
 		StateSpace stateSpace = null;
+
 		Map<String, String> prefs = new HashMap<String, String>() {{
 			put("MEMOIZE_FUNCTIONS", "true");
 			put("SYMBOLIC", "true");
@@ -140,20 +140,17 @@ public class Animate {
 		}};
 		try {
 			stateSpace = api.eventb_load(model_path, prefs);
-		} catch (Exception e) {
+		} catch (IOException e) {
 			System.out.println("Error loading model: " + e.getMessage());
-			System.exit(3);
+			throw e;
 		}
 
-		if (!dumpFile.isEmpty()) {
-			try {
-				this.eventb_save(stateSpace, dumpFile, true);
-			} catch (Exception e) {
-				System.out.println("Error saving model: " + e.getMessage());
-			}
-			System.out.println("Saving model state to " + dumpFile);
-			return;
-		}
+		return stateSpace;
+	}
+
+	public void start(final StateSpace stateSpace,
+					  final int steps,
+					  final boolean checkInv) {
 
 		Trace trace = new Trace(stateSpace);
 
@@ -216,7 +213,7 @@ public class Animate {
 			if (cmd.hasOption("size")) {
 				size = Integer.parseInt(cmd.getOptionValue("size"));
 			}
-		} catch (Exception e) {
+		} catch (NumberFormatException e) {
 			System.out.println(e.getMessage());
 			formatter.printHelp("animate", options);
 
@@ -224,9 +221,22 @@ public class Animate {
 		}
 
 		Animate m = INJECTOR.getInstance(Animate.class);
-		m.start(cmd.getOptionValue("model"),
-				steps, size, cmd.hasOption("invariants"),
-				cmd.hasOption("perf"), cmd.getOptionValue("eventb", ""));
+
+		StateSpace stateSpace = m.load_model(cmd.getOptionValue("model"), size, cmd.hasOption("perf"));
+
+		if (cmd.hasOption("eventb")) {
+			String dumpFile = cmd.getOptionValue("eventb");
+			try {
+				m.eventb_save(stateSpace, dumpFile, true);
+			} catch (IOException e) {
+				System.out.println("Error saving model: " + e.getMessage());
+				System.exit(1);
+			}
+			System.out.println("Saving model state to " + dumpFile);
+			System.exit(0);
+		}
+
+		m.start(stateSpace, steps, cmd.hasOption("invariants"));
 
 		System.exit(0);
 	}
