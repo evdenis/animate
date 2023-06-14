@@ -19,15 +19,16 @@ repositories {
 }
 
 dependencies {
-	compile "de.hhu.stups:de.prob2.kernel:${prob_version}"
+	implementation "de.hhu.stups:de.prob2.kernel:${prob_version}"
 }
 
 
 jar {
+	duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
 	manifest {
 		attributes('Main-Class': 'animate.Animate')
 	}
 	from {
-		configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+		configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
 	}
 }
