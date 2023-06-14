@@ -1,5 +1,7 @@
 package animate;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -12,7 +14,10 @@ import com.google.inject.Stage;
 import de.prob.animator.command.ComputeCoverageCommand;
 import de.prob.animator.command.ComputeCoverageCommand.ComputeCoverageResult;
 import de.prob.animator.domainobjects.*;
-import de.prob.model.eventb.EventBMachine;;
+import de.prob.model.eventb.EventBMachine;
+import de.prob.model.eventb.EventBModel;
+import de.prob.model.eventb.translate.EventBModelTranslator;
+import de.prob.prolog.output.PrologTermOutput;
 import de.prob.scripting.Api;
 import de.prob.statespace.*;
 
@@ -95,6 +100,20 @@ public class Animate {
 		return trace.add(ops.get(0).getId());
 	}
 
+	// Same as api.eventb_save, but pretty-printed
+	public void eventb_save(final StateSpace s, final String path, final boolean use_indentation) throws IOException {
+		final EventBModelTranslator translator = new EventBModelTranslator((EventBModel) s.getModel(), s.getMainComponent());
+
+		try (final FileOutputStream fos = new FileOutputStream(path)) {
+			final PrologTermOutput pto = new PrologTermOutput(fos, use_indentation);
+			pto.openTerm("package");
+			translator.printProlog(pto);
+			pto.closeTerm();
+			pto.fullstop();
+			pto.flush();
+		}
+	}
+
 	public void start(final String model_path,
 					  final int steps, final int size,
 					  final boolean checkInv,
@@ -128,7 +147,7 @@ public class Animate {
 
 		if (!dumpFile.isEmpty()) {
 			try {
-				api.eventb_save(stateSpace, dumpFile);
+				this.eventb_save(stateSpace, dumpFile, true);
 			} catch (Exception e) {
 				System.out.println("Error saving model: " + e.getMessage());
 			}
