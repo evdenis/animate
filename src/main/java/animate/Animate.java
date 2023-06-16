@@ -34,6 +34,8 @@ public class Animate {
     private static Injector INJECTOR = Guice.createInjector(Stage.PRODUCTION, new Config());
     private Api api;
 
+    private static final Logger logger = (Logger) LoggerFactory.getLogger(Animate.class);
+
     @Inject
     public Animate(Api api) {
         this.api = api;
@@ -108,7 +110,7 @@ public class Animate {
                                  final int size,
                                  final boolean perf) throws IOException {
 
-        System.out.println("Load Event-B Machine");
+        logger.info("Load Event-B Machine");
 
         StateSpace stateSpace = null;
 
@@ -136,7 +138,7 @@ public class Animate {
 
         GetVersionCommand version = new GetVersionCommand();
         stateSpace.execute(version);
-        System.out.println("ProB Version: " + version.getVersionString() + "\n");
+        logger.info("ProB Version: " + version.getVersionString() + "\n");
 
         return stateSpace;
     }
@@ -148,7 +150,7 @@ public class Animate {
         stateSpace.startTransaction();
         Trace trace = new Trace(stateSpace);
 
-        System.out.println("Animate:");
+        System.out.println("Animation steps:");
         try {
             for (int i = 0; i < steps; i++) {
                 Trace new_trace = trace.anyEvent(null);
@@ -168,6 +170,7 @@ public class Animate {
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());
         }
+        System.out.println();
 
         System.out.println("Current state:\n" + trace.getCurrentState().getStateRep());
         System.out.println();
@@ -208,6 +211,7 @@ public class Animate {
         if (!cmd.hasOption("debug")) {
             Logger root = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
             root.setLevel(Level.WARN);
+            logger.setLevel(Level.INFO);
         }
 
         try {
