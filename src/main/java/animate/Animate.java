@@ -1,5 +1,6 @@
 package animate;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.*;
@@ -15,6 +16,10 @@ import de.prob.animator.command.ComputeCoverageCommand;
 import de.prob.animator.command.ComputeCoverageCommand.ComputeCoverageResult;
 import de.prob.animator.command.GetVersionCommand;
 import de.prob.animator.domainobjects.*;
+import de.prob.check.tracereplay.json.TraceManager;
+import de.prob.check.tracereplay.json.storage.TraceJsonFile;
+import de.prob.json.JsonMetadata;
+import de.prob.json.JsonMetadataBuilder;
 import de.prob.model.eventb.EventBMachine;
 import de.prob.model.eventb.EventBModel;
 import de.prob.model.eventb.translate.EventBModelTranslator;
@@ -34,11 +39,14 @@ public class Animate {
     private static Injector INJECTOR = Guice.createInjector(Stage.PRODUCTION, new Config());
     private Api api;
 
+    private TraceManager trace_manager;
+
     private static final Logger logger = (Logger) LoggerFactory.getLogger(Animate.class);
 
     @Inject
     public Animate(Api api) {
         this.api = api;
+        this.trace_manager = INJECTOR.getInstance(TraceManager.class);
     }
 
     public void printCoverage(StateSpace stateSpace) {
@@ -143,7 +151,7 @@ public class Animate {
         return stateSpace;
     }
 
-    public void start(final StateSpace stateSpace,
+    public Trace start(final StateSpace stateSpace,
                       final int steps,
                       final boolean checkInv) {
 
@@ -178,7 +186,7 @@ public class Animate {
 
         stateSpace.endTransaction();
 
-        stateSpace.kill();
+        return trace;
     }
 
     public static void main(String[] args) throws Exception {
@@ -192,6 +200,7 @@ public class Animate {
         options.addOption("i", "invariants", false, "check invariants");
         options.addOption("d", "debug", false, "enable debug log (default: off)");
         options.addOption("s", "steps", true, "number of random steps (default: 5)");
+        options.addOption(null, "save", true, "save animation trace in json to a file");
         options.addOption("z", "size", true, "default size for ProB sets (default: 4)");
         options.addOption(null, "perf", false, "print ProB performance info (default: off)");
 
@@ -251,7 +260,26 @@ public class Animate {
             System.exit(0);
         }
 
-        m.start(stateSpace, steps, cmd.hasOption("invariants"));
+        Trace trace = m.start(stateSpace, steps, cmd.hasOption("invariants"));
+
+        if (cmd.hasOption("save")) {
+            JsonMetadata metadata = new JsonMetadataBuilder("Trace", 5)
+                    .withSavedNow()
+                    .withUserCreator()
+                    .withProBCliVersion("version")
+                    .withModelName(stateSpace.getMainComponent().toString())
+                    .build();
+            TraceJsonFile abstractJsonFile = new TraceJsonFile(trace, metadata);
+            logger.info("Saving animation trace to {}", cmd.getOptionValue("save"));
+
+            try {
+                m.trace_manager.save(new File(cmd.getOptionValue("save")).toPath(), abstractJsonFile);
+            } catch (IOException e) {
+                System.out.println("Error saving trace: " + e.getMessage());
+            }
+        }
+
+        stateSpace.kill();
 
         System.exit(0);
     }
