@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -34,10 +33,12 @@ import org.slf4j.LoggerFactory;
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
 
-import org.apache.commons.cli.*;
+import picocli.CommandLine;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Option;
 
-
-public class Animate {
+@Command(name = "animate", version = "animate 1.0", mixinStandardHelpOptions = true)
+public class Animate implements Runnable {
 
     private static Injector INJECTOR = Guice.createInjector(Stage.PRODUCTION, new Config());
     private Api api;
@@ -45,6 +46,25 @@ public class Animate {
     private TraceManager trace_manager;
 
     private static final Logger logger = (Logger) LoggerFactory.getLogger(Animate.class);
+
+    @Option(names = { "-m", "--model" }, required = true, description = "path to model.bum file")
+    File model;
+    @Option(names = { "-s", "--steps" }, defaultValue = "5", description = "number of random steps (default: 5)")
+    int steps;
+    @Option(names = { "-z", "--size" }, defaultValue = "4", description = "default size for ProB sets (default: 4)")
+    int size;
+    @Option(names = "--debug", description = "enable debug log (default: off)")
+    boolean debug;
+    @Option(names = "--perf", description = "print ProB performance info (default: off)")
+    boolean perf;
+    @Option(names = {"-i", "--invariants"}, description = "check invariants (default: off)")
+    boolean checkInv;
+    @Option(names = "--eventb", paramLabel="model.eventb", description = "dump prolog model to .eventb file and exit")
+    Path eventb;
+    @Option(names = "--save", paramLabel = "trace.json", description = "save animation trace in json to a file")
+    Path jsonTrace;
+    @Option(names = "--graph", paramLabel = "machine.dot", description = "save machine hierarchy graph in dot or svg and exit")
+    Path machineHierarchy;
 
     @Inject
     public Animate(Api api) {
@@ -117,9 +137,7 @@ public class Animate {
         }
     }
 
-    public StateSpace load_model(final String model_path,
-                                 final int size,
-                                 final boolean perf) throws IOException {
+    public StateSpace load_model() throws IOException {
         logger.info("Load Event-B Machine");
 
         StateSpace stateSpace = null;
@@ -139,12 +157,8 @@ public class Animate {
                 put("PERFORMANCE_INFO", "true");
             }
         }};
-        try {
-            stateSpace = api.eventb_load(model_path, prefs);
-        } catch (IOException e) {
-            System.err.println("Error loading model: " + e.getMessage());
-            throw e;
-        }
+
+        stateSpace = api.eventb_load(model.getPath(), prefs);
 
         GetVersionCommand version = new GetVersionCommand();
         stateSpace.execute(version);
@@ -153,9 +167,7 @@ public class Animate {
         return stateSpace;
     }
 
-    public Trace start(final StateSpace stateSpace,
-                      final int steps,
-                      final boolean checkInv) {
+    public Trace start(final StateSpace stateSpace) {
 
         stateSpace.startTransaction();
         Trace trace = new Trace(stateSpace);
@@ -191,89 +203,52 @@ public class Animate {
         return trace;
     }
 
-    public static void main(String[] args) throws Exception {
-        Options options = new Options();
-        int steps = 5;
-        int size = 4;
+    @Override
+    public void run() {
 
-        options.addRequiredOption("m", "model", true, "path to model.bum file");
-        options.addOption(null,"eventb", true, "dump prolog model to .eventb file and exit");
-        options.addOption(null, "graph", true, "print model dependency graph and exit");
-        options.addOption("i", "invariants", false, "check invariants");
-        options.addOption("d", "debug", false, "enable debug log (default: off)");
-        options.addOption("s", "steps", true, "number of random steps (default: 5)");
-        options.addOption(null, "save", true, "save animation trace in json to a file");
-        options.addOption("z", "size", true, "default size for ProB sets (default: 4)");
-        options.addOption(null, "perf", false, "print ProB performance info (default: off)");
-
-        CommandLineParser parser = new DefaultParser();
-        HelpFormatter formatter = new HelpFormatter();
-        CommandLine cmd = null;
-
-        try {
-            cmd = parser.parse(options, args);
-        } catch (ParseException e) {
-            System.err.println(e.getMessage());
-            formatter.printHelp("animate", options);
-
-            System.exit(1);
-        }
-
-        if (!cmd.hasOption("debug")) {
+        if (!debug) {
             Logger root = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
             root.setLevel(Level.WARN);
             logger.setLevel(Level.INFO);
         }
 
+        StateSpace stateSpace = null;
         try {
-            if (cmd.hasOption("steps")) {
-                steps = Integer.parseInt(cmd.getOptionValue("steps"));
-            }
-            if (cmd.hasOption("size")) {
-                size = Integer.parseInt(cmd.getOptionValue("size"));
-            }
-        } catch (NumberFormatException e) {
-            System.err.println(e.getMessage());
-            formatter.printHelp("animate", options);
-
+            stateSpace = load_model();
+        } catch (IOException e) {
+            System.err.println("Error loading model: " + e.getMessage());
             System.exit(1);
         }
 
-        Animate m = INJECTOR.getInstance(Animate.class);
-
-        StateSpace stateSpace = m.load_model(cmd.getOptionValue("model"), size, cmd.hasOption("perf"));
-
-        if (cmd.hasOption("graph")) {
+        if (machineHierarchy != null) {
             // machine_hierarchy, event_hierarchy, properties, invariant
             DotVisualizationCommand machine = DotVisualizationCommand.getByName("machine_hierarchy", stateSpace.getRoot());
-            Path file = Paths.get(cmd.getOptionValue("graph"));
-            String extension = MoreFiles.getFileExtension(file);
+            String extension = MoreFiles.getFileExtension(machineHierarchy);
             if (extension.equals("dot")) {
-                machine.visualizeAsDotToFile(file, new ArrayList<>());
+                machine.visualizeAsDotToFile(machineHierarchy, new ArrayList<>());
             } else if (extension.equals("svg")) {
-                machine.visualizeAsSvgToFile(file, new ArrayList<>());
+                machine.visualizeAsSvgToFile(machineHierarchy, new ArrayList<>());
             } else {
                 System.err.println("Unknown extension " + extension);
                 System.exit(1);
             }
-            System.exit(0);
+            return;
         }
 
-        if (cmd.hasOption("eventb")) {
-            String dumpFile = cmd.getOptionValue("eventb");
+        if (eventb != null) {
             try {
-                m.eventb_save(stateSpace, dumpFile, true);
+                eventb_save(stateSpace, eventb.toString(), true);
             } catch (IOException e) {
                 System.err.println("Error saving model: " + e.getMessage());
                 System.exit(1);
             }
-            System.out.println("Saving model state to " + dumpFile);
-            System.exit(0);
+            System.out.println("Saving model state to " + eventb);
+            return;
         }
 
-        Trace trace = m.start(stateSpace, steps, cmd.hasOption("invariants"));
+        Trace trace = start(stateSpace);
 
-        if (cmd.hasOption("save")) {
+        if (jsonTrace != null) {
             JsonMetadata metadata = new JsonMetadataBuilder("Trace", 5)
                     .withSavedNow()
                     .withUserCreator()
@@ -281,17 +256,21 @@ public class Animate {
                     .withModelName(stateSpace.getMainComponent().toString())
                     .build();
             TraceJsonFile abstractJsonFile = new TraceJsonFile(trace, metadata);
-            logger.info("Saving animation trace to {}", cmd.getOptionValue("save"));
+            logger.info("Saving animation trace to {}", jsonTrace);
 
             try {
-                m.trace_manager.save(new File(cmd.getOptionValue("save")).toPath(), abstractJsonFile);
+                trace_manager.save(jsonTrace, abstractJsonFile);
             } catch (IOException e) {
                 System.err.println("Error saving trace: " + e.getMessage());
             }
         }
 
         stateSpace.kill();
+    }
 
-        System.exit(0);
+    public static void main(String[] args) throws Exception {
+        Animate m = INJECTOR.getInstance(Animate.class);
+        int exitCode = new CommandLine(m).execute(args);
+        System.exit(exitCode);
     }
 }
