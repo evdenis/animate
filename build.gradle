@@ -24,6 +24,9 @@ dependencies {
 	implementation "de.hhu.stups:de.prob2.kernel:${prob_version}"
 }
 
+tasks.withType(JavaCompile) {
+	options.deprecation = true
+}
 
 jar {
 	duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
