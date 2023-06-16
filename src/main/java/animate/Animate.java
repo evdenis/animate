@@ -142,7 +142,7 @@ public class Animate {
         try {
             stateSpace = api.eventb_load(model_path, prefs);
         } catch (IOException e) {
-            System.out.println("Error loading model: " + e.getMessage());
+            System.err.println("Error loading model: " + e.getMessage());
             throw e;
         }
 
@@ -213,7 +213,7 @@ public class Animate {
         try {
             cmd = parser.parse(options, args);
         } catch (ParseException e) {
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
             formatter.printHelp("animate", options);
 
             System.exit(1);
@@ -233,7 +233,7 @@ public class Animate {
                 size = Integer.parseInt(cmd.getOptionValue("size"));
             }
         } catch (NumberFormatException e) {
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
             formatter.printHelp("animate", options);
 
             System.exit(1);
@@ -264,7 +264,7 @@ public class Animate {
             try {
                 m.eventb_save(stateSpace, dumpFile, true);
             } catch (IOException e) {
-                System.out.println("Error saving model: " + e.getMessage());
+                System.err.println("Error saving model: " + e.getMessage());
                 System.exit(1);
             }
             System.out.println("Saving model state to " + dumpFile);
@@ -286,7 +286,7 @@ public class Animate {
             try {
                 m.trace_manager.save(new File(cmd.getOptionValue("save")).toPath(), abstractJsonFile);
             } catch (IOException e) {
-                System.out.println("Error saving trace: " + e.getMessage());
+                System.err.println("Error saving trace: " + e.getMessage());
             }
         }
 
