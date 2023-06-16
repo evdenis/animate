@@ -36,6 +36,7 @@ import ch.qos.logback.classic.Logger;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
+import picocli.CommandLine.Parameters;
 
 @Command(name = "animate", version = "animate 1.0", mixinStandardHelpOptions = true)
 public class Animate implements Runnable {
@@ -47,7 +48,7 @@ public class Animate implements Runnable {
 
     private static final Logger logger = (Logger) LoggerFactory.getLogger(Animate.class);
 
-    @Option(names = { "-m", "--model" }, required = true, description = "path to model.bum file")
+    @Parameters(description = "path to model.bum file")
     File model;
     @Option(names = { "-s", "--steps" }, defaultValue = "5", description = "number of random steps (default: 5)")
     int steps;
