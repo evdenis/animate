@@ -3,10 +3,13 @@ package animate;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import com.google.common.io.MoreFiles;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
@@ -117,7 +120,6 @@ public class Animate {
     public StateSpace load_model(final String model_path,
                                  final int size,
                                  final boolean perf) throws IOException {
-
         logger.info("Load Event-B Machine");
 
         StateSpace stateSpace = null;
@@ -196,7 +198,7 @@ public class Animate {
 
         options.addRequiredOption("m", "model", true, "path to model.bum file");
         options.addOption(null,"eventb", true, "dump prolog model to .eventb file and exit");
-        options.addOption(null, "graph", false, "print model dependency graph and exit");
+        options.addOption(null, "graph", true, "print model dependency graph and exit");
         options.addOption("i", "invariants", false, "check invariants");
         options.addOption("d", "debug", false, "enable debug log (default: off)");
         options.addOption("s", "steps", true, "number of random steps (default: 5)");
@@ -242,9 +244,18 @@ public class Animate {
         StateSpace stateSpace = m.load_model(cmd.getOptionValue("model"), size, cmd.hasOption("perf"));
 
         if (cmd.hasOption("graph")) {
-            EventBModel model = (EventBModel) stateSpace.getModel();
-            model = model.calculateDependencies();
-            System.out.print(model.getGraph());
+            // machine_hierarchy, event_hierarchy, properties, invariant
+            DotVisualizationCommand machine = DotVisualizationCommand.getByName("machine_hierarchy", stateSpace.getRoot());
+            Path file = Paths.get(cmd.getOptionValue("graph"));
+            String extension = MoreFiles.getFileExtension(file);
+            if (extension.equals("dot")) {
+                machine.visualizeAsDotToFile(file, new ArrayList<>());
+            } else if (extension.equals("svg")) {
+                machine.visualizeAsSvgToFile(file, new ArrayList<>());
+            } else {
+                System.err.println("Unknown extension " + extension);
+                System.exit(1);
+            }
             System.exit(0);
         }
 
