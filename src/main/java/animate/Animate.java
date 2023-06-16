@@ -13,6 +13,7 @@ import com.google.inject.Stage;
 
 import de.prob.animator.command.ComputeCoverageCommand;
 import de.prob.animator.command.ComputeCoverageCommand.ComputeCoverageResult;
+import de.prob.animator.command.GetVersionCommand;
 import de.prob.animator.domainobjects.*;
 import de.prob.model.eventb.EventBMachine;
 import de.prob.model.eventb.EventBModel;
@@ -115,8 +116,7 @@ public class Animate {
     public StateSpace load_model(final String model_path,
                                  final int size,
                                  final boolean perf) throws IOException {
-        System.out.println("ProB version: " + api.getVersion());
-        System.out.println();
+
         System.out.println("Load Event-B Machine");
 
         StateSpace stateSpace = null;
@@ -142,6 +142,10 @@ public class Animate {
             System.out.println("Error loading model: " + e.getMessage());
             throw e;
         }
+
+        GetVersionCommand version = new GetVersionCommand();
+        stateSpace.execute(version);
+        System.out.println("ProB Version: " + version.getVersionString() + "\n");
 
         return stateSpace;
     }
