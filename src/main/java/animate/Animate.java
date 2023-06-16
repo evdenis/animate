@@ -262,6 +262,7 @@ public class Animate implements Runnable {
                 trace_manager.save(jsonTrace, abstractJsonFile);
             } catch (IOException e) {
                 System.err.println("Error saving trace: " + e.getMessage());
+                System.exit(1);
             }
         }
 
