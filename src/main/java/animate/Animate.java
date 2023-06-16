@@ -145,6 +145,7 @@ public class Animate {
                       final int steps,
                       final boolean checkInv) {
 
+        stateSpace.startTransaction();
         Trace trace = new Trace(stateSpace);
 
         System.out.println("Animate:");
@@ -171,6 +172,8 @@ public class Animate {
         System.out.println("Current state:\n" + trace.getCurrentState().getStateRep());
         System.out.println();
         printCoverage(stateSpace);
+
+        stateSpace.endTransaction();
 
         stateSpace.kill();
     }
