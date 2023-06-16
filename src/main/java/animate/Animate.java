@@ -251,7 +251,7 @@ public class Animate implements Runnable {
         if (jsonTrace != null) {
             JsonMetadata metadata = new JsonMetadataBuilder("Trace", 5)
                     .withSavedNow()
-                    .withUserCreator()
+                    .withCreator("animate")
                     .withProBCliVersion("version")
                     .withModelName(stateSpace.getMainComponent().toString())
                     .build();
