@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.*;
+import java.util.concurrent.Callable;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -39,7 +40,7 @@ import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
 @Command(name = "animate", version = "animate 1.0", mixinStandardHelpOptions = true)
-public class Animate implements Runnable {
+public class Animate implements Callable<Integer> {
 
     private static Injector INJECTOR = Guice.createInjector(Stage.PRODUCTION, new Config());
     private Api api;
@@ -205,7 +206,7 @@ public class Animate implements Runnable {
     }
 
     @Override
-    public void run() {
+    public Integer call() {
 
         if (!debug) {
             Logger root = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
@@ -218,7 +219,7 @@ public class Animate implements Runnable {
             stateSpace = load_model();
         } catch (IOException e) {
             System.err.println("Error loading model: " + e.getMessage());
-            System.exit(1);
+            return 1;
         }
 
         if (machineHierarchy != null) {
@@ -231,9 +232,9 @@ public class Animate implements Runnable {
                 machine.visualizeAsSvgToFile(machineHierarchy, new ArrayList<>());
             } else {
                 System.err.println("Unknown extension " + extension);
-                System.exit(1);
+                return 1;
             }
-            return;
+            return 0;
         }
 
         if (eventb != null) {
@@ -241,10 +242,10 @@ public class Animate implements Runnable {
                 eventb_save(stateSpace, eventb.toString(), true);
             } catch (IOException e) {
                 System.err.println("Error saving model: " + e.getMessage());
-                System.exit(1);
+                return 1;
             }
             System.out.println("Saving model state to " + eventb);
-            return;
+            return 0;
         }
 
         Trace trace = start(stateSpace);
@@ -263,11 +264,13 @@ public class Animate implements Runnable {
                 trace_manager.save(jsonTrace, abstractJsonFile);
             } catch (IOException e) {
                 System.err.println("Error saving trace: " + e.getMessage());
-                System.exit(1);
+                return 1;
             }
         }
 
         stateSpace.kill();
+
+        return 0;
     }
 
     public static void main(String[] args) throws Exception {
