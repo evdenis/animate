@@ -187,13 +187,13 @@ public class Animate {
         int size = 4;
 
         options.addRequiredOption("m", "model", true, "path to model.bum file");
-        options.addOption("e", "eventb", true, "dump prolog model to .eventb file and exit");
-        options.addOption("g", "graph", false, "print model dependency graph and exit");
+        options.addOption(null,"eventb", true, "dump prolog model to .eventb file and exit");
+        options.addOption(null, "graph", false, "print model dependency graph and exit");
         options.addOption("i", "invariants", false, "check invariants");
         options.addOption("d", "debug", false, "enable debug log (default: off)");
         options.addOption("s", "steps", true, "number of random steps (default: 5)");
         options.addOption("z", "size", true, "default size for ProB sets (default: 4)");
-        options.addOption("p", "perf", false, "print ProB performance info (default: off)");
+        options.addOption(null, "perf", false, "print ProB performance info (default: off)");
 
         CommandLineParser parser = new DefaultParser();
         HelpFormatter formatter = new HelpFormatter();
