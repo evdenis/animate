@@ -185,7 +185,7 @@ public class Animate {
 
         options.addRequiredOption("m", "model", true, "path to model.bum file");
         options.addOption("e", "eventb", true, "dump prolog model to .eventb file and exit");
-        options.addOption("g", "graph", false, "print model dependecy graph and exit");
+        options.addOption("g", "graph", false, "print model dependency graph and exit");
         options.addOption("i", "invariants", false, "check invariants");
         options.addOption("d", "debug", false, "enable debug log (default: off)");
         options.addOption("s", "steps", true, "number of random steps (default: 5)");
