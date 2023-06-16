@@ -38,8 +38,9 @@ import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
+import picocli.CommandLine.ScopeType;
 
-@Command(name = "animate", version = "animate 1.0", mixinStandardHelpOptions = true)
+@Command(name = "animate", version = "animate 1.0",  subcommands = {CommandLine.HelpCommand.class})
 public class Animate implements Callable<Integer> {
 
     private static Injector INJECTOR = Guice.createInjector(Stage.PRODUCTION, new Config());
@@ -49,7 +50,7 @@ public class Animate implements Callable<Integer> {
 
     private static final Logger logger = (Logger) LoggerFactory.getLogger(Animate.class);
 
-    @Parameters(description = "path to model.bum file")
+    @Parameters(description = "path to model.bum file", scope = ScopeType.INHERIT)
     File model;
     @Option(names = { "-s", "--steps" }, defaultValue = "5", description = "number of random steps (default: ${DEFAULT-VALUE})")
     int steps;
@@ -61,12 +62,8 @@ public class Animate implements Callable<Integer> {
     boolean perf;
     @Option(names = {"-i", "--invariants"}, description = "check invariants (default: ${DEFAULT-VALUE})")
     boolean checkInv;
-    @Option(names = "--eventb", paramLabel="model.eventb", description = "dump prolog model to .eventb file and exit")
-    Path eventb;
     @Option(names = "--save", paramLabel = "trace.json", description = "save animation trace in json to a file")
     Path jsonTrace;
-    @Option(names = "--graph", paramLabel = "machine.dot", description = "save machine hierarchy graph in dot or svg and exit")
-    Path machineHierarchy;
 
     @Inject
     public Animate(Api api) {
@@ -169,6 +166,14 @@ public class Animate implements Callable<Integer> {
         return stateSpace;
     }
 
+    public void initLogging() {
+        if (!debug) {
+            Logger root = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
+            root.setLevel(Level.WARN);
+            logger.setLevel(Level.INFO);
+        }
+    }
+
     public Trace start(final StateSpace stateSpace) {
 
         stateSpace.startTransaction();
@@ -205,47 +210,65 @@ public class Animate implements Callable<Integer> {
         return trace;
     }
 
-    @Override
-    public Integer call() {
+    @Command(description = "Dump information about the model")
+    public Integer info(@Option(names = "--machine", paramLabel = "machine.dot", description = "save machine hierarchy graph in dot or svg")
+                        Path machine,
+                        @Option(names = "--eventb", paramLabel="model.eventb", description = "dump prolog model to .eventb file")
+                        Path eventb) {
+        int err = 0;
 
-        if (!debug) {
-            Logger root = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
-            root.setLevel(Level.WARN);
-            logger.setLevel(Level.INFO);
-        }
+        initLogging();
 
-        StateSpace stateSpace = null;
+        StateSpace stateSpace;
         try {
             stateSpace = load_model();
-        } catch (IOException e) {
+        } catch (Exception e) {
             System.err.println("Error loading model: " + e.getMessage());
             return 1;
         }
 
-        if (machineHierarchy != null) {
+        if (machine != null) {
             // machine_hierarchy, event_hierarchy, properties, invariant
-            DotVisualizationCommand machine = DotVisualizationCommand.getByName("machine_hierarchy", stateSpace.getRoot());
-            String extension = MoreFiles.getFileExtension(machineHierarchy);
+            DotVisualizationCommand cmd = DotVisualizationCommand.getByName("machine_hierarchy", stateSpace.getRoot());
+            String extension = MoreFiles.getFileExtension(machine);
             if (extension.equals("dot")) {
-                machine.visualizeAsDotToFile(machineHierarchy, new ArrayList<>());
+                cmd.visualizeAsDotToFile(machine, new ArrayList<>());
             } else if (extension.equals("svg")) {
-                machine.visualizeAsSvgToFile(machineHierarchy, new ArrayList<>());
+                cmd.visualizeAsSvgToFile(machine, new ArrayList<>());
             } else {
                 System.err.println("Unknown extension " + extension);
-                return 1;
+                err = 1;
             }
-            return 0;
         }
 
         if (eventb != null) {
+            System.out.println("Saving B model to " + eventb);
             try {
                 eventb_save(stateSpace, eventb.toString(), true);
             } catch (IOException e) {
                 System.err.println("Error saving model: " + e.getMessage());
-                return 1;
+                err = 1;
             }
-            System.out.println("Saving model state to " + eventb);
-            return 0;
+        }
+
+        if (machine == null && eventb == null) {
+            EventBModel model = (EventBModel) stateSpace.getModel();
+            System.out.print(model.calculateDependencies().getGraph());
+        }
+
+        return err;
+    }
+
+    @Override
+    public Integer call() {
+        initLogging();
+
+        StateSpace stateSpace;
+        try {
+            stateSpace = load_model();
+        } catch (Exception e) {
+            System.err.println("Error loading model: " + e.getMessage());
+            return 1;
         }
 
         Trace trace = start(stateSpace);
