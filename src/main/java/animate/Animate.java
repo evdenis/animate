@@ -90,15 +90,6 @@ public class Animate {
         return violated_invariants;
     }
 
-    public Trace anyEvent(Trace trace) throws DeadlockedState {
-        List<Transition> ops = trace.getCurrentState().getOutTransitions(true, FormulaExpand.EXPAND);
-        Collections.shuffle(ops);
-        if (ops.isEmpty()) {
-            throw new DeadlockedState("Can't find an event to execute from this state (deadlock)");
-        }
-        return trace.add(ops.get(0).getId());
-    }
-
     // Same as api.eventb_save, but pretty-printed
     public void eventb_save(final StateSpace s, final String path, final boolean use_indentation) throws IOException {
         final EventBModelTranslator translator = new EventBModelTranslator((EventBModel) s.getModel(), s.getMainComponent());
@@ -159,8 +150,13 @@ public class Animate {
         System.out.println("Animate:");
         try {
             for (int i = 0; i < steps; i++) {
-                trace = anyEvent(trace);
-                System.out.println(trace.getCurrent().getTransition().getPrettyRep());
+                Trace new_trace = trace.anyEvent(null);
+                if (new_trace == trace)
+                    throw new DeadlockedState("Can't find an event to execute from this state (deadlock)");
+                trace = new_trace;
+
+                Transition transition = trace.getCurrent().getTransition().evaluate(FormulaExpand.EXPAND);
+                System.out.println(transition.getPrettyRep());
                 if (checkInv && !trace.getCurrentState().isInvariantOk()) {
                     throw new InvariantsViolation();
                 }
