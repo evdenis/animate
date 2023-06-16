@@ -175,6 +175,8 @@ public class Animate {
         System.out.println("Current state:\n" + trace.getCurrentState().getStateRep());
         System.out.println();
         printCoverage(stateSpace);
+
+        stateSpace.kill();
     }
 
     public static void main(String[] args) throws Exception {
