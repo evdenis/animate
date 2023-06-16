@@ -40,7 +40,7 @@ import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 import picocli.CommandLine.ScopeType;
 
-@Command(name = "animate", version = "animate 1.0",  subcommands = {CommandLine.HelpCommand.class})
+@Command(name = "animate", sortOptions = false, version = "animate 1.0",  subcommands = {CommandLine.HelpCommand.class})
 public class Animate implements Callable<Integer> {
 
     private static Injector INJECTOR = Guice.createInjector(Stage.PRODUCTION, new Config());
@@ -56,14 +56,14 @@ public class Animate implements Callable<Integer> {
     int steps;
     @Option(names = { "-z", "--size" }, defaultValue = "4", description = "default size for ProB sets (default: ${DEFAULT-VALUE})")
     int size;
-    @Option(names = "--debug", description = "enable debug log (default: ${DEFAULT-VALUE})")
-    boolean debug;
-    @Option(names = "--perf", description = "print ProB performance info (default: ${DEFAULT-VALUE})")
-    boolean perf;
     @Option(names = {"-i", "--invariants"}, description = "check invariants (default: ${DEFAULT-VALUE})")
     boolean checkInv;
+    @Option(names = "--perf", description = "print ProB performance info (default: ${DEFAULT-VALUE})")
+    boolean perf;
     @Option(names = "--save", paramLabel = "trace.json", description = "save animation trace in json to a file")
     Path jsonTrace;
+    @Option(names = "--debug", description = "enable debug log (default: ${DEFAULT-VALUE})")
+    boolean debug;
 
     @Inject
     public Animate(Api api) {
