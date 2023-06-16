@@ -50,15 +50,15 @@ public class Animate implements Runnable {
 
     @Parameters(description = "path to model.bum file")
     File model;
-    @Option(names = { "-s", "--steps" }, defaultValue = "5", description = "number of random steps (default: 5)")
+    @Option(names = { "-s", "--steps" }, defaultValue = "5", description = "number of random steps (default: ${DEFAULT-VALUE})")
     int steps;
-    @Option(names = { "-z", "--size" }, defaultValue = "4", description = "default size for ProB sets (default: 4)")
+    @Option(names = { "-z", "--size" }, defaultValue = "4", description = "default size for ProB sets (default: ${DEFAULT-VALUE})")
     int size;
-    @Option(names = "--debug", description = "enable debug log (default: off)")
+    @Option(names = "--debug", description = "enable debug log (default: ${DEFAULT-VALUE})")
     boolean debug;
-    @Option(names = "--perf", description = "print ProB performance info (default: off)")
+    @Option(names = "--perf", description = "print ProB performance info (default: ${DEFAULT-VALUE})")
     boolean perf;
-    @Option(names = {"-i", "--invariants"}, description = "check invariants (default: off)")
+    @Option(names = {"-i", "--invariants"}, description = "check invariants (default: ${DEFAULT-VALUE})")
     boolean checkInv;
     @Option(names = "--eventb", paramLabel="model.eventb", description = "dump prolog model to .eventb file and exit")
     Path eventb;
