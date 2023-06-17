@@ -19,6 +19,8 @@ import de.prob.animator.command.ComputeCoverageCommand;
 import de.prob.animator.command.ComputeCoverageCommand.ComputeCoverageResult;
 import de.prob.animator.command.GetVersionCommand;
 import de.prob.animator.domainobjects.*;
+import de.prob.check.tracereplay.ReplayedTrace;
+import de.prob.check.tracereplay.TraceReplay;
 import de.prob.check.tracereplay.json.TraceManager;
 import de.prob.check.tracereplay.json.storage.TraceJsonFile;
 import de.prob.json.JsonMetadata;
@@ -62,7 +64,7 @@ public class Animate implements Callable<Integer> {
     boolean perf;
     @Option(names = "--save", paramLabel = "trace.json", description = "save animation trace in json to a file")
     Path jsonTrace;
-    @Option(names = "--debug", description = "enable debug log (default: ${DEFAULT-VALUE})")
+    @Option(names = "--debug", description = "enable debug log (default: ${DEFAULT-VALUE})", scope = ScopeType.INHERIT)
     boolean debug;
 
     @Inject
@@ -208,6 +210,28 @@ public class Animate implements Callable<Integer> {
         stateSpace.endTransaction();
 
         return trace;
+    }
+
+    @Command(description = "Replay json trace")
+    public Integer replay(@Option(names = {"-t", "--trace"}, required = true, paramLabel = "trace.json", description = "Path to a json trace")
+                          final Path jsonTrace){
+        int err = 0;
+
+        initLogging();
+
+        StateSpace stateSpace;
+        try {
+            stateSpace = load_model();
+        } catch (Exception e) {
+            System.err.println("Error loading model: " + e.getMessage());
+            return 1;
+        }
+
+        System.out.println("Starting trace replay. Use --debug to view steps.");
+        ReplayedTrace trace = TraceReplay.replayTraceFile(stateSpace, jsonTrace);
+        System.out.println("Trace replay status: " + trace.getReplayStatus());
+
+        return err;
     }
 
     @Command(description = "Dump information about the model")
