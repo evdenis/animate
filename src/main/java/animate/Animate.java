@@ -211,10 +211,16 @@ public class Animate implements Callable<Integer> {
     }
 
     @Command(description = "Dump information about the model")
-    public Integer info(@Option(names = "--machine", paramLabel = "machine.dot", description = "save machine hierarchy graph in dot or svg")
-                        Path machine,
-                        @Option(names = "--eventb", paramLabel="model.eventb", description = "dump prolog model to .eventb file")
-                        Path eventb) {
+    public Integer info(@Option(names = {"-m", "--machine"}, paramLabel = "machine.dot", description = "save machine hierarchy graph in dot or svg")
+                        final Path machine,
+                        @Option(names = {"-e", "--events"}, paramLabel = "events.dot", description = "save events hierarchy graph in dot or svg")
+                        final Path events,
+                        @Option(names = {"-p", "--properties"}, paramLabel = "properties.dot", description = "save properties graph in dot or svg")
+                        final Path properties,
+                        @Option(names = {"-i", "--invariant"}, paramLabel = "invariant.dot", description = "save invariant graph in dot or svg")
+                        final Path invariant,
+                        @Option(names = {"-b", "--bmodel"}, paramLabel = "model.eventb", description = "dump prolog model to .eventb file")
+                        final Path eventb) {
         int err = 0;
 
         initLogging();
@@ -227,22 +233,43 @@ public class Animate implements Callable<Integer> {
             return 1;
         }
 
-        if (machine != null) {
-            // machine_hierarchy, event_hierarchy, properties, invariant
-            DotVisualizationCommand cmd = DotVisualizationCommand.getByName("machine_hierarchy", stateSpace.getRoot());
-            String extension = MoreFiles.getFileExtension(machine);
-            if (extension.equals("dot")) {
-                cmd.visualizeAsDotToFile(machine, new ArrayList<>());
-            } else if (extension.equals("svg")) {
-                cmd.visualizeAsSvgToFile(machine, new ArrayList<>());
-            } else {
-                System.err.println("Unknown extension " + extension);
-                err = 1;
+        Map<String, Path> visualizationCommand = new HashMap<String, Path>() {{
+            put("machine_hierarchy", machine);
+            put("event_hierarchy", events);
+            put("properties", properties);
+            put("invariant", invariant);
+        }};
+
+        logger.info("Initializing model");
+        stateSpace.startTransaction();
+        Trace trace = new Trace(stateSpace);
+        trace = trace.execute("$setup_constants");
+        trace = trace.execute("$initialise_machine");
+        stateSpace.endTransaction();
+
+        boolean anyCmd = false;
+        for (Map.Entry<String, Path> el : visualizationCommand.entrySet()) {
+            Path path = el.getValue();
+            if (path != null) {
+                anyCmd = true;
+                logger.info("Saving {} to {}", el.getKey(), path);
+                // machine_hierarchy, event_hierarchy, properties, invariant
+                DotVisualizationCommand cmd = DotVisualizationCommand.getByName(el.getKey(), trace.getCurrentState());
+                String extension = MoreFiles.getFileExtension(path);
+                if (extension.equals("dot")) {
+                    cmd.visualizeAsDotToFile(path, new ArrayList<>());
+                } else if (extension.equals("svg")) {
+                    cmd.visualizeAsSvgToFile(path, new ArrayList<>());
+                } else {
+                    System.err.println("Unknown extension " + extension);
+                    err = 1;
+                }
             }
         }
 
         if (eventb != null) {
-            System.out.println("Saving B model to " + eventb);
+            anyCmd = true;
+            logger.info("Saving B model to {}", eventb);
             try {
                 eventb_save(stateSpace, eventb.toString(), true);
             } catch (IOException e) {
@@ -251,7 +278,7 @@ public class Animate implements Callable<Integer> {
             }
         }
 
-        if (machine == null && eventb == null) {
+        if (!anyCmd) {
             EventBModel model = (EventBModel) stateSpace.getModel();
             System.out.print(model.calculateDependencies().getGraph());
         }
