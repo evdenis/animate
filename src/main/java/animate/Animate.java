@@ -108,7 +108,15 @@ public class Animate implements Callable<Integer> {
     }
 
     public List<String> findViolatedInvariants(StateSpace stateSpace, State state) {
-        List<IEvalElement> invariants = ((EventBMachine) stateSpace.getMainComponent())
+        Object mainComponent = stateSpace.getMainComponent();
+        if (mainComponent == null) {
+            throw new IllegalStateException("Main component is null");
+        }
+        if (!(mainComponent instanceof EventBMachine)) {
+            throw new IllegalStateException("Main component is not an EventBMachine: " + mainComponent.getClass().getName());
+        }
+
+        List<IEvalElement> invariants = ((EventBMachine) mainComponent)
                 .getAllInvariants()
                 .stream()
                 .map(i -> i.getPredicate())
