@@ -45,7 +45,7 @@ import picocli.CommandLine.ScopeType;
 @Command(name = "animate", sortOptions = false, version = "animate 1.0",  subcommands = {CommandLine.HelpCommand.class})
 public class Animate implements Callable<Integer> {
 
-    private static Injector INJECTOR = Guice.createInjector(Stage.PRODUCTION, new Config());
+    private static final Injector INJECTOR = Guice.createInjector(Stage.PRODUCTION, new Config());
     private Api api;
 
     private TraceManager trace_manager;
