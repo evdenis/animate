@@ -248,8 +248,6 @@ public class Animate implements Callable<Integer> {
     @Command(description = "Replay json trace")
     public Integer replay(@Option(names = {"-t", "--trace"}, required = true, paramLabel = "trace.json", description = "Path to a json trace")
                           final Path jsonTrace){
-        int err = 0;
-
         initLogging();
 
         StateSpace stateSpace;
@@ -269,7 +267,7 @@ public class Animate implements Callable<Integer> {
             stateSpace.kill();
         }
 
-        return err;
+        return 0;
     }
 
     @Command(description = "Dump information about the model")
