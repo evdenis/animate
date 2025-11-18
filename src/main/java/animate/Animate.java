@@ -181,33 +181,35 @@ public class Animate implements Callable<Integer> {
         stateSpace.startTransaction();
         Trace trace = new Trace(stateSpace);
 
-        System.out.println("Animation steps:");
         try {
-            for (int i = 0; i < steps; i++) {
-                Trace new_trace = trace.anyEvent(null);
-                if (new_trace == trace)
-                    throw new DeadlockedState("Can't find an event to execute from this state (deadlock)");
-                trace = new_trace;
+            System.out.println("Animation steps:");
+            try {
+                for (int i = 0; i < steps; i++) {
+                    Trace new_trace = trace.anyEvent(null);
+                    if (new_trace == trace)
+                        throw new DeadlockedState("Can't find an event to execute from this state (deadlock)");
+                    trace = new_trace;
 
-                Transition transition = trace.getCurrent().getTransition().evaluate(FormulaExpand.EXPAND);
-                System.out.println(transition.getPrettyRep());
-                if (checkInv && !trace.getCurrentState().isInvariantOk()) {
-                    throw new InvariantsViolation();
+                    Transition transition = trace.getCurrent().getTransition().evaluate(FormulaExpand.EXPAND);
+                    System.out.println(transition.getPrettyRep());
+                    if (checkInv && !trace.getCurrentState().isInvariantOk()) {
+                        throw new InvariantsViolation();
+                    }
                 }
+            } catch (InvariantsViolation e) {
+                List<String> inv = findViolatedInvariants(stateSpace, trace.getCurrentState());
+                System.err.println("Error: violated invariants:\n\t - " + String.join("\n\t - ", inv));
+            } catch (Exception e) {
+                System.err.println("Error: " + e.getMessage());
             }
-        } catch (InvariantsViolation e) {
-            List<String> inv = findViolatedInvariants(stateSpace, trace.getCurrentState());
-            System.err.println("Error: violated invariants:\n\t - " + String.join("\n\t - ", inv));
-        } catch (Exception e) {
-            System.err.println("Error: " + e.getMessage());
+            System.out.println();
+
+            System.out.println("Current state:\n" + trace.getCurrentState().getStateRep());
+            System.out.println();
+            printCoverage(stateSpace);
+        } finally {
+            stateSpace.endTransaction();
         }
-        System.out.println();
-
-        System.out.println("Current state:\n" + trace.getCurrentState().getStateRep());
-        System.out.println();
-        printCoverage(stateSpace);
-
-        stateSpace.endTransaction();
 
         return trace;
     }
