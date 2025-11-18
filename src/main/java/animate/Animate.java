@@ -166,21 +166,20 @@ public class Animate implements Callable<Integer> {
 
         StateSpace stateSpace = null;
 
-        Map<String, String> prefs = new HashMap<String, String>() {{
-            put("MEMOIZE_FUNCTIONS", "true");
-            put("SYMBOLIC", "true");
-            put("TRACE_INFO", "true");
-            put("TRY_FIND_ABORT", "true");
-            put("SYMMETRY_MODE", "hash");
-            put("DEFAULT_SETSIZE", String.valueOf(size));
-            put("COMPRESSION", "true");
-            put("CLPFD", "true");
-            put("PROOF_INFO", "true");
-            put("OPERATION_REUSE", "true");
-            if (perf) {
-                put("PERFORMANCE_INFO", "true");
-            }
-        }};
+        Map<String, String> prefs = new HashMap<>();
+        prefs.put("MEMOIZE_FUNCTIONS", "true");
+        prefs.put("SYMBOLIC", "true");
+        prefs.put("TRACE_INFO", "true");
+        prefs.put("TRY_FIND_ABORT", "true");
+        prefs.put("SYMMETRY_MODE", "hash");
+        prefs.put("DEFAULT_SETSIZE", String.valueOf(size));
+        prefs.put("COMPRESSION", "true");
+        prefs.put("CLPFD", "true");
+        prefs.put("PROOF_INFO", "true");
+        prefs.put("OPERATION_REUSE", "true");
+        if (perf) {
+            prefs.put("PERFORMANCE_INFO", "true");
+        }
 
         stateSpace = api.eventb_load(model.getPath(), prefs);
 
@@ -290,12 +289,11 @@ public class Animate implements Callable<Integer> {
         }
 
         try {
-            Map<String, Path> visualizationCommand = new HashMap<String, Path>() {{
-                put("machine_hierarchy", machine);
-                put("event_hierarchy", events);
-                put("properties", properties);
-                put("invariant", invariant);
-            }};
+            Map<String, Path> visualizationCommand = new HashMap<>();
+            visualizationCommand.put("machine_hierarchy", machine);
+            visualizationCommand.put("event_hierarchy", events);
+            visualizationCommand.put("properties", properties);
+            visualizationCommand.put("invariant", invariant);
 
             logger.info("Initializing model");
             stateSpace.startTransaction();
