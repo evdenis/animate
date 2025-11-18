@@ -52,6 +52,10 @@ public class Animate implements Callable<Integer> {
 
     private static final Logger logger = (Logger) LoggerFactory.getLogger(Animate.class);
 
+    // ProB initialization event names
+    private static final String SETUP_CONSTANTS = "$setup_constants";
+    private static final String INITIALISE_MACHINE = "$initialise_machine";
+
     @Parameters(description = "path to model.bum file", scope = ScopeType.INHERIT)
     File model;
     @Option(names = { "-s", "--steps" }, defaultValue = "5", description = "number of random steps (default: ${DEFAULT-VALUE})")
@@ -304,8 +308,8 @@ public class Animate implements Callable<Integer> {
             logger.info("Initializing model");
             stateSpace.startTransaction();
             Trace trace = new Trace(stateSpace);
-            trace = trace.execute("$setup_constants");
-            trace = trace.execute("$initialise_machine");
+            trace = trace.execute(SETUP_CONSTANTS);
+            trace = trace.execute(INITIALISE_MACHINE);
             stateSpace.endTransaction();
 
             boolean anyCmd = false;
