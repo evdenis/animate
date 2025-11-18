@@ -223,6 +223,7 @@ public class Animate implements Callable<Integer> {
                 List<String> inv = findViolatedInvariants(stateSpace, trace.getCurrentState());
                 System.err.println("Error: violated invariants:\n\t - " + String.join("\n\t - ", inv));
             } catch (Exception e) {
+                logger.error("Error during animation", e);
                 System.err.println("Error: " + e.getMessage());
             }
             System.out.println();
@@ -248,6 +249,7 @@ public class Animate implements Callable<Integer> {
         try {
             stateSpace = load_model();
         } catch (Exception e) {
+            logger.error("Error loading model", e);
             System.err.println("Error loading model: " + e.getMessage());
             return 1;
         }
@@ -282,6 +284,7 @@ public class Animate implements Callable<Integer> {
         try {
             stateSpace = load_model();
         } catch (Exception e) {
+            logger.error("Error loading model", e);
             System.err.println("Error loading model: " + e.getMessage());
             return 1;
         }
@@ -327,6 +330,7 @@ public class Animate implements Callable<Integer> {
                 try {
                     eventb_save(stateSpace, eventb.toString(), true);
                 } catch (IOException e) {
+                    logger.error("Error saving model", e);
                     System.err.println("Error saving model: " + e.getMessage());
                     err = 1;
                 }
@@ -351,6 +355,7 @@ public class Animate implements Callable<Integer> {
         try {
             stateSpace = load_model();
         } catch (Exception e) {
+            logger.error("Error loading model", e);
             System.err.println("Error loading model: " + e.getMessage());
             return 1;
         }
@@ -370,6 +375,7 @@ public class Animate implements Callable<Integer> {
             try {
                 trace_manager.save(jsonTrace, abstractJsonFile);
             } catch (IOException e) {
+                logger.error("Error saving trace", e);
                 System.err.println("Error saving trace: " + e.getMessage());
                 return 1;
             }
