@@ -42,7 +42,7 @@ import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 import picocli.CommandLine.ScopeType;
 
-@Command(name = "animate", sortOptions = false, version = "animate 1.0",  subcommands = {CommandLine.HelpCommand.class})
+@Command(name = "animate", sortOptions = false, version = "animate " + VERSION,  subcommands = {CommandLine.HelpCommand.class})
 public class Animate implements Callable<Integer> {
 
     private static final Injector INJECTOR = Guice.createInjector(Stage.PRODUCTION, new Config());
@@ -51,6 +51,9 @@ public class Animate implements Callable<Integer> {
     private TraceManager trace_manager;
 
     private static final Logger logger = (Logger) LoggerFactory.getLogger(Animate.class);
+
+    // Version information
+    private static final String VERSION = "1.0";
 
     // ProB initialization event names
     private static final String SETUP_CONSTANTS = "$setup_constants";
@@ -374,7 +377,7 @@ public class Animate implements Callable<Integer> {
             JsonMetadata metadata = new JsonMetadataBuilder("Trace", 5)
                     .withSavedNow()
                     .withCreator("animate")
-                    .withProBCliVersion("version")
+                    .withProBCliVersion(VERSION)
                     .withModelName(stateSpace.getMainComponent().toString())
                     .build();
             TraceJsonFile abstractJsonFile = new TraceJsonFile(trace, metadata);
