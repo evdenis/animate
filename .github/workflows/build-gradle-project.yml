@@ -43,6 +43,7 @@ jobs:
         path: build/reports/tests/test/
 
     - name: Upload build artifact
+      if: success()
       uses: actions/upload-artifact@v6
       with:
         name: animate.jar
