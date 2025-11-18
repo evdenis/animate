@@ -227,9 +227,13 @@ public class Animate implements Callable<Integer> {
             return 1;
         }
 
-        System.out.println("Starting trace replay. Use --debug to view steps.");
-        ReplayedTrace trace = TraceReplay.replayTraceFile(stateSpace, jsonTrace);
-        System.out.println("Trace replay status: " + trace.getReplayStatus());
+        try {
+            System.out.println("Starting trace replay. Use --debug to view steps.");
+            ReplayedTrace trace = TraceReplay.replayTraceFile(stateSpace, jsonTrace);
+            System.out.println("Trace replay status: " + trace.getReplayStatus());
+        } finally {
+            stateSpace.kill();
+        }
 
         return err;
     }
