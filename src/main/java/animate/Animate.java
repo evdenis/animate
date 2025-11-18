@@ -145,7 +145,30 @@ public class Animate implements Callable<Integer> {
         }
     }
 
+    private void validateInput() throws IllegalArgumentException {
+        if (model == null) {
+            throw new IllegalArgumentException("Model file is required");
+        }
+        if (!model.exists()) {
+            throw new IllegalArgumentException("Model file does not exist: " + model.getPath());
+        }
+        if (!model.isFile()) {
+            throw new IllegalArgumentException("Model path is not a file: " + model.getPath());
+        }
+        if (!model.canRead()) {
+            throw new IllegalArgumentException("Model file is not readable: " + model.getPath());
+        }
+        if (steps <= 0) {
+            throw new IllegalArgumentException("Number of steps must be positive, got: " + steps);
+        }
+        if (size <= 0) {
+            throw new IllegalArgumentException("Default set size must be positive, got: " + size);
+        }
+    }
+
     public StateSpace load_model() throws IOException {
+        validateInput();
+
         logger.info("Load Event-B Machine");
 
         StateSpace stateSpace;
