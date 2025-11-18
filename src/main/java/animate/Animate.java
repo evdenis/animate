@@ -261,54 +261,58 @@ public class Animate implements Callable<Integer> {
             return 1;
         }
 
-        Map<String, Path> visualizationCommand = new HashMap<String, Path>() {{
-            put("machine_hierarchy", machine);
-            put("event_hierarchy", events);
-            put("properties", properties);
-            put("invariant", invariant);
-        }};
+        try {
+            Map<String, Path> visualizationCommand = new HashMap<String, Path>() {{
+                put("machine_hierarchy", machine);
+                put("event_hierarchy", events);
+                put("properties", properties);
+                put("invariant", invariant);
+            }};
 
-        logger.info("Initializing model");
-        stateSpace.startTransaction();
-        Trace trace = new Trace(stateSpace);
-        trace = trace.execute("$setup_constants");
-        trace = trace.execute("$initialise_machine");
-        stateSpace.endTransaction();
+            logger.info("Initializing model");
+            stateSpace.startTransaction();
+            Trace trace = new Trace(stateSpace);
+            trace = trace.execute("$setup_constants");
+            trace = trace.execute("$initialise_machine");
+            stateSpace.endTransaction();
 
-        boolean anyCmd = false;
-        for (Map.Entry<String, Path> el : visualizationCommand.entrySet()) {
-            Path path = el.getValue();
-            if (path != null) {
+            boolean anyCmd = false;
+            for (Map.Entry<String, Path> el : visualizationCommand.entrySet()) {
+                Path path = el.getValue();
+                if (path != null) {
+                    anyCmd = true;
+                    logger.info("Saving {} to {}", el.getKey(), path);
+                    // machine_hierarchy, event_hierarchy, properties, invariant
+                    DotVisualizationCommand cmd = DotVisualizationCommand.getByName(el.getKey(), trace.getCurrentState());
+                    String extension = MoreFiles.getFileExtension(path);
+                    if (extension.equals("dot")) {
+                        cmd.visualizeAsDotToFile(path, new ArrayList<>());
+                    } else if (extension.equals("svg")) {
+                        cmd.visualizeAsSvgToFile(path, new ArrayList<>());
+                    } else {
+                        System.err.println("Unknown extension " + extension);
+                        err = 1;
+                    }
+                }
+            }
+
+            if (eventb != null) {
                 anyCmd = true;
-                logger.info("Saving {} to {}", el.getKey(), path);
-                // machine_hierarchy, event_hierarchy, properties, invariant
-                DotVisualizationCommand cmd = DotVisualizationCommand.getByName(el.getKey(), trace.getCurrentState());
-                String extension = MoreFiles.getFileExtension(path);
-                if (extension.equals("dot")) {
-                    cmd.visualizeAsDotToFile(path, new ArrayList<>());
-                } else if (extension.equals("svg")) {
-                    cmd.visualizeAsSvgToFile(path, new ArrayList<>());
-                } else {
-                    System.err.println("Unknown extension " + extension);
+                logger.info("Saving B model to {}", eventb);
+                try {
+                    eventb_save(stateSpace, eventb.toString(), true);
+                } catch (IOException e) {
+                    System.err.println("Error saving model: " + e.getMessage());
                     err = 1;
                 }
             }
-        }
 
-        if (eventb != null) {
-            anyCmd = true;
-            logger.info("Saving B model to {}", eventb);
-            try {
-                eventb_save(stateSpace, eventb.toString(), true);
-            } catch (IOException e) {
-                System.err.println("Error saving model: " + e.getMessage());
-                err = 1;
+            if (!anyCmd) {
+                EventBModel model = (EventBModel) stateSpace.getModel();
+                System.out.print(model.calculateDependencies().getGraph());
             }
-        }
-
-        if (!anyCmd) {
-            EventBModel model = (EventBModel) stateSpace.getModel();
-            System.out.print(model.calculateDependencies().getGraph());
+        } finally {
+            stateSpace.kill();
         }
 
         return err;
