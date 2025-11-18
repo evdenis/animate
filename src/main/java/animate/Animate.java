@@ -89,7 +89,7 @@ public class Animate implements Callable<Integer> {
         }
     }
 
-    class InvariantsViolation extends Exception {
+    static class InvariantsViolation extends Exception {
         public InvariantsViolation() {
         }
 
@@ -98,7 +98,7 @@ public class Animate implements Callable<Integer> {
         }
     }
 
-    class DeadlockedState extends Exception {
+    static class DeadlockedState extends Exception {
         public DeadlockedState() {
         }
 
