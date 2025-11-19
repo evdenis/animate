@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<org.eventb.core.machineFile org.eventb.core.configuration="org.eventb.core.fwd" version="5">
+<org.eventb.core.event name="'" org.eventb.core.convergence="0" org.eventb.core.extended="false" org.eventb.core.label="INITIALISATION">
+<org.eventb.core.action name="'" org.eventb.core.assignment="r ≔ 0" org.eventb.core.label="act1"/>
+</org.eventb.core.event>
+<org.eventb.core.variable name="(" org.eventb.core.identifier="r"/>
+<org.eventb.core.invariant name=")" org.eventb.core.label="inv1" org.eventb.core.predicate="r ∈  dom(f)"/>
+<org.eventb.core.seesContext name="*" org.eventb.core.target="C0"/>
+<org.eventb.core.event name="+" org.eventb.core.convergence="0" org.eventb.core.extended="false" org.eventb.core.label="found">
+<org.eventb.core.parameter name="'" org.eventb.core.identifier="e"/>
+<org.eventb.core.guard name="(" org.eventb.core.label="grd1" org.eventb.core.predicate="e ∈ dom(f)"/>
+<org.eventb.core.action name=")" org.eventb.core.assignment="r ≔ e" org.eventb.core.label="act1"/>
+<org.eventb.core.guard name="*" org.eventb.core.label="grd2" org.eventb.core.predicate="f(e) = v"/>
+</org.eventb.core.event>
+</org.eventb.core.machineFile>
