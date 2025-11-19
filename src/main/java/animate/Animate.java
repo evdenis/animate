@@ -278,7 +278,7 @@ public class Animate implements Callable<Integer> {
                 anyCmd = true;
                 logger.info("Saving {} to {}", el.getKey(), path);
                 // machine_hierarchy, event_hierarchy, properties, invariant
-                DotVisualizationCommand cmd = DotVisualizationCommand.getByName(el.getKey(), trace.getCurrentState());
+                DotVisualizationCommand cmd = DotVisualizationCommand.getByName(el.getKey(), trace);
                 String extension = MoreFiles.getFileExtension(path);
                 if (extension.equals("dot")) {
                     cmd.visualizeAsDotToFile(path, new ArrayList<>());
