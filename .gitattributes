@@ -1,0 +1,6 @@
+# Event-B model files
+*.bum binary
+*.buc binary
+*.bcc binary
+*.bcm binary
+*.bpr binary

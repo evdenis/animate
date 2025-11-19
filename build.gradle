@@ -22,10 +22,21 @@ dependencies {
 	implementation 'ch.qos.logback:logback-classic:1.5.23'
 	implementation 'info.picocli:picocli:4.7.7'
 	implementation "de.hhu.stups:de.prob2.kernel:${prob_version}"
+
+	testImplementation 'junit:junit:4.13.2'
+	testImplementation 'org.hamcrest:hamcrest:2.2'
 }
 
 tasks.withType(JavaCompile) {
 	options.deprecation = true
+}
+
+test {
+	testLogging {
+		events "passed", "skipped", "failed"
+		exceptionFormat "full"
+		showStandardStreams = true
+	}
 }
 
 jar {

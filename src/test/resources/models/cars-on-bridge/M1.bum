@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<org.eventb.core.machineFile org.eventb.core.configuration="org.eventb.core.fwd" version="5">
+    <org.eventb.core.refinesMachine name="'" org.eventb.core.target="M0"/>
+    <org.eventb.core.seesContext name="." org.eventb.core.target="C0"/>
+    <org.eventb.core.variable name="(" org.eventb.core.identifier="cars_number"/>
+    <org.eventb.core.event name="/" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="INITIALISATION">
+        <org.eventb.core.action name="'" org.eventb.core.assignment="to_il ≔ 0" org.eventb.core.label="act2"/>
+        <org.eventb.core.action name="(" org.eventb.core.assignment="on_il ≔ 0" org.eventb.core.label="act3"/>
+        <org.eventb.core.action name=")" org.eventb.core.assignment="to_ml ≔ 0" org.eventb.core.label="act4"/>
+    </org.eventb.core.event>
+    <org.eventb.core.event name="0" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="ML_out">
+        <org.eventb.core.refinesEvent name="'" org.eventb.core.target="ML_out"/>
+        <org.eventb.core.action name="(" org.eventb.core.assignment="to_il ≔ to_il + 1" org.eventb.core.label="act2"/>
+        <org.eventb.core.guard name=")" org.eventb.core.label="grd2" org.eventb.core.predicate="to_ml = 0"/>
+        <org.eventb.core.guard name="*" org.eventb.core.label="grd3" org.eventb.core.predicate="to_il + on_il &lt; cars_limit" org.eventb.core.theorem="true"/>
+    </org.eventb.core.event>
+    <org.eventb.core.event name="1" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="ML_in">
+        <org.eventb.core.refinesEvent name="'" org.eventb.core.target="ML_in"/>
+        <org.eventb.core.action name="(" org.eventb.core.assignment="to_ml ≔ to_ml − 1" org.eventb.core.label="act2"/>
+        <org.eventb.core.guard name=")" org.eventb.core.label="grd2" org.eventb.core.predicate="to_ml &gt; 0"/>
+    </org.eventb.core.event>
+    <org.eventb.core.variable name="2" org.eventb.core.identifier="to_il"/>
+    <org.eventb.core.variable name="3" org.eventb.core.identifier="on_il"/>
+    <org.eventb.core.variable name="4" org.eventb.core.identifier="to_ml"/>
+    <org.eventb.core.invariant name="5" org.eventb.core.label="inv1" org.eventb.core.predicate="to_il ∈ ℕ"/>
+    <org.eventb.core.invariant name="6" org.eventb.core.label="inv2" org.eventb.core.predicate="on_il ∈ ℕ"/>
+    <org.eventb.core.invariant name="7" org.eventb.core.label="inv3" org.eventb.core.predicate="to_ml ∈ ℕ"/>
+    <org.eventb.core.invariant name="8" org.eventb.core.label="inv4" org.eventb.core.predicate="to_il = 0 ∨ to_ml = 0"/>
+    <org.eventb.core.invariant name="9" org.eventb.core.label="inv5" org.eventb.core.predicate="to_il + on_il + to_ml = cars_number"/>
+    <org.eventb.core.event name=":" org.eventb.core.convergence="1" org.eventb.core.extended="false" org.eventb.core.label="IL_out">
+        <org.eventb.core.action name="'" org.eventb.core.assignment="on_il ≔ on_il − 1" org.eventb.core.label="act1"/>
+        <org.eventb.core.action name="(" org.eventb.core.assignment="to_ml ≔ to_ml + 1" org.eventb.core.label="act2"/>
+        <org.eventb.core.guard name=")" org.eventb.core.label="grd1" org.eventb.core.predicate="on_il &gt; 0"/>
+        <org.eventb.core.guard name="*" org.eventb.core.label="grd2" org.eventb.core.predicate="to_il = 0"/>
+    </org.eventb.core.event>
+    <org.eventb.core.event name=";" org.eventb.core.convergence="1" org.eventb.core.extended="false" org.eventb.core.label="IL_in">
+        <org.eventb.core.action name="'" org.eventb.core.assignment="to_il ≔ to_il − 1" org.eventb.core.label="act1"/>
+        <org.eventb.core.action name="(" org.eventb.core.assignment="on_il ≔ on_il + 1" org.eventb.core.label="act2"/>
+        <org.eventb.core.guard name=")" org.eventb.core.label="grd1" org.eventb.core.predicate="to_il &gt; 0"/>
+    </org.eventb.core.event>
+    <org.eventb.core.invariant name="=" org.eventb.core.label="inv6" org.eventb.core.predicate="(to_il + on_il &lt; cars_limit ∧ to_ml = 0) ∨ to_ml &gt; 0 ∨ to_il &gt; 0 ∨ (on_il &gt; 0 ∧ to_il = 0)" org.eventb.core.theorem="true"/>
+    <org.eventb.core.variant name="&gt;" org.eventb.core.expression="2 ∗ to_il + on_il"/>
+</org.eventb.core.machineFile>
