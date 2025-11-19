@@ -6,7 +6,7 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 
-def prob_version = "4.12.2"
+def prob_version = "4.15.0"
 mainClassName = "animate/Animate"
 
 
