@@ -1,8 +1,12 @@
 package animate;
 
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.google.inject.Stage;
 import de.prob.scripting.Api;
 import de.prob.statespace.StateSpace;
 import de.prob.statespace.Trace;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -23,8 +27,15 @@ import static org.junit.Assert.*;
 public class ModelAnimationTest {
 
     private static final int ANIMATION_STEPS = 10;
+    private static Api api;
     private final File modelFile;
     private final String modelName;
+
+    @BeforeClass
+    public static void setupApi() {
+        Injector injector = Guice.createInjector(Stage.PRODUCTION, new Config());
+        api = injector.getInstance(Api.class);
+    }
 
     public ModelAnimationTest(String modelName, File modelFile) {
         this.modelName = modelName;
@@ -63,7 +74,6 @@ public class ModelAnimationTest {
     public void testModelLoads() throws Exception {
         System.out.println("Testing model: " + modelName);
 
-        Api api = Api.getInstance();
         assertNotNull("ProB API should be available", api);
 
         StateSpace stateSpace = api.eventb_load(modelFile.getAbsolutePath());
@@ -86,7 +96,6 @@ public class ModelAnimationTest {
     public void testModelAnimation() throws Exception {
         System.out.println("Testing animation for: " + modelName);
 
-        Api api = Api.getInstance();
         StateSpace stateSpace = api.eventb_load(modelFile.getAbsolutePath());
 
         try {
@@ -124,7 +133,6 @@ public class ModelAnimationTest {
     public void testInvariantChecking() throws Exception {
         System.out.println("Testing invariant checking for: " + modelName);
 
-        Api api = Api.getInstance();
         StateSpace stateSpace = api.eventb_load(modelFile.getAbsolutePath());
 
         try {
