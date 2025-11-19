@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<org.eventb.core.machineFile org.eventb.core.configuration="org.eventb.core.fwd" version="5">
+<org.eventb.core.event name="'" org.eventb.core.convergence="0" org.eventb.core.extended="false" org.eventb.core.label="INITIALISATION">
+<org.eventb.core.action name="'" org.eventb.core.assignment="Files ≔ {Root}" org.eventb.core.label="act1"/>
+<org.eventb.core.action name="(" org.eventb.core.assignment="Folders ≔ {Root}" org.eventb.core.label="act2"/>
+<org.eventb.core.action name="*" org.eventb.core.assignment="FileSystem ≔ ∅" org.eventb.core.label="act3"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="evt1" org.eventb.core.convergence="0" org.eventb.core.extended="false" org.eventb.core.label="create_file">
+<org.eventb.core.parameter name="_2oqepGFKEeWoCLs0HEMUPA" org.eventb.core.identifier="file"/>
+<org.eventb.core.parameter name="_2oqepWFKEeWoCLs0HEMUPA" org.eventb.core.identifier="parent"/>
+<org.eventb.core.parameter name="_2oqepmFKEeWoCLs0HEMUPA" org.eventb.core.identifier="name"/>
+<org.eventb.core.action name="_2os65WFKEeWoCLs0HEMUPA" org.eventb.core.assignment="Files ≔ Files ∪ {file}" org.eventb.core.label="act1"/>
+<org.eventb.core.action name="_2os652FKEeWoCLs0HEMUPA" org.eventb.core.assignment="FileSystem(file) ≔ {parent ↦ name}" org.eventb.core.label="act2"/>
+<org.eventb.core.guard name="_McQ4aWFMEeWoCLs0HEMUPA" org.eventb.core.label="grd1" org.eventb.core.predicate="file ∈ FilesType ∖ Files"/>
+<org.eventb.core.guard name="_McQ4a2FMEeWoCLs0HEMUPA" org.eventb.core.label="grd2" org.eventb.core.predicate="parent ∈ Folders"/>
+<org.eventb.core.guard name="_McQ4bmFMEeWoCLs0HEMUPA" org.eventb.core.label="grd3" org.eventb.core.predicate="name ∈ Names"/>
+<org.eventb.core.guard name="_McQ4b2FMEeWoCLs0HEMUPA" org.eventb.core.label="grd4" org.eventb.core.predicate="∀x · x ∈ dom(FileSystem) ⇒ parent ↦ name ∉ FileSystem(x)"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="evt4" org.eventb.core.convergence="0" org.eventb.core.extended="false" org.eventb.core.label="create_folder">
+<org.eventb.core.parameter name="_2oqepGFKEeWoCLs0HEMUPA" org.eventb.core.identifier="folder"/>
+<org.eventb.core.parameter name="_2oqepWFKEeWoCLs0HEMUPA" org.eventb.core.identifier="parent"/>
+<org.eventb.core.parameter name="_2oqepmFKEeWoCLs0HEMUPA" org.eventb.core.identifier="name"/>
+<org.eventb.core.action name="_2os65WFKEeWoCLs0HEMUPA" org.eventb.core.assignment="Files ≔ Files ∪ {folder}" org.eventb.core.label="act1"/>
+<org.eventb.core.action name="_McQ4bmFMEeWoCLs0HEMUPB" org.eventb.core.assignment="Folders ≔ Folders ∪ {folder}" org.eventb.core.label="act2"/>
+<org.eventb.core.action name="_2os652FKEeWoCLs0HEMUPA" org.eventb.core.assignment="FileSystem(folder) ≔ {parent ↦ name}" org.eventb.core.label="act3"/>
+<org.eventb.core.guard name="_McQ4aWFMEeWoCLs0HEMUPA" org.eventb.core.label="grd1" org.eventb.core.predicate="folder ∈ FilesType ∖ Files"/>
+<org.eventb.core.guard name="_McQ4a2FMEeWoCLs0HEMUPA" org.eventb.core.label="grd2" org.eventb.core.predicate="parent ∈ Folders"/>
+<org.eventb.core.guard name="_McQ4bmFMEeWoCLs0HEMUPA" org.eventb.core.label="grd3" org.eventb.core.predicate="name ∈ Names"/>
+<org.eventb.core.guard name="_McQ4b2FMEeWoCLs0HEMUPA" org.eventb.core.label="grd4" org.eventb.core.predicate="∀x · x ∈ dom(FileSystem) ⇒ parent ↦ name ∉ FileSystem(x)"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="evt3" org.eventb.core.convergence="0" org.eventb.core.extended="false" org.eventb.core.label="create_hard_link">
+<org.eventb.core.parameter name="_KA6zIWFTEeWoCLs0HEMUPA" org.eventb.core.identifier="file"/>
+<org.eventb.core.parameter name="_KA7aMGFTEeWoCLs0HEMUPA" org.eventb.core.identifier="parent"/>
+<org.eventb.core.parameter name="_KA7aMWFTEeWoCLs0HEMUPA" org.eventb.core.identifier="name"/>
+<org.eventb.core.guard name="_ciBhcGFUEeWoCLs0HEMUPA" org.eventb.core.label="grd1" org.eventb.core.predicate="file ∈ Files ∖ Folders"/>
+<org.eventb.core.guard name="_ciBhcmFUEeWoCLs0HEMUPA" org.eventb.core.label="grd2" org.eventb.core.predicate="parent ∈ Folders"/>
+<org.eventb.core.guard name="_hSdqN2FXEeWoCLs0HEMUPA" org.eventb.core.label="grd3" org.eventb.core.predicate="name ∈ Names"/>
+<org.eventb.core.guard name="_hSdqOGFXEeWoCLs0HEMUPA" org.eventb.core.label="grd4" org.eventb.core.predicate="∀x · x ∈ dom(FileSystem) ⇒ parent ↦ name ∉ FileSystem(x)"/>
+<org.eventb.core.action name="_obip4GFQEeWoCLs0HEMUPA" org.eventb.core.assignment="FileSystem(file) ≔ FileSystem(file) ∪ {parent ↦ name}" org.eventb.core.label="act1"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="evt5" org.eventb.core.convergence="0" org.eventb.core.extended="false" org.eventb.core.label="delete_hard_link">
+<org.eventb.core.parameter name="_qYCEYGFTEeWoCLs0HEMUPA" org.eventb.core.identifier="parent"/>
+<org.eventb.core.parameter name="_qYCEYWFTEeWoCLs0HEMUPA" org.eventb.core.identifier="name"/>
+<org.eventb.core.parameter name="_qYCEYmFTEeWoCLs0HEMUPA" org.eventb.core.identifier="file"/>
+<org.eventb.core.action name="_KA8BQGFTEeWoCLs0HEMUPA" org.eventb.core.assignment="FileSystem(file) ≔ FileSystem(file) ∖ {parent ↦ name}" org.eventb.core.label="act1"/>
+<org.eventb.core.guard name="_Q53-0GHeEeWbr88oOyLCRQ" org.eventb.core.label="grd1" org.eventb.core.predicate="parent ∈ Folders"/>
+<org.eventb.core.guard name="_Q53-0WHeEeWbr88oOyLCRQ" org.eventb.core.label="grd2" org.eventb.core.predicate="file ∈ Files ∖ Folders"/>
+<org.eventb.core.guard name="_Q53-0mHeEeWbr88oOyLCRQ" org.eventb.core.label="grd3" org.eventb.core.predicate="name ∈ Names"/>
+<org.eventb.core.guard name="_MhijgmFYEeWoCLs0HEMUPA" org.eventb.core.label="grd4" org.eventb.core.predicate="parent ↦ name ∈ FileSystem(file)"/>
+<org.eventb.core.guard name="_Mhijg2FYEeWoCLs0HEMUPA" org.eventb.core.label="grd5" org.eventb.core.predicate="∃p, n · p ∈ Folders ∧ p ↦ n ∈ FileSystem(file) ∧ (n ≠ name ∨ p ≠ parent)"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="evt6" org.eventb.core.convergence="0" org.eventb.core.extended="false" org.eventb.core.label="rename_file">
+<org.eventb.core.parameter name="_ciBhYWFUEeWoCLs0HEMUPA" org.eventb.core.identifier="oldName"/>
+<org.eventb.core.parameter name="_ciBhYmFUEeWoCLs0HEMUPA" org.eventb.core.identifier="name"/>
+<org.eventb.core.parameter name="_ciBhY2FUEeWoCLs0HEMUPA" org.eventb.core.identifier="parent"/>
+<org.eventb.core.parameter name="_ciBhZGFUEeWoCLs0HEMUPA" org.eventb.core.identifier="file"/>
+<org.eventb.core.action name="_qYCrcGFTEeWoCLs0HEMUPA" org.eventb.core.assignment="FileSystem(file) ≔ (FileSystem(file) ∖ {parent ↦ oldName}) ∪ {parent ↦ name}" org.eventb.core.label="act1"/>
+<org.eventb.core.guard name="_U4-fYmHjEeWbr88oOyLCRQ" org.eventb.core.label="grd1" org.eventb.core.predicate="parent ∈ Folders"/>
+<org.eventb.core.guard name="_Q54l4WHeEeWbr88oOyLCRQ" org.eventb.core.label="grd2" org.eventb.core.predicate="file ∈ dom(FileSystem)"/>
+<org.eventb.core.guard name="_Q54l4mHeEeWbr88oOyLCRQ" org.eventb.core.label="grd3" org.eventb.core.predicate="oldName ∈ Names"/>
+<org.eventb.core.guard name="_Q54l42HeEeWbr88oOyLCRQ" org.eventb.core.label="grd4" org.eventb.core.predicate="parent ↦ oldName ∈ FileSystem(file)"/>
+<org.eventb.core.guard name="_Q54l5GHeEeWbr88oOyLCRQ" org.eventb.core.label="grd5" org.eventb.core.predicate="name ∈ Names"/>
+<org.eventb.core.guard name="_0KMtUGHoEeWbr88oOyLCRQ" org.eventb.core.label="grd6" org.eventb.core.predicate="∀x · x ∈ dom(FileSystem) ⇒ parent ↦ name ∉ FileSystem(x)"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="evt7" org.eventb.core.convergence="0" org.eventb.core.extended="false" org.eventb.core.label="delete_file">
+<org.eventb.core.action name="_ciCIcWFUEeWoCLs0HEMUPA" org.eventb.core.assignment="Files ≔ Files ∖ {file}" org.eventb.core.label="act1"/>
+<org.eventb.core.action name="_ciCIc2FUEeWoCLs0HEMUPA" org.eventb.core.assignment="Folders ≔ Folders ∖ {file}" org.eventb.core.label="act2"/>
+<org.eventb.core.parameter name="_hSdqM2FXEeWoCLs0HEMUPA" org.eventb.core.identifier="file"/>
+<org.eventb.core.parameter name="_hSdqNGFXEeWoCLs0HEMUPA" org.eventb.core.identifier="parent"/>
+<org.eventb.core.parameter name="_hSdqNWFXEeWoCLs0HEMUPA" org.eventb.core.identifier="name"/>
+<org.eventb.core.guard name="_0KNUZGHoEeWbr88oOyLCRQ" org.eventb.core.label="grd1" org.eventb.core.predicate="file ∈ Files"/>
+<org.eventb.core.guard name="_oQL4wGHwEeWbr88oOyLCRQ" org.eventb.core.label="grd2" org.eventb.core.predicate="file ≠ Root"/>
+<org.eventb.core.guard name="_oQL4wmHwEeWbr88oOyLCRQ" org.eventb.core.label="grd3" org.eventb.core.predicate="parent ∈ Folders"/>
+<org.eventb.core.guard name="_oQL4w2HwEeWbr88oOyLCRQ" org.eventb.core.label="grd4" org.eventb.core.predicate="parent ↦ name ∈ FileSystem(file)"/>
+<org.eventb.core.guard name="_oQL4x2HwEeWbr88oOyLCRQ" org.eventb.core.label="grd5" org.eventb.core.predicate="∀n · n ≠ name ⇒ parent ↦ n ∉ FileSystem(file)"/>
+<org.eventb.core.guard name="_oQL4yGHwEeWbr88oOyLCRQ" org.eventb.core.label="grd6" org.eventb.core.predicate="∀x · x ∈ dom(FileSystem) ⇒ file ∉ dom(FileSystem(x))"/>
+<org.eventb.core.action name="_q9uEAGFWEeWoCLs0HEMUPA" org.eventb.core.assignment="FileSystem ≔ {file} ⩤ FileSystem" org.eventb.core.label="act3"/>
+<org.eventb.core.guard name="_oQL4yWHwEeWbr88oOyLCRQ" org.eventb.core.label="grd7" org.eventb.core.predicate="∀x · x ∈ Folders ∧ x ≠ parent ⇒ x ∉ dom(FileSystem(file))"/>
+</org.eventb.core.event>
+<org.eventb.core.variable name="(" org.eventb.core.identifier="Files"/>
+<org.eventb.core.variable name="-" org.eventb.core.identifier="Folders"/>
+<org.eventb.core.invariant name="*" org.eventb.core.label="inv1" org.eventb.core.predicate="Files ⊆ FilesType"/>
+<org.eventb.core.invariant name="." org.eventb.core.comment="&#10;" org.eventb.core.label="inv2" org.eventb.core.predicate="Folders ⊆ Files"/>
+<org.eventb.core.invariant name="0" org.eventb.core.comment="&#10;" org.eventb.core.label="inv3" org.eventb.core.predicate="Root ∈ Folders"/>
+<org.eventb.core.variable name="," org.eventb.core.comment="child -&gt; parent relation that models file system tree" org.eventb.core.identifier="FileSystem"/>
+<org.eventb.core.invariant name="/" org.eventb.core.comment="&#10;" org.eventb.core.label="inv5" org.eventb.core.predicate="FileSystem ∈ Files ∖ {Root} → (Folders ↔ Names)"/>
+<org.eventb.core.invariant name="inv1" org.eventb.core.label="inv6" org.eventb.core.predicate="∀f · f ∈ dom(FileSystem) ⇒ FileSystem(f) ≠ ∅"/>
+<org.eventb.core.invariant name="inv2" org.eventb.core.label="inv7" org.eventb.core.predicate="∀f · f ∈ Folders ∧ f ≠ Root ⇒ (∃p, n · p ∈ Folders ∧ n ∈ Names ∧ FileSystem(f) = {p ↦ n})"/>
+<org.eventb.core.invariant name="inv3" org.eventb.core.comment="&#10;" org.eventb.core.label="inv8" org.eventb.core.predicate="∀x, y · x ∈ dom(FileSystem) ∧ y ∈ dom(FileSystem) ∧ x ≠ y ⇒ FileSystem(x) ∩ FileSystem(y) = ∅"/>
+<org.eventb.core.seesContext name="inv7" org.eventb.core.target="C0"/>
+<org.eventb.core.invariant name="inv8" org.eventb.core.label="NoCycles" org.eventb.core.predicate="∀C · C ⊆ Folders ∧ C ≠ ∅ ∧ Root ∉ C ⇒ C ∖ {x ↦ y ∣ x ∈ Folders ∖ {Root} ∧ y ∈ dom(FileSystem(x))}[C] ≠ ∅"/>
+</org.eventb.core.machineFile>

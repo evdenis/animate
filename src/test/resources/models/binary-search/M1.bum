@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<org.eventb.core.machineFile org.eventb.core.configuration="org.eventb.core.fwd" version="5">
+<org.eventb.core.refinesMachine name="'" org.eventb.core.target="M0"/>
+<org.eventb.core.seesContext name="*" org.eventb.core.target="C0"/>
+<org.eventb.core.variable name="(" org.eventb.core.identifier="r"/>
+<org.eventb.core.event name="+" org.eventb.core.convergence="0" org.eventb.core.extended="true" org.eventb.core.label="INITIALISATION">
+<org.eventb.core.action name="'" org.eventb.core.assignment="k :∈ dom(f)" org.eventb.core.label="act2"/>
+</org.eventb.core.event>
+<org.eventb.core.event name="," org.eventb.core.convergence="0" org.eventb.core.extended="false" org.eventb.core.label="found">
+<org.eventb.core.refinesEvent name="'" org.eventb.core.target="found"/>
+<org.eventb.core.guard name="(" org.eventb.core.label="grd1" org.eventb.core.predicate="f(k) = v"/>
+<org.eventb.core.action name=")" org.eventb.core.assignment="r ≔ k" org.eventb.core.label="act1"/>
+<org.eventb.core.witness name="*" org.eventb.core.label="e" org.eventb.core.predicate="e = k"/>
+</org.eventb.core.event>
+<org.eventb.core.variable name="-" org.eventb.core.identifier="k"/>
+<org.eventb.core.invariant name="." org.eventb.core.label="inv1" org.eventb.core.predicate="k ∈ dom(f)"/>
+<org.eventb.core.event name="/" org.eventb.core.convergence="2" org.eventb.core.extended="false" org.eventb.core.label="search">
+<org.eventb.core.guard name="'" org.eventb.core.label="grd1" org.eventb.core.predicate="f(k) ≠ v"/>
+<org.eventb.core.action name="(" org.eventb.core.assignment="k :∈ dom(f)" org.eventb.core.label="act1"/>
+</org.eventb.core.event>
+</org.eventb.core.machineFile>
