@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<org.eventb.core.poFile org.eventb.core.poStamp="0">
+    <org.eventb.core.poPredicateSet name="CTXHYP" org.eventb.core.poStamp="0">
+        <org.eventb.core.poIdentifier name="cars_limit" org.eventb.core.type="ℤ"/>
+        <org.eventb.core.poPredicate name="cars_limiu" org.eventb.core.predicate="cars_limit∈ℕ1" org.eventb.core.source="/cars-on-bridge/C0.buc|org.eventb.core.contextFile#C0|org.eventb.core.axiom#("/>
+    </org.eventb.core.poPredicateSet>
+    <org.eventb.core.poPredicateSet name="ABSHYP" org.eventb.core.parentSet="/cars-on-bridge/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#CTXHYP" org.eventb.core.poStamp="0">
+        <org.eventb.core.poIdentifier name="cars_number" org.eventb.core.type="ℤ"/>
+    </org.eventb.core.poPredicateSet>
+    <org.eventb.core.poSequent name="inv3/THM" org.eventb.core.accurate="true" org.eventb.core.poDesc="Theorem" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/cars-on-bridge/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#HYPC2"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="cars_number&lt;cars_limit∨cars_number&gt;0" org.eventb.core.source="/cars-on-bridge/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#-"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/cars-on-bridge/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#-"/>
+        <org.eventb.core.poSelHint name="SEQHYS" org.eventb.core.poSelHintFst="/cars-on-bridge/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ABSHYP" org.eventb.core.poSelHintSnd="/cars-on-bridge/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#HYPC2"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poSequent name="INITIALISATION/inv1/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  establishment" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/cars-on-bridge/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTALLHYPcars_numbet"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="0∈ℕ" org.eventb.core.source="/cars-on-bridge/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#)"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/cars-on-bridge/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#'"/>
+        <org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/cars-on-bridge/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#)"/>
+        <org.eventb.core.poSelHint name="SEQHYT" org.eventb.core.poSelHintFst="/cars-on-bridge/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#CTXHYP" org.eventb.core.poSelHintSnd="/cars-on-bridge/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poSequent#INITIALISATION\/inv1\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+        <org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/cars-on-bridge/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#HYPC2|org.eventb.core.poPredicate#PRD0"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poSequent name="INITIALISATION/inv2/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  establishment" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/cars-on-bridge/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTALLHYPcars_numbet"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="0≤cars_limit" org.eventb.core.source="/cars-on-bridge/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#*"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/cars-on-bridge/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#'"/>
+        <org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/cars-on-bridge/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#*"/>
+        <org.eventb.core.poSelHint name="SEQHYT" org.eventb.core.poSelHintFst="/cars-on-bridge/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#CTXHYP" org.eventb.core.poSelHintSnd="/cars-on-bridge/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poSequent#INITIALISATION\/inv2\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+        <org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/cars-on-bridge/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#HYPC2|org.eventb.core.poPredicate#PRD1"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poPredicateSet name="EVTIDENTcars_numbet" org.eventb.core.parentSet="/cars-on-bridge/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#CTXHYP" org.eventb.core.poStamp="0">
+        <org.eventb.core.poIdentifier name="cars_number'" org.eventb.core.type="ℤ"/>
+    </org.eventb.core.poPredicateSet>
+    <org.eventb.core.poPredicateSet name="EVTALLHYPcars_numbet" org.eventb.core.parentSet="/cars-on-bridge/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTIDENTcars_numbet" org.eventb.core.poStamp="0"/>
+    <org.eventb.core.poSequent name="ML_out/inv1/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  preservation" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/cars-on-bridge/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTALLHYPcars_numbeu"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="cars_number+1∈ℕ" org.eventb.core.source="/cars-on-bridge/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#)"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/cars-on-bridge/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#+"/>
+        <org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/cars-on-bridge/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#)"/>
+        <org.eventb.core.poSelHint name="SEQHYT" org.eventb.core.poSelHintFst="/cars-on-bridge/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/cars-on-bridge/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poSequent#ML_out\/inv1\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+        <org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/cars-on-bridge/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#HYPC2|org.eventb.core.poPredicate#PRD0"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poSequent name="ML_out/inv2/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  preservation" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/cars-on-bridge/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTALLHYPcars_numbeu"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="cars_number+1≤cars_limit" org.eventb.core.source="/cars-on-bridge/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#*"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/cars-on-bridge/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#+"/>
+        <org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/cars-on-bridge/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#*"/>
+        <org.eventb.core.poSelHint name="SEQHYT" org.eventb.core.poSelHintFst="/cars-on-bridge/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/cars-on-bridge/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poSequent#ML_out\/inv2\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+        <org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/cars-on-bridge/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#HYPC2|org.eventb.core.poPredicate#PRD1"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poPredicateSet name="EVTIDENTcars_numbeu" org.eventb.core.parentSet="/cars-on-bridge/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poStamp="0">
+        <org.eventb.core.poIdentifier name="cars_number'" org.eventb.core.type="ℤ"/>
+    </org.eventb.core.poPredicateSet>
+    <org.eventb.core.poPredicateSet name="EVTALLHYPcars_numbeu" org.eventb.core.parentSet="/cars-on-bridge/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTIDENTcars_numbeu" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicate name="PRD0" org.eventb.core.predicate="cars_number&lt;cars_limit" org.eventb.core.source="/cars-on-bridge/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#+|org.eventb.core.guard#("/>
+    </org.eventb.core.poPredicateSet>
+    <org.eventb.core.poSequent name="ML_in/inv1/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  preservation" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/cars-on-bridge/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTALLHYPcars_numbev"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="cars_number − 1∈ℕ" org.eventb.core.source="/cars-on-bridge/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#)"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/cars-on-bridge/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#,"/>
+        <org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/cars-on-bridge/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#)"/>
+        <org.eventb.core.poSelHint name="SEQHYT" org.eventb.core.poSelHintFst="/cars-on-bridge/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/cars-on-bridge/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poSequent#ML_in\/inv1\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+        <org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/cars-on-bridge/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#HYPC2|org.eventb.core.poPredicate#PRD0"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poSequent name="ML_in/inv2/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  preservation" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/cars-on-bridge/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTALLHYPcars_numbev"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="cars_number − 1≤cars_limit" org.eventb.core.source="/cars-on-bridge/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#*"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/cars-on-bridge/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#,"/>
+        <org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/cars-on-bridge/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#*"/>
+        <org.eventb.core.poSelHint name="SEQHYT" org.eventb.core.poSelHintFst="/cars-on-bridge/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/cars-on-bridge/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poSequent#ML_in\/inv2\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+        <org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/cars-on-bridge/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#HYPC2|org.eventb.core.poPredicate#PRD1"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poSequent name="ML_in/NAT" org.eventb.core.accurate="true" org.eventb.core.poDesc="Natural number variant of event" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/cars-on-bridge/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTALLHYPcars_numbev"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="cars_number∈ℕ" org.eventb.core.source="/cars-on-bridge/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.variant#\/"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/cars-on-bridge/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#,"/>
+        <org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/cars-on-bridge/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.variant#\/"/>
+        <org.eventb.core.poSelHint name="SEQHYT" org.eventb.core.poSelHintFst="/cars-on-bridge/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/cars-on-bridge/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poSequent#ML_in\/NAT|org.eventb.core.poPredicateSet#SEQHYP"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poSequent name="ML_in/VAR" org.eventb.core.accurate="true" org.eventb.core.poDesc="Variant of event" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/cars-on-bridge/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTALLHYPcars_numbev"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="cars_number − 1&lt;cars_number" org.eventb.core.source="/cars-on-bridge/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.variant#\/"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/cars-on-bridge/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#,"/>
+        <org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/cars-on-bridge/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.variant#\/"/>
+        <org.eventb.core.poSelHint name="SEQHYT" org.eventb.core.poSelHintFst="/cars-on-bridge/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/cars-on-bridge/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poSequent#ML_in\/VAR|org.eventb.core.poPredicateSet#SEQHYP"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poPredicateSet name="EVTIDENTcars_numbev" org.eventb.core.parentSet="/cars-on-bridge/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poStamp="0">
+        <org.eventb.core.poIdentifier name="cars_number'" org.eventb.core.type="ℤ"/>
+    </org.eventb.core.poPredicateSet>
+    <org.eventb.core.poPredicateSet name="EVTALLHYPcars_numbev" org.eventb.core.parentSet="/cars-on-bridge/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTIDENTcars_numbev" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicate name="PRD0" org.eventb.core.predicate="cars_number&gt;0" org.eventb.core.source="/cars-on-bridge/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#,|org.eventb.core.guard#("/>
+    </org.eventb.core.poPredicateSet>
+    <org.eventb.core.poPredicateSet name="HYPC2" org.eventb.core.parentSet="/cars-on-bridge/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ABSHYP" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicate name="PRD0" org.eventb.core.predicate="cars_number∈ℕ" org.eventb.core.source="/cars-on-bridge/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#)"/>
+        <org.eventb.core.poPredicate name="PRD1" org.eventb.core.predicate="cars_number≤cars_limit" org.eventb.core.source="/cars-on-bridge/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#*"/>
+    </org.eventb.core.poPredicateSet>
+    <org.eventb.core.poPredicateSet name="ALLHYP" org.eventb.core.parentSet="/cars-on-bridge/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#HYPC2" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicate name="PRD2" org.eventb.core.predicate="cars_number&lt;cars_limit∨cars_number&gt;0" org.eventb.core.source="/cars-on-bridge/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#-"/>
+    </org.eventb.core.poPredicateSet>
+</org.eventb.core.poFile>

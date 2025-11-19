@@ -54,9 +54,9 @@
         <org.eventb.core.prPred name="p4" org.eventb.core.predicate="f∈ℤ ⇸ ℤ"/>
         <org.eventb.core.prPred name="p0" org.eventb.core.predicate="k∈dom(f)∧f∈ℤ ⇸ ℤ"/>
         <org.eventb.core.prPred name="p2" org.eventb.core.predicate="k∈dom(f)"/>
-        <org.eventb.core.prReas name="r1" org.eventb.core.prRID="org.eventb.core.seqprover.autoRewritesL4:0"/>
+        <org.eventb.core.prReas name="r1" org.eventb.core.prRID="org.eventb.core.seqprover.autoRewritesL5:0"/>
         <org.eventb.core.prReas name="r2" org.eventb.core.prRID="org.eventb.core.seqprover.isFunGoal"/>
-        <org.eventb.core.prReas name="r0" org.eventb.core.prRID="org.eventb.core.seqprover.genMPL3"/>
+        <org.eventb.core.prReas name="r0" org.eventb.core.prRID="org.eventb.core.seqprover.genMPL4"/>
     </org.eventb.core.prProof>
     <org.eventb.core.prProof name="found/grd1/GRD" org.eventb.core.confidence="1000" org.eventb.core.prFresh="" org.eventb.core.prGoal="p0" org.eventb.core.prHyps="p0">
         <org.eventb.core.lang name="L"/>
@@ -76,7 +76,7 @@
         <org.eventb.core.prIdent name="k" org.eventb.core.type="ℤ"/>
         <org.eventb.core.prPred name="p1" org.eventb.core.predicate="⊤"/>
         <org.eventb.core.prPred name="p0" org.eventb.core.predicate="k=k"/>
-        <org.eventb.core.prReas name="r0" org.eventb.core.prRID="org.eventb.core.seqprover.autoRewritesL4:0"/>
+        <org.eventb.core.prReas name="r0" org.eventb.core.prRID="org.eventb.core.seqprover.autoRewritesL5:0"/>
         <org.eventb.core.prReas name="r1" org.eventb.core.prRID="org.eventb.core.seqprover.trueGoal"/>
     </org.eventb.core.prProof>
     <org.eventb.core.prProof name="search/grd1/WD" org.eventb.core.confidence="1000" org.eventb.core.prFresh="" org.eventb.core.prGoal="p0" org.eventb.core.prHyps="p1,p2">
@@ -98,9 +98,9 @@
         <org.eventb.core.prPred name="p4" org.eventb.core.predicate="f∈ℤ ⇸ ℤ"/>
         <org.eventb.core.prPred name="p0" org.eventb.core.predicate="k∈dom(f)∧f∈ℤ ⇸ ℤ"/>
         <org.eventb.core.prPred name="p2" org.eventb.core.predicate="k∈dom(f)"/>
-        <org.eventb.core.prReas name="r1" org.eventb.core.prRID="org.eventb.core.seqprover.autoRewritesL4:0"/>
+        <org.eventb.core.prReas name="r1" org.eventb.core.prRID="org.eventb.core.seqprover.autoRewritesL5:0"/>
         <org.eventb.core.prReas name="r2" org.eventb.core.prRID="org.eventb.core.seqprover.isFunGoal"/>
-        <org.eventb.core.prReas name="r0" org.eventb.core.prRID="org.eventb.core.seqprover.genMPL3"/>
+        <org.eventb.core.prReas name="r0" org.eventb.core.prRID="org.eventb.core.seqprover.genMPL4"/>
     </org.eventb.core.prProof>
     <org.eventb.core.prProof name="search/inv1/INV" org.eventb.core.confidence="1000" org.eventb.core.prFresh="" org.eventb.core.prGoal="p0" org.eventb.core.prHyps="p0">
         <org.eventb.core.lang name="L"/>
