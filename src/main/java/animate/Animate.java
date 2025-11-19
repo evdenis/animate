@@ -126,7 +126,7 @@ public class Animate implements Callable<Integer> {
 
     // Same as api.eventb_save, but pretty-printed
     public void eventb_save(final StateSpace s, final String path, final boolean use_indentation) throws IOException {
-        final EventBModelTranslator translator = new EventBModelTranslator((EventBModel) s.getModel(), s.getMainComponent());
+        final EventBModelTranslator translator = new EventBModelTranslator((EventBModel) s.getModel());
 
         try (final FileOutputStream fos = new FileOutputStream(path)) {
             final PrologTermOutput pto = new PrologTermOutput(fos, use_indentation);
