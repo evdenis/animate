@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<org.eventb.core.poFile org.eventb.core.poStamp="0">
+    <org.eventb.core.poPredicateSet name="ABSHYP" org.eventb.core.poStamp="0">
+        <org.eventb.core.poIdentifier name="cars_limit" org.eventb.core.type="ℤ"/>
+        <org.eventb.core.poPredicate name="cars_limiu" org.eventb.core.predicate="cars_limit∈ℕ1" org.eventb.core.source="/cars-on-bridge/C0.buc|org.eventb.core.contextFile#C0|org.eventb.core.axiom#("/>
+        <org.eventb.core.poIdentifier name="colour" org.eventb.core.type="ℙ(colour)"/>
+        <org.eventb.core.poIdentifier name="red" org.eventb.core.type="colour"/>
+        <org.eventb.core.poIdentifier name="green" org.eventb.core.type="colour"/>
+        <org.eventb.core.poPredicate name="cars_limiv" org.eventb.core.predicate="partition(colour,{red},{green})" org.eventb.core.source="/cars-on-bridge/C2.buc|org.eventb.core.contextFile#C2|org.eventb.core.axiom#+"/>
+        <org.eventb.core.poIdentifier name="SENSOR" org.eventb.core.type="ℙ(SENSOR)"/>
+        <org.eventb.core.poIdentifier name="off" org.eventb.core.type="SENSOR"/>
+        <org.eventb.core.poIdentifier name="on" org.eventb.core.type="SENSOR"/>
+    </org.eventb.core.poPredicateSet>
+    <org.eventb.core.poPredicateSet name="ALLHYP" org.eventb.core.parentSet="/cars-on-bridge/C3.bpo|org.eventb.core.poFile#C3|org.eventb.core.poPredicateSet#ABSHYP" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicate name="PRD0" org.eventb.core.predicate="SENSOR={on,off}" org.eventb.core.source="/cars-on-bridge/C3.buc|org.eventb.core.contextFile#C3|org.eventb.core.axiom#+"/>
+        <org.eventb.core.poPredicate name="PRD1" org.eventb.core.predicate="on≠off" org.eventb.core.source="/cars-on-bridge/C3.buc|org.eventb.core.contextFile#C3|org.eventb.core.axiom#,"/>
+    </org.eventb.core.poPredicateSet>
+</org.eventb.core.poFile>

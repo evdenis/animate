@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<org.eventb.core.poFile org.eventb.core.poStamp="0">
+    <org.eventb.core.poPredicateSet name="ABSHYP" org.eventb.core.poStamp="0">
+        <org.eventb.core.poIdentifier name="FilesType" org.eventb.core.type="ℙ(FilesType)"/>
+        <org.eventb.core.poIdentifier name="Names" org.eventb.core.type="ℙ(Names)"/>
+        <org.eventb.core.poIdentifier name="Root" org.eventb.core.type="FilesType"/>
+    </org.eventb.core.poPredicateSet>
+    <org.eventb.core.poPredicateSet name="ALLHYP" org.eventb.core.parentSet="/file-system/C0.bpo|org.eventb.core.poFile#C0|org.eventb.core.poPredicateSet#ABSHYP" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicate name="PRD0" org.eventb.core.predicate="Root∈FilesType" org.eventb.core.source="/file-system/C0.buc|org.eventb.core.contextFile#C0|org.eventb.core.axiom#'"/>
+    </org.eventb.core.poPredicateSet>
+</org.eventb.core.poFile>

@@ -1,0 +1,588 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<org.eventb.core.poFile org.eventb.core.poStamp="0">
+    <org.eventb.core.poPredicateSet name="CTXHYP" org.eventb.core.poStamp="0">
+        <org.eventb.core.poIdentifier name="FilesType" org.eventb.core.type="ℙ(FilesType)"/>
+        <org.eventb.core.poIdentifier name="Names" org.eventb.core.type="ℙ(Names)"/>
+        <org.eventb.core.poIdentifier name="Root" org.eventb.core.type="FilesType"/>
+        <org.eventb.core.poPredicate name="FilesTypf" org.eventb.core.predicate="Root∈FilesType" org.eventb.core.source="/file-system/C0.buc|org.eventb.core.contextFile#C0|org.eventb.core.axiom#'"/>
+    </org.eventb.core.poPredicateSet>
+    <org.eventb.core.poPredicateSet name="ABSHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#CTXHYP" org.eventb.core.poStamp="0">
+        <org.eventb.core.poIdentifier name="FileSystem" org.eventb.core.type="ℙ(FilesType×ℙ(FilesType×Names))"/>
+        <org.eventb.core.poIdentifier name="Folders" org.eventb.core.type="ℙ(FilesType)"/>
+        <org.eventb.core.poIdentifier name="Files" org.eventb.core.type="ℙ(FilesType)"/>
+    </org.eventb.core.poPredicateSet>
+    <org.eventb.core.poSequent name="inv6/WD" org.eventb.core.accurate="true" org.eventb.core.poDesc="Well-definedness of Invariant" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#HYPC4"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="∀f⦂FilesType·f∈dom(FileSystem)⇒FileSystem∈FilesType ⇸ ℙ(FilesType × Names)" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv1"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv1"/>
+        <org.eventb.core.poSelHint name="SEQHYS" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ABSHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#HYPC4"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poSequent name="inv7/WD" org.eventb.core.accurate="true" org.eventb.core.poDesc="Well-definedness of Invariant" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#HYPC5"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="∀f⦂FilesType·f∈Folders∧f≠Root⇒(∀p⦂FilesType,n⦂Names·p∈Folders∧n∈Names⇒f∈dom(FileSystem)∧FileSystem∈FilesType ⇸ ℙ(FilesType × Names))" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv2"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv2"/>
+        <org.eventb.core.poSelHint name="SEQHYS" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ABSHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#HYPC5"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poSequent name="inv8/WD" org.eventb.core.accurate="true" org.eventb.core.poDesc="Well-definedness of Invariant" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#HYPC6"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="∀x⦂FilesType,y⦂FilesType·x∈dom(FileSystem)∧y∈dom(FileSystem)∧x≠y⇒FileSystem∈FilesType ⇸ ℙ(FilesType × Names)" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv3"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv3"/>
+        <org.eventb.core.poSelHint name="SEQHYS" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ABSHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#HYPC6"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poSequent name="NoCycles/WD" org.eventb.core.accurate="true" org.eventb.core.poDesc="Well-definedness of Invariant" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#HYPC7"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="∀C⦂ℙ(FilesType)·C⊆Folders∧C≠(∅ ⦂ ℙ(FilesType))∧Root∉C⇒(∀x⦂FilesType·x∈Folders ∖ {Root}⇒x∈dom(FileSystem)∧FileSystem∈FilesType ⇸ ℙ(FilesType × Names))" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv8"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv8"/>
+        <org.eventb.core.poSelHint name="SEQHYS" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ABSHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#HYPC7"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poSequent name="INITIALISATION/inv2/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  establishment" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTALLHYPFileSysten"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="{Root}⊆{Root}" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#."/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#'"/>
+        <org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#."/>
+        <org.eventb.core.poSelHint name="SEQHYT" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#CTXHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poSequent#INITIALISATION\/inv2\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+        <org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#HYPC4|org.eventb.core.poPredicate#PRD1"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poSequent name="INITIALISATION/inv3/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  establishment" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTALLHYPFileSysten"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="Root∈{Root}" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#0"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#'"/>
+        <org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#0"/>
+        <org.eventb.core.poSelHint name="SEQHYT" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#CTXHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poSequent#INITIALISATION\/inv3\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+        <org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#HYPC4|org.eventb.core.poPredicate#PRD2"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poSequent name="INITIALISATION/inv5/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  establishment" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTALLHYPFileSysten"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="(∅ ⦂ ℙ(FilesType×ℙ(FilesType×Names)))∈{Root} ∖ {Root} → ({Root} ↔ Names)" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#\/"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#'"/>
+        <org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#\/"/>
+        <org.eventb.core.poSelHint name="SEQHYT" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#CTXHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poSequent#INITIALISATION\/inv5\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+        <org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#HYPC4|org.eventb.core.poPredicate#PRD3"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poSequent name="INITIALISATION/inv6/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  establishment" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTALLHYPFileSysten"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="∀f⦂FilesType·f∈dom(∅ ⦂ ℙ(FilesType×ℙ(FilesType×Names)))⇒(∅ ⦂ ℙ(FilesType×ℙ(FilesType×Names)))(f)≠(∅ ⦂ ℙ(FilesType×Names))" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv1"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#'"/>
+        <org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv1"/>
+        <org.eventb.core.poSelHint name="SEQHYT" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#CTXHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poSequent#INITIALISATION\/inv6\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+        <org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#HYPC5|org.eventb.core.poPredicate#PRD4"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poSequent name="INITIALISATION/inv7/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  establishment" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTALLHYPFileSysten"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="∀f⦂FilesType·f∈{Root}∧f≠Root⇒(∃p⦂FilesType,n⦂Names·p∈{Root}∧n∈Names∧(∅ ⦂ ℙ(FilesType×ℙ(FilesType×Names)))(f)={p ↦ n})" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv2"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#'"/>
+        <org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv2"/>
+        <org.eventb.core.poSelHint name="SEQHYT" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#CTXHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poSequent#INITIALISATION\/inv7\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+        <org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#HYPC6|org.eventb.core.poPredicate#PRD5"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poSequent name="INITIALISATION/inv8/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  establishment" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTALLHYPFileSysten"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="∀x⦂FilesType,y⦂FilesType·x∈dom(∅ ⦂ ℙ(FilesType×ℙ(FilesType×Names)))∧y∈dom(∅ ⦂ ℙ(FilesType×ℙ(FilesType×Names)))∧x≠y⇒(∅ ⦂ ℙ(FilesType×ℙ(FilesType×Names)))(x)∩(∅ ⦂ ℙ(FilesType×ℙ(FilesType×Names)))(y)=(∅ ⦂ ℙ(FilesType×Names))" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv3"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#'"/>
+        <org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv3"/>
+        <org.eventb.core.poSelHint name="SEQHYT" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#CTXHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poSequent#INITIALISATION\/inv8\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+        <org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#HYPC7|org.eventb.core.poPredicate#PRD6"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poSequent name="INITIALISATION/NoCycles/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  establishment" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTALLHYPFileSysten"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="∀C⦂ℙ(FilesType)·C⊆{Root}∧C≠(∅ ⦂ ℙ(FilesType))∧Root∉C⇒C ∖ {x⦂FilesType,y⦂FilesType·x∈{Root} ∖ {Root}∧y∈dom((∅ ⦂ ℙ(FilesType×ℙ(FilesType×Names)))(x)) ∣ x ↦ y}[C]≠(∅ ⦂ ℙ(FilesType))" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv8"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#'"/>
+        <org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv8"/>
+        <org.eventb.core.poSelHint name="SEQHYT" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#CTXHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poSequent#INITIALISATION\/NoCycles\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+        <org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP|org.eventb.core.poPredicate#PRD7"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poPredicateSet name="EVTIDENTFileSysten" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#CTXHYP" org.eventb.core.poStamp="0">
+        <org.eventb.core.poIdentifier name="Folders'" org.eventb.core.type="ℙ(FilesType)"/>
+        <org.eventb.core.poIdentifier name="FileSystem'" org.eventb.core.type="ℙ(FilesType×ℙ(FilesType×Names))"/>
+        <org.eventb.core.poIdentifier name="Files'" org.eventb.core.type="ℙ(FilesType)"/>
+    </org.eventb.core.poPredicateSet>
+    <org.eventb.core.poPredicateSet name="EVTALLHYPFileSysten" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTIDENTFileSysten" org.eventb.core.poStamp="0"/>
+    <org.eventb.core.poSequent name="create_file/grd4/WD" org.eventb.core.accurate="true" org.eventb.core.poDesc="Well-definedness of Guard" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTHYPFileSysteo)"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="∀x⦂FilesType·x∈dom(FileSystem)⇒FileSystem∈FilesType ⇸ ℙ(FilesType × Names)" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt1|org.eventb.core.guard#_McQ4b2FMEeWoCLs0HEMUPA"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt1|org.eventb.core.guard#_McQ4b2FMEeWoCLs0HEMUPA"/>
+        <org.eventb.core.poSelHint name="SEQHYS" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTHYPFileSysteo)"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poSequent name="create_file/inv2/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  preservation" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTALLHYPFileSysteo"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="Folders⊆Files∪{file}" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#."/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt1"/>
+        <org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#."/>
+        <org.eventb.core.poSelHint name="SEQHYT" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poSequent#create_file\/inv2\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+        <org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#HYPC4|org.eventb.core.poPredicate#PRD1"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poSequent name="create_file/inv5/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  preservation" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTALLHYPFileSysteo"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="FileSystem{file ↦ {parent ↦ name}}∈(Files∪{file}) ∖ {Root} → (Folders ↔ Names)" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#\/"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt1"/>
+        <org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#\/"/>
+        <org.eventb.core.poSelHint name="SEQHYT" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poSequent#create_file\/inv5\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+        <org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#HYPC4|org.eventb.core.poPredicate#PRD3"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poSequent name="create_file/inv6/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  preservation" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTALLHYPFileSysteo"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="∀f⦂FilesType·f∈dom(FileSystem{file ↦ {parent ↦ name}})⇒(FileSystem{file ↦ {parent ↦ name}})(f)≠(∅ ⦂ ℙ(FilesType×Names))" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv1"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt1"/>
+        <org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv1"/>
+        <org.eventb.core.poSelHint name="SEQHYT" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poSequent#create_file\/inv6\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+        <org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#HYPC5|org.eventb.core.poPredicate#PRD4"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poSequent name="create_file/inv7/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  preservation" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTALLHYPFileSysteo"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="∀f⦂FilesType·f∈Folders∧f≠Root⇒(∃p⦂FilesType,n⦂Names·p∈Folders∧n∈Names∧(FileSystem{file ↦ {parent ↦ name}})(f)={p ↦ n})" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv2"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt1"/>
+        <org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv2"/>
+        <org.eventb.core.poSelHint name="SEQHYT" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poSequent#create_file\/inv7\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+        <org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#HYPC6|org.eventb.core.poPredicate#PRD5"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poSequent name="create_file/inv8/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  preservation" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTALLHYPFileSysteo"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="∀x⦂FilesType,y⦂FilesType·x∈dom(FileSystem{file ↦ {parent ↦ name}})∧y∈dom(FileSystem{file ↦ {parent ↦ name}})∧x≠y⇒(FileSystem{file ↦ {parent ↦ name}})(x)∩(FileSystem{file ↦ {parent ↦ name}})(y)=(∅ ⦂ ℙ(FilesType×Names))" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv3"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt1"/>
+        <org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv3"/>
+        <org.eventb.core.poSelHint name="SEQHYT" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poSequent#create_file\/inv8\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+        <org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#HYPC7|org.eventb.core.poPredicate#PRD6"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poSequent name="create_file/NoCycles/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  preservation" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTALLHYPFileSysteo"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="∀C⦂ℙ(FilesType)·C⊆Folders∧C≠(∅ ⦂ ℙ(FilesType))∧Root∉C⇒C ∖ {x⦂FilesType,y⦂FilesType·x∈Folders ∖ {Root}∧y∈dom((FileSystem{file ↦ {parent ↦ name}})(x)) ∣ x ↦ y}[C]≠(∅ ⦂ ℙ(FilesType))" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv8"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt1"/>
+        <org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv8"/>
+        <org.eventb.core.poSelHint name="SEQHYT" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poSequent#create_file\/NoCycles\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+        <org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP|org.eventb.core.poPredicate#PRD7"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poPredicateSet name="EVTIDENTFileSysteo" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poStamp="0">
+        <org.eventb.core.poIdentifier name="parent" org.eventb.core.type="FilesType"/>
+        <org.eventb.core.poIdentifier name="file" org.eventb.core.type="FilesType"/>
+        <org.eventb.core.poIdentifier name="FileSystem'" org.eventb.core.type="ℙ(FilesType×ℙ(FilesType×Names))"/>
+        <org.eventb.core.poIdentifier name="name" org.eventb.core.type="Names"/>
+        <org.eventb.core.poIdentifier name="Files'" org.eventb.core.type="ℙ(FilesType)"/>
+    </org.eventb.core.poPredicateSet>
+    <org.eventb.core.poPredicateSet name="EVTHYPFileSysteo)" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTIDENTFileSysteo" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicate name="PRD0" org.eventb.core.predicate="file∈FilesType ∖ Files" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt1|org.eventb.core.guard#_McQ4aWFMEeWoCLs0HEMUPA"/>
+        <org.eventb.core.poPredicate name="PRD1" org.eventb.core.predicate="parent∈Folders" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt1|org.eventb.core.guard#_McQ4a2FMEeWoCLs0HEMUPA"/>
+        <org.eventb.core.poPredicate name="PRD2" org.eventb.core.predicate="name∈Names" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt1|org.eventb.core.guard#_McQ4bmFMEeWoCLs0HEMUPA"/>
+    </org.eventb.core.poPredicateSet>
+    <org.eventb.core.poPredicateSet name="EVTALLHYPFileSysteo" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTHYPFileSysteo)" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicate name="PRD3" org.eventb.core.predicate="∀x⦂FilesType·x∈dom(FileSystem)⇒parent ↦ name∉FileSystem(x)" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt1|org.eventb.core.guard#_McQ4b2FMEeWoCLs0HEMUPA"/>
+    </org.eventb.core.poPredicateSet>
+    <org.eventb.core.poSequent name="create_folder/grd4/WD" org.eventb.core.accurate="true" org.eventb.core.poDesc="Well-definedness of Guard" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTHYPFileSystep)"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="∀x⦂FilesType·x∈dom(FileSystem)⇒FileSystem∈FilesType ⇸ ℙ(FilesType × Names)" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt4|org.eventb.core.guard#_McQ4b2FMEeWoCLs0HEMUPA"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt4|org.eventb.core.guard#_McQ4b2FMEeWoCLs0HEMUPA"/>
+        <org.eventb.core.poSelHint name="SEQHYS" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTHYPFileSystep)"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poSequent name="create_folder/inv2/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  preservation" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTALLHYPFileSystep"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="Folders∪{folder}⊆Files∪{folder}" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#."/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt4"/>
+        <org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#."/>
+        <org.eventb.core.poSelHint name="SEQHYT" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poSequent#create_folder\/inv2\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+        <org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#HYPC4|org.eventb.core.poPredicate#PRD1"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poSequent name="create_folder/inv3/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  preservation" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTALLHYPFileSystep"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="Root∈Folders∪{folder}" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#0"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt4"/>
+        <org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#0"/>
+        <org.eventb.core.poSelHint name="SEQHYT" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poSequent#create_folder\/inv3\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+        <org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#HYPC4|org.eventb.core.poPredicate#PRD2"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poSequent name="create_folder/inv5/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  preservation" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTALLHYPFileSystep"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="FileSystem{folder ↦ {parent ↦ name}}∈(Files∪{folder}) ∖ {Root} → (Folders∪{folder} ↔ Names)" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#\/"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt4"/>
+        <org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#\/"/>
+        <org.eventb.core.poSelHint name="SEQHYT" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poSequent#create_folder\/inv5\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+        <org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#HYPC4|org.eventb.core.poPredicate#PRD3"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poSequent name="create_folder/inv6/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  preservation" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTALLHYPFileSystep"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="∀f⦂FilesType·f∈dom(FileSystem{folder ↦ {parent ↦ name}})⇒(FileSystem{folder ↦ {parent ↦ name}})(f)≠(∅ ⦂ ℙ(FilesType×Names))" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv1"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt4"/>
+        <org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv1"/>
+        <org.eventb.core.poSelHint name="SEQHYT" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poSequent#create_folder\/inv6\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+        <org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#HYPC5|org.eventb.core.poPredicate#PRD4"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poSequent name="create_folder/inv7/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  preservation" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTALLHYPFileSystep"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="∀f⦂FilesType·f∈Folders∪{folder}∧f≠Root⇒(∃p⦂FilesType,n⦂Names·p∈Folders∪{folder}∧n∈Names∧(FileSystem{folder ↦ {parent ↦ name}})(f)={p ↦ n})" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv2"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt4"/>
+        <org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv2"/>
+        <org.eventb.core.poSelHint name="SEQHYT" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poSequent#create_folder\/inv7\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+        <org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#HYPC6|org.eventb.core.poPredicate#PRD5"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poSequent name="create_folder/inv8/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  preservation" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTALLHYPFileSystep"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="∀x⦂FilesType,y⦂FilesType·x∈dom(FileSystem{folder ↦ {parent ↦ name}})∧y∈dom(FileSystem{folder ↦ {parent ↦ name}})∧x≠y⇒(FileSystem{folder ↦ {parent ↦ name}})(x)∩(FileSystem{folder ↦ {parent ↦ name}})(y)=(∅ ⦂ ℙ(FilesType×Names))" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv3"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt4"/>
+        <org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv3"/>
+        <org.eventb.core.poSelHint name="SEQHYT" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poSequent#create_folder\/inv8\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+        <org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#HYPC7|org.eventb.core.poPredicate#PRD6"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poSequent name="create_folder/NoCycles/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  preservation" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTALLHYPFileSystep"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="∀C⦂ℙ(FilesType)·C⊆Folders∪{folder}∧C≠(∅ ⦂ ℙ(FilesType))∧Root∉C⇒C ∖ {x⦂FilesType,y⦂FilesType·x∈(Folders∪{folder}) ∖ {Root}∧y∈dom((FileSystem{folder ↦ {parent ↦ name}})(x)) ∣ x ↦ y}[C]≠(∅ ⦂ ℙ(FilesType))" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv8"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt4"/>
+        <org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv8"/>
+        <org.eventb.core.poSelHint name="SEQHYT" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poSequent#create_folder\/NoCycles\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+        <org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP|org.eventb.core.poPredicate#PRD7"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poPredicateSet name="EVTIDENTFileSystep" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poStamp="0">
+        <org.eventb.core.poIdentifier name="Folders'" org.eventb.core.type="ℙ(FilesType)"/>
+        <org.eventb.core.poIdentifier name="parent" org.eventb.core.type="FilesType"/>
+        <org.eventb.core.poIdentifier name="FileSystem'" org.eventb.core.type="ℙ(FilesType×ℙ(FilesType×Names))"/>
+        <org.eventb.core.poIdentifier name="name" org.eventb.core.type="Names"/>
+        <org.eventb.core.poIdentifier name="folder" org.eventb.core.type="FilesType"/>
+        <org.eventb.core.poIdentifier name="Files'" org.eventb.core.type="ℙ(FilesType)"/>
+    </org.eventb.core.poPredicateSet>
+    <org.eventb.core.poPredicateSet name="EVTHYPFileSystep)" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTIDENTFileSystep" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicate name="PRD0" org.eventb.core.predicate="folder∈FilesType ∖ Files" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt4|org.eventb.core.guard#_McQ4aWFMEeWoCLs0HEMUPA"/>
+        <org.eventb.core.poPredicate name="PRD1" org.eventb.core.predicate="parent∈Folders" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt4|org.eventb.core.guard#_McQ4a2FMEeWoCLs0HEMUPA"/>
+        <org.eventb.core.poPredicate name="PRD2" org.eventb.core.predicate="name∈Names" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt4|org.eventb.core.guard#_McQ4bmFMEeWoCLs0HEMUPA"/>
+    </org.eventb.core.poPredicateSet>
+    <org.eventb.core.poPredicateSet name="EVTALLHYPFileSystep" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTHYPFileSystep)" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicate name="PRD3" org.eventb.core.predicate="∀x⦂FilesType·x∈dom(FileSystem)⇒parent ↦ name∉FileSystem(x)" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt4|org.eventb.core.guard#_McQ4b2FMEeWoCLs0HEMUPA"/>
+    </org.eventb.core.poPredicateSet>
+    <org.eventb.core.poSequent name="create_hard_link/grd4/WD" org.eventb.core.accurate="true" org.eventb.core.poDesc="Well-definedness of Guard" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTHYPFileSysteq)"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="∀x⦂FilesType·x∈dom(FileSystem)⇒FileSystem∈FilesType ⇸ ℙ(FilesType × Names)" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt3|org.eventb.core.guard#_hSdqOGFXEeWoCLs0HEMUPA"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt3|org.eventb.core.guard#_hSdqOGFXEeWoCLs0HEMUPA"/>
+        <org.eventb.core.poSelHint name="SEQHYS" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTHYPFileSysteq)"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poSequent name="create_hard_link/inv5/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  preservation" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTALLHYPFileSysteq"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="FileSystem{file ↦ FileSystem(file)∪{parent ↦ name}}∈Files ∖ {Root} → (Folders ↔ Names)" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#\/"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt3"/>
+        <org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#\/"/>
+        <org.eventb.core.poSelHint name="SEQHYT" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poSequent#create_hard_link\/inv5\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+        <org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#HYPC4|org.eventb.core.poPredicate#PRD3"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poSequent name="create_hard_link/inv6/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  preservation" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTALLHYPFileSysteq"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="∀f⦂FilesType·f∈dom(FileSystem{file ↦ FileSystem(file)∪{parent ↦ name}})⇒(FileSystem{file ↦ FileSystem(file)∪{parent ↦ name}})(f)≠(∅ ⦂ ℙ(FilesType×Names))" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv1"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt3"/>
+        <org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv1"/>
+        <org.eventb.core.poSelHint name="SEQHYT" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poSequent#create_hard_link\/inv6\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+        <org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#HYPC5|org.eventb.core.poPredicate#PRD4"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poSequent name="create_hard_link/inv7/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  preservation" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTALLHYPFileSysteq"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="∀f⦂FilesType·f∈Folders∧f≠Root⇒(∃p⦂FilesType,n⦂Names·p∈Folders∧n∈Names∧(FileSystem{file ↦ FileSystem(file)∪{parent ↦ name}})(f)={p ↦ n})" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv2"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt3"/>
+        <org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv2"/>
+        <org.eventb.core.poSelHint name="SEQHYT" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poSequent#create_hard_link\/inv7\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+        <org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#HYPC6|org.eventb.core.poPredicate#PRD5"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poSequent name="create_hard_link/inv8/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  preservation" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTALLHYPFileSysteq"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="∀x⦂FilesType,y⦂FilesType·x∈dom(FileSystem{file ↦ FileSystem(file)∪{parent ↦ name}})∧y∈dom(FileSystem{file ↦ FileSystem(file)∪{parent ↦ name}})∧x≠y⇒(FileSystem{file ↦ FileSystem(file)∪{parent ↦ name}})(x)∩(FileSystem{file ↦ FileSystem(file)∪{parent ↦ name}})(y)=(∅ ⦂ ℙ(FilesType×Names))" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv3"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt3"/>
+        <org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv3"/>
+        <org.eventb.core.poSelHint name="SEQHYT" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poSequent#create_hard_link\/inv8\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+        <org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#HYPC7|org.eventb.core.poPredicate#PRD6"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poSequent name="create_hard_link/NoCycles/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  preservation" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTALLHYPFileSysteq"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="∀C⦂ℙ(FilesType)·C⊆Folders∧C≠(∅ ⦂ ℙ(FilesType))∧Root∉C⇒C ∖ {x⦂FilesType,y⦂FilesType·x∈Folders ∖ {Root}∧y∈dom((FileSystem{file ↦ FileSystem(file)∪{parent ↦ name}})(x)) ∣ x ↦ y}[C]≠(∅ ⦂ ℙ(FilesType))" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv8"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt3"/>
+        <org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv8"/>
+        <org.eventb.core.poSelHint name="SEQHYT" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poSequent#create_hard_link\/NoCycles\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+        <org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP|org.eventb.core.poPredicate#PRD7"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poSequent name="create_hard_link/act1/WD" org.eventb.core.accurate="true" org.eventb.core.poDesc="Well-definedness of action" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTALLHYPFileSysteq"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="file∈dom(FileSystem)∧FileSystem∈FilesType ⇸ ℙ(FilesType × Names)" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt3|org.eventb.core.action#_obip4GFQEeWoCLs0HEMUPA"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt3|org.eventb.core.action#_obip4GFQEeWoCLs0HEMUPA"/>
+        <org.eventb.core.poSelHint name="SEQHYS" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTALLHYPFileSysteq"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poPredicateSet name="EVTIDENTFileSysteq" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poStamp="0">
+        <org.eventb.core.poIdentifier name="parent" org.eventb.core.type="FilesType"/>
+        <org.eventb.core.poIdentifier name="file" org.eventb.core.type="FilesType"/>
+        <org.eventb.core.poIdentifier name="FileSystem'" org.eventb.core.type="ℙ(FilesType×ℙ(FilesType×Names))"/>
+        <org.eventb.core.poIdentifier name="name" org.eventb.core.type="Names"/>
+    </org.eventb.core.poPredicateSet>
+    <org.eventb.core.poPredicateSet name="EVTHYPFileSysteq)" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTIDENTFileSysteq" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicate name="PRD0" org.eventb.core.predicate="file∈Files ∖ Folders" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt3|org.eventb.core.guard#_ciBhcGFUEeWoCLs0HEMUPA"/>
+        <org.eventb.core.poPredicate name="PRD1" org.eventb.core.predicate="parent∈Folders" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt3|org.eventb.core.guard#_ciBhcmFUEeWoCLs0HEMUPA"/>
+        <org.eventb.core.poPredicate name="PRD2" org.eventb.core.predicate="name∈Names" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt3|org.eventb.core.guard#_hSdqN2FXEeWoCLs0HEMUPA"/>
+    </org.eventb.core.poPredicateSet>
+    <org.eventb.core.poPredicateSet name="EVTALLHYPFileSysteq" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTHYPFileSysteq)" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicate name="PRD3" org.eventb.core.predicate="∀x⦂FilesType·x∈dom(FileSystem)⇒parent ↦ name∉FileSystem(x)" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt3|org.eventb.core.guard#_hSdqOGFXEeWoCLs0HEMUPA"/>
+    </org.eventb.core.poPredicateSet>
+    <org.eventb.core.poSequent name="delete_hard_link/grd4/WD" org.eventb.core.accurate="true" org.eventb.core.poDesc="Well-definedness of Guard" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTHYPFileSyster)"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="file∈dom(FileSystem)∧FileSystem∈FilesType ⇸ ℙ(FilesType × Names)" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt5|org.eventb.core.guard#_MhijgmFYEeWoCLs0HEMUPA"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt5|org.eventb.core.guard#_MhijgmFYEeWoCLs0HEMUPA"/>
+        <org.eventb.core.poSelHint name="SEQHYS" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTHYPFileSyster)"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poSequent name="delete_hard_link/grd5/WD" org.eventb.core.accurate="true" org.eventb.core.poDesc="Well-definedness of Guard" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTHYPFileSyster*"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="∀p⦂FilesType·p∈Folders⇒file∈dom(FileSystem)∧FileSystem∈FilesType ⇸ ℙ(FilesType × Names)" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt5|org.eventb.core.guard#_Mhijg2FYEeWoCLs0HEMUPA"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt5|org.eventb.core.guard#_Mhijg2FYEeWoCLs0HEMUPA"/>
+        <org.eventb.core.poSelHint name="SEQHYS" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTHYPFileSyster*"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poSequent name="delete_hard_link/inv5/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  preservation" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTALLHYPFileSyster"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="FileSystem{file ↦ FileSystem(file) ∖ {parent ↦ name}}∈Files ∖ {Root} → (Folders ↔ Names)" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#\/"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt5"/>
+        <org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#\/"/>
+        <org.eventb.core.poSelHint name="SEQHYT" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poSequent#delete_hard_link\/inv5\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+        <org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#HYPC4|org.eventb.core.poPredicate#PRD3"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poSequent name="delete_hard_link/inv6/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  preservation" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTALLHYPFileSyster"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="∀f⦂FilesType·f∈dom(FileSystem{file ↦ FileSystem(file) ∖ {parent ↦ name}})⇒(FileSystem{file ↦ FileSystem(file) ∖ {parent ↦ name}})(f)≠(∅ ⦂ ℙ(FilesType×Names))" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv1"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt5"/>
+        <org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv1"/>
+        <org.eventb.core.poSelHint name="SEQHYT" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poSequent#delete_hard_link\/inv6\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+        <org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#HYPC5|org.eventb.core.poPredicate#PRD4"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poSequent name="delete_hard_link/inv7/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  preservation" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTALLHYPFileSyster"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="∀f⦂FilesType·f∈Folders∧f≠Root⇒(∃p⦂FilesType,n⦂Names·p∈Folders∧n∈Names∧(FileSystem{file ↦ FileSystem(file) ∖ {parent ↦ name}})(f)={p ↦ n})" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv2"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt5"/>
+        <org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv2"/>
+        <org.eventb.core.poSelHint name="SEQHYT" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poSequent#delete_hard_link\/inv7\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+        <org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#HYPC6|org.eventb.core.poPredicate#PRD5"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poSequent name="delete_hard_link/inv8/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  preservation" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTALLHYPFileSyster"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="∀x⦂FilesType,y⦂FilesType·x∈dom(FileSystem{file ↦ FileSystem(file) ∖ {parent ↦ name}})∧y∈dom(FileSystem{file ↦ FileSystem(file) ∖ {parent ↦ name}})∧x≠y⇒(FileSystem{file ↦ FileSystem(file) ∖ {parent ↦ name}})(x)∩(FileSystem{file ↦ FileSystem(file) ∖ {parent ↦ name}})(y)=(∅ ⦂ ℙ(FilesType×Names))" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv3"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt5"/>
+        <org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv3"/>
+        <org.eventb.core.poSelHint name="SEQHYT" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poSequent#delete_hard_link\/inv8\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+        <org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#HYPC7|org.eventb.core.poPredicate#PRD6"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poSequent name="delete_hard_link/NoCycles/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  preservation" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTALLHYPFileSyster"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="∀C⦂ℙ(FilesType)·C⊆Folders∧C≠(∅ ⦂ ℙ(FilesType))∧Root∉C⇒C ∖ {x⦂FilesType,y⦂FilesType·x∈Folders ∖ {Root}∧y∈dom((FileSystem{file ↦ FileSystem(file) ∖ {parent ↦ name}})(x)) ∣ x ↦ y}[C]≠(∅ ⦂ ℙ(FilesType))" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv8"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt5"/>
+        <org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv8"/>
+        <org.eventb.core.poSelHint name="SEQHYT" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poSequent#delete_hard_link\/NoCycles\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+        <org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP|org.eventb.core.poPredicate#PRD7"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poSequent name="delete_hard_link/act1/WD" org.eventb.core.accurate="true" org.eventb.core.poDesc="Well-definedness of action" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTALLHYPFileSyster"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="file∈dom(FileSystem)∧FileSystem∈FilesType ⇸ ℙ(FilesType × Names)" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt5|org.eventb.core.action#_KA8BQGFTEeWoCLs0HEMUPA"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt5|org.eventb.core.action#_KA8BQGFTEeWoCLs0HEMUPA"/>
+        <org.eventb.core.poSelHint name="SEQHYS" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTALLHYPFileSyster"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poPredicateSet name="EVTIDENTFileSyster" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poStamp="0">
+        <org.eventb.core.poIdentifier name="parent" org.eventb.core.type="FilesType"/>
+        <org.eventb.core.poIdentifier name="file" org.eventb.core.type="FilesType"/>
+        <org.eventb.core.poIdentifier name="FileSystem'" org.eventb.core.type="ℙ(FilesType×ℙ(FilesType×Names))"/>
+        <org.eventb.core.poIdentifier name="name" org.eventb.core.type="Names"/>
+    </org.eventb.core.poPredicateSet>
+    <org.eventb.core.poPredicateSet name="EVTHYPFileSyster)" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTIDENTFileSyster" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicate name="PRD0" org.eventb.core.predicate="parent∈Folders" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt5|org.eventb.core.guard#_Q53-0GHeEeWbr88oOyLCRQ"/>
+        <org.eventb.core.poPredicate name="PRD1" org.eventb.core.predicate="file∈Files ∖ Folders" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt5|org.eventb.core.guard#_Q53-0WHeEeWbr88oOyLCRQ"/>
+        <org.eventb.core.poPredicate name="PRD2" org.eventb.core.predicate="name∈Names" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt5|org.eventb.core.guard#_Q53-0mHeEeWbr88oOyLCRQ"/>
+    </org.eventb.core.poPredicateSet>
+    <org.eventb.core.poPredicateSet name="EVTHYPFileSyster*" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTHYPFileSyster)" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicate name="PRD3" org.eventb.core.predicate="parent ↦ name∈FileSystem(file)" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt5|org.eventb.core.guard#_MhijgmFYEeWoCLs0HEMUPA"/>
+    </org.eventb.core.poPredicateSet>
+    <org.eventb.core.poPredicateSet name="EVTALLHYPFileSyster" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTHYPFileSyster*" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicate name="PRD4" org.eventb.core.predicate="∃p⦂FilesType,n⦂Names·p∈Folders∧p ↦ n∈FileSystem(file)∧(n≠name∨p≠parent)" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt5|org.eventb.core.guard#_Mhijg2FYEeWoCLs0HEMUPA"/>
+    </org.eventb.core.poPredicateSet>
+    <org.eventb.core.poSequent name="rename_file/grd4/WD" org.eventb.core.accurate="true" org.eventb.core.poDesc="Well-definedness of Guard" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTHYPFileSystes)"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="file∈dom(FileSystem)∧FileSystem∈FilesType ⇸ ℙ(FilesType × Names)" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt6|org.eventb.core.guard#_Q54l42HeEeWbr88oOyLCRQ"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt6|org.eventb.core.guard#_Q54l42HeEeWbr88oOyLCRQ"/>
+        <org.eventb.core.poSelHint name="SEQHYS" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTHYPFileSystes)"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poSequent name="rename_file/grd6/WD" org.eventb.core.accurate="true" org.eventb.core.poDesc="Well-definedness of Guard" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTHYPFileSystes+"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="∀x⦂FilesType·x∈dom(FileSystem)⇒FileSystem∈FilesType ⇸ ℙ(FilesType × Names)" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt6|org.eventb.core.guard#_0KMtUGHoEeWbr88oOyLCRQ"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt6|org.eventb.core.guard#_0KMtUGHoEeWbr88oOyLCRQ"/>
+        <org.eventb.core.poSelHint name="SEQHYS" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTHYPFileSystes+"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poSequent name="rename_file/inv5/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  preservation" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTALLHYPFileSystes"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="FileSystem{file ↦ (FileSystem(file) ∖ {parent ↦ oldName})∪{parent ↦ name}}∈Files ∖ {Root} → (Folders ↔ Names)" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#\/"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt6"/>
+        <org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#\/"/>
+        <org.eventb.core.poSelHint name="SEQHYT" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poSequent#rename_file\/inv5\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+        <org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#HYPC4|org.eventb.core.poPredicate#PRD3"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poSequent name="rename_file/inv6/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  preservation" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTALLHYPFileSystes"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="∀f⦂FilesType·f∈dom(FileSystem{file ↦ (FileSystem(file) ∖ {parent ↦ oldName})∪{parent ↦ name}})⇒(FileSystem{file ↦ (FileSystem(file) ∖ {parent ↦ oldName})∪{parent ↦ name}})(f)≠(∅ ⦂ ℙ(FilesType×Names))" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv1"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt6"/>
+        <org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv1"/>
+        <org.eventb.core.poSelHint name="SEQHYT" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poSequent#rename_file\/inv6\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+        <org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#HYPC5|org.eventb.core.poPredicate#PRD4"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poSequent name="rename_file/inv7/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  preservation" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTALLHYPFileSystes"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="∀f⦂FilesType·f∈Folders∧f≠Root⇒(∃p⦂FilesType,n⦂Names·p∈Folders∧n∈Names∧(FileSystem{file ↦ (FileSystem(file) ∖ {parent ↦ oldName})∪{parent ↦ name}})(f)={p ↦ n})" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv2"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt6"/>
+        <org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv2"/>
+        <org.eventb.core.poSelHint name="SEQHYT" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poSequent#rename_file\/inv7\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+        <org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#HYPC6|org.eventb.core.poPredicate#PRD5"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poSequent name="rename_file/inv8/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  preservation" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTALLHYPFileSystes"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="∀x⦂FilesType,y⦂FilesType·x∈dom(FileSystem{file ↦ (FileSystem(file) ∖ {parent ↦ oldName})∪{parent ↦ name}})∧y∈dom(FileSystem{file ↦ (FileSystem(file) ∖ {parent ↦ oldName})∪{parent ↦ name}})∧x≠y⇒(FileSystem{file ↦ (FileSystem(file) ∖ {parent ↦ oldName})∪{parent ↦ name}})(x)∩(FileSystem{file ↦ (FileSystem(file) ∖ {parent ↦ oldName})∪{parent ↦ name}})(y)=(∅ ⦂ ℙ(FilesType×Names))" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv3"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt6"/>
+        <org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv3"/>
+        <org.eventb.core.poSelHint name="SEQHYT" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poSequent#rename_file\/inv8\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+        <org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#HYPC7|org.eventb.core.poPredicate#PRD6"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poSequent name="rename_file/NoCycles/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  preservation" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTALLHYPFileSystes"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="∀C⦂ℙ(FilesType)·C⊆Folders∧C≠(∅ ⦂ ℙ(FilesType))∧Root∉C⇒C ∖ {x⦂FilesType,y⦂FilesType·x∈Folders ∖ {Root}∧y∈dom((FileSystem{file ↦ (FileSystem(file) ∖ {parent ↦ oldName})∪{parent ↦ name}})(x)) ∣ x ↦ y}[C]≠(∅ ⦂ ℙ(FilesType))" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv8"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt6"/>
+        <org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv8"/>
+        <org.eventb.core.poSelHint name="SEQHYT" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poSequent#rename_file\/NoCycles\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+        <org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP|org.eventb.core.poPredicate#PRD7"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poSequent name="rename_file/act1/WD" org.eventb.core.accurate="true" org.eventb.core.poDesc="Well-definedness of action" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTALLHYPFileSystes"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="file∈dom(FileSystem)∧FileSystem∈FilesType ⇸ ℙ(FilesType × Names)" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt6|org.eventb.core.action#_qYCrcGFTEeWoCLs0HEMUPA"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt6|org.eventb.core.action#_qYCrcGFTEeWoCLs0HEMUPA"/>
+        <org.eventb.core.poSelHint name="SEQHYS" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTALLHYPFileSystes"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poPredicateSet name="EVTIDENTFileSystes" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poStamp="0">
+        <org.eventb.core.poIdentifier name="parent" org.eventb.core.type="FilesType"/>
+        <org.eventb.core.poIdentifier name="file" org.eventb.core.type="FilesType"/>
+        <org.eventb.core.poIdentifier name="FileSystem'" org.eventb.core.type="ℙ(FilesType×ℙ(FilesType×Names))"/>
+        <org.eventb.core.poIdentifier name="name" org.eventb.core.type="Names"/>
+        <org.eventb.core.poIdentifier name="oldName" org.eventb.core.type="Names"/>
+    </org.eventb.core.poPredicateSet>
+    <org.eventb.core.poPredicateSet name="EVTHYPFileSystes)" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTIDENTFileSystes" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicate name="PRD0" org.eventb.core.predicate="parent∈Folders" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt6|org.eventb.core.guard#_U4-fYmHjEeWbr88oOyLCRQ"/>
+        <org.eventb.core.poPredicate name="PRD1" org.eventb.core.predicate="file∈dom(FileSystem)" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt6|org.eventb.core.guard#_Q54l4WHeEeWbr88oOyLCRQ"/>
+        <org.eventb.core.poPredicate name="PRD2" org.eventb.core.predicate="oldName∈Names" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt6|org.eventb.core.guard#_Q54l4mHeEeWbr88oOyLCRQ"/>
+    </org.eventb.core.poPredicateSet>
+    <org.eventb.core.poPredicateSet name="EVTHYPFileSystes+" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTHYPFileSystes)" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicate name="PRD3" org.eventb.core.predicate="parent ↦ oldName∈FileSystem(file)" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt6|org.eventb.core.guard#_Q54l42HeEeWbr88oOyLCRQ"/>
+        <org.eventb.core.poPredicate name="PRD4" org.eventb.core.predicate="name∈Names" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt6|org.eventb.core.guard#_Q54l5GHeEeWbr88oOyLCRQ"/>
+    </org.eventb.core.poPredicateSet>
+    <org.eventb.core.poPredicateSet name="EVTALLHYPFileSystes" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTHYPFileSystes+" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicate name="PRD5" org.eventb.core.predicate="∀x⦂FilesType·x∈dom(FileSystem)⇒parent ↦ name∉FileSystem(x)" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt6|org.eventb.core.guard#_0KMtUGHoEeWbr88oOyLCRQ"/>
+    </org.eventb.core.poPredicateSet>
+    <org.eventb.core.poSequent name="delete_file/grd4/WD" org.eventb.core.accurate="true" org.eventb.core.poDesc="Well-definedness of Guard" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTHYPFileSystet)"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="file∈dom(FileSystem)∧FileSystem∈FilesType ⇸ ℙ(FilesType × Names)" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt7|org.eventb.core.guard#_oQL4w2HwEeWbr88oOyLCRQ"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt7|org.eventb.core.guard#_oQL4w2HwEeWbr88oOyLCRQ"/>
+        <org.eventb.core.poSelHint name="SEQHYS" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTHYPFileSystet)"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poSequent name="delete_file/grd5/WD" org.eventb.core.accurate="true" org.eventb.core.poDesc="Well-definedness of Guard" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTHYPFileSystet*"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="∀n⦂Names·n≠name⇒file∈dom(FileSystem)∧FileSystem∈FilesType ⇸ ℙ(FilesType × Names)" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt7|org.eventb.core.guard#_oQL4x2HwEeWbr88oOyLCRQ"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt7|org.eventb.core.guard#_oQL4x2HwEeWbr88oOyLCRQ"/>
+        <org.eventb.core.poSelHint name="SEQHYS" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTHYPFileSystet*"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poSequent name="delete_file/grd6/WD" org.eventb.core.accurate="true" org.eventb.core.poDesc="Well-definedness of Guard" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTHYPFileSystet+"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="∀x⦂FilesType·x∈dom(FileSystem)⇒FileSystem∈FilesType ⇸ ℙ(FilesType × Names)" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt7|org.eventb.core.guard#_oQL4yGHwEeWbr88oOyLCRQ"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt7|org.eventb.core.guard#_oQL4yGHwEeWbr88oOyLCRQ"/>
+        <org.eventb.core.poSelHint name="SEQHYS" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTHYPFileSystet+"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poSequent name="delete_file/grd7/WD" org.eventb.core.accurate="true" org.eventb.core.poDesc="Well-definedness of Guard" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTHYPFileSystet,"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="∀x⦂FilesType·x∈Folders∧x≠parent⇒file∈dom(FileSystem)∧FileSystem∈FilesType ⇸ ℙ(FilesType × Names)" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt7|org.eventb.core.guard#_oQL4yWHwEeWbr88oOyLCRQ"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt7|org.eventb.core.guard#_oQL4yWHwEeWbr88oOyLCRQ"/>
+        <org.eventb.core.poSelHint name="SEQHYS" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTHYPFileSystet,"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poSequent name="delete_file/inv2/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  preservation" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTALLHYPFileSystet"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="Folders ∖ {file}⊆Files ∖ {file}" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#."/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt7"/>
+        <org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#."/>
+        <org.eventb.core.poSelHint name="SEQHYT" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poSequent#delete_file\/inv2\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+        <org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#HYPC4|org.eventb.core.poPredicate#PRD1"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poSequent name="delete_file/inv3/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  preservation" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTALLHYPFileSystet"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="Root∈Folders ∖ {file}" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#0"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt7"/>
+        <org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#0"/>
+        <org.eventb.core.poSelHint name="SEQHYT" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poSequent#delete_file\/inv3\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+        <org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#HYPC4|org.eventb.core.poPredicate#PRD2"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poSequent name="delete_file/inv5/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  preservation" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTALLHYPFileSystet"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="{file} ⩤ FileSystem∈(Files ∖ {file}) ∖ {Root} → (Folders ∖ {file} ↔ Names)" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#\/"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt7"/>
+        <org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#\/"/>
+        <org.eventb.core.poSelHint name="SEQHYT" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poSequent#delete_file\/inv5\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+        <org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#HYPC4|org.eventb.core.poPredicate#PRD3"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poSequent name="delete_file/inv6/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  preservation" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTALLHYPFileSystet"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="∀f⦂FilesType·f∈dom({file} ⩤ FileSystem)⇒({file} ⩤ FileSystem)(f)≠(∅ ⦂ ℙ(FilesType×Names))" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv1"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt7"/>
+        <org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv1"/>
+        <org.eventb.core.poSelHint name="SEQHYT" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poSequent#delete_file\/inv6\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+        <org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#HYPC5|org.eventb.core.poPredicate#PRD4"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poSequent name="delete_file/inv7/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  preservation" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTALLHYPFileSystet"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="∀f⦂FilesType·f∈Folders ∖ {file}∧f≠Root⇒(∃p⦂FilesType,n⦂Names·p∈Folders ∖ {file}∧n∈Names∧({file} ⩤ FileSystem)(f)={p ↦ n})" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv2"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt7"/>
+        <org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv2"/>
+        <org.eventb.core.poSelHint name="SEQHYT" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poSequent#delete_file\/inv7\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+        <org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#HYPC6|org.eventb.core.poPredicate#PRD5"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poSequent name="delete_file/inv8/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  preservation" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTALLHYPFileSystet"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="∀x⦂FilesType,y⦂FilesType·x∈dom({file} ⩤ FileSystem)∧y∈dom({file} ⩤ FileSystem)∧x≠y⇒({file} ⩤ FileSystem)(x)∩({file} ⩤ FileSystem)(y)=(∅ ⦂ ℙ(FilesType×Names))" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv3"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt7"/>
+        <org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv3"/>
+        <org.eventb.core.poSelHint name="SEQHYT" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poSequent#delete_file\/inv8\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+        <org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#HYPC7|org.eventb.core.poPredicate#PRD6"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poSequent name="delete_file/NoCycles/INV" org.eventb.core.accurate="true" org.eventb.core.poDesc="Invariant  preservation" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTALLHYPFileSystet"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="∀C⦂ℙ(FilesType)·C⊆Folders ∖ {file}∧C≠(∅ ⦂ ℙ(FilesType))∧Root∉C⇒C ∖ {x⦂FilesType,y⦂FilesType·x∈(Folders ∖ {file}) ∖ {Root}∧y∈dom(({file} ⩤ FileSystem)(x)) ∣ x ↦ y}[C]≠(∅ ⦂ ℙ(FilesType))" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv8"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt7"/>
+        <org.eventb.core.poSource name="SEQHYS" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv8"/>
+        <org.eventb.core.poSelHint name="SEQHYT" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poSelHintSnd="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poSequent#delete_file\/NoCycles\/INV|org.eventb.core.poPredicateSet#SEQHYP"/>
+        <org.eventb.core.poSelHint name="SEQHYU" org.eventb.core.poSelHintFst="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP|org.eventb.core.poPredicate#PRD7"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poPredicateSet name="EVTIDENTFileSystet" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ALLHYP" org.eventb.core.poStamp="0">
+        <org.eventb.core.poIdentifier name="Folders'" org.eventb.core.type="ℙ(FilesType)"/>
+        <org.eventb.core.poIdentifier name="parent" org.eventb.core.type="FilesType"/>
+        <org.eventb.core.poIdentifier name="file" org.eventb.core.type="FilesType"/>
+        <org.eventb.core.poIdentifier name="FileSystem'" org.eventb.core.type="ℙ(FilesType×ℙ(FilesType×Names))"/>
+        <org.eventb.core.poIdentifier name="name" org.eventb.core.type="Names"/>
+        <org.eventb.core.poIdentifier name="Files'" org.eventb.core.type="ℙ(FilesType)"/>
+    </org.eventb.core.poPredicateSet>
+    <org.eventb.core.poPredicateSet name="EVTHYPFileSystet)" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTIDENTFileSystet" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicate name="PRD0" org.eventb.core.predicate="file∈Files" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt7|org.eventb.core.guard#_0KNUZGHoEeWbr88oOyLCRQ"/>
+        <org.eventb.core.poPredicate name="PRD1" org.eventb.core.predicate="file≠Root" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt7|org.eventb.core.guard#_oQL4wGHwEeWbr88oOyLCRQ"/>
+        <org.eventb.core.poPredicate name="PRD2" org.eventb.core.predicate="parent∈Folders" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt7|org.eventb.core.guard#_oQL4wmHwEeWbr88oOyLCRQ"/>
+    </org.eventb.core.poPredicateSet>
+    <org.eventb.core.poPredicateSet name="EVTHYPFileSystet*" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTHYPFileSystet)" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicate name="PRD3" org.eventb.core.predicate="parent ↦ name∈FileSystem(file)" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt7|org.eventb.core.guard#_oQL4w2HwEeWbr88oOyLCRQ"/>
+    </org.eventb.core.poPredicateSet>
+    <org.eventb.core.poPredicateSet name="EVTHYPFileSystet+" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTHYPFileSystet*" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicate name="PRD4" org.eventb.core.predicate="∀n⦂Names·n≠name⇒parent ↦ n∉FileSystem(file)" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt7|org.eventb.core.guard#_oQL4x2HwEeWbr88oOyLCRQ"/>
+    </org.eventb.core.poPredicateSet>
+    <org.eventb.core.poPredicateSet name="EVTHYPFileSystet," org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTHYPFileSystet+" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicate name="PRD5" org.eventb.core.predicate="∀x⦂FilesType·x∈dom(FileSystem)⇒file∉dom(FileSystem(x))" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt7|org.eventb.core.guard#_oQL4yGHwEeWbr88oOyLCRQ"/>
+    </org.eventb.core.poPredicateSet>
+    <org.eventb.core.poPredicateSet name="EVTALLHYPFileSystet" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#EVTHYPFileSystet," org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicate name="PRD6" org.eventb.core.predicate="∀x⦂FilesType·x∈Folders∧x≠parent⇒x∉dom(FileSystem(file))" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.event#evt7|org.eventb.core.guard#_oQL4yWHwEeWbr88oOyLCRQ"/>
+    </org.eventb.core.poPredicateSet>
+    <org.eventb.core.poPredicateSet name="HYPC4" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#ABSHYP" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicate name="PRD0" org.eventb.core.predicate="Files⊆FilesType" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#*"/>
+        <org.eventb.core.poPredicate name="PRD1" org.eventb.core.predicate="Folders⊆Files" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#."/>
+        <org.eventb.core.poPredicate name="PRD2" org.eventb.core.predicate="Root∈Folders" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#0"/>
+        <org.eventb.core.poPredicate name="PRD3" org.eventb.core.predicate="FileSystem∈Files ∖ {Root} → (Folders ↔ Names)" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#\/"/>
+    </org.eventb.core.poPredicateSet>
+    <org.eventb.core.poPredicateSet name="HYPC5" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#HYPC4" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicate name="PRD4" org.eventb.core.predicate="∀f⦂FilesType·f∈dom(FileSystem)⇒FileSystem(f)≠(∅ ⦂ ℙ(FilesType×Names))" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv1"/>
+    </org.eventb.core.poPredicateSet>
+    <org.eventb.core.poPredicateSet name="HYPC6" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#HYPC5" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicate name="PRD5" org.eventb.core.predicate="∀f⦂FilesType·f∈Folders∧f≠Root⇒(∃p⦂FilesType,n⦂Names·p∈Folders∧n∈Names∧FileSystem(f)={p ↦ n})" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv2"/>
+    </org.eventb.core.poPredicateSet>
+    <org.eventb.core.poPredicateSet name="HYPC7" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#HYPC6" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicate name="PRD6" org.eventb.core.predicate="∀x⦂FilesType,y⦂FilesType·x∈dom(FileSystem)∧y∈dom(FileSystem)∧x≠y⇒FileSystem(x)∩FileSystem(y)=(∅ ⦂ ℙ(FilesType×Names))" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv3"/>
+    </org.eventb.core.poPredicateSet>
+    <org.eventb.core.poPredicateSet name="ALLHYP" org.eventb.core.parentSet="/file-system/M0.bpo|org.eventb.core.poFile#M0|org.eventb.core.poPredicateSet#HYPC7" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicate name="PRD7" org.eventb.core.predicate="∀C⦂ℙ(FilesType)·C⊆Folders∧C≠(∅ ⦂ ℙ(FilesType))∧Root∉C⇒C ∖ {x⦂FilesType,y⦂FilesType·x∈Folders ∖ {Root}∧y∈dom(FileSystem(x)) ∣ x ↦ y}[C]≠(∅ ⦂ ℙ(FilesType))" org.eventb.core.source="/file-system/M0.bum|org.eventb.core.machineFile#M0|org.eventb.core.invariant#inv8"/>
+    </org.eventb.core.poPredicateSet>
+</org.eventb.core.poFile>
