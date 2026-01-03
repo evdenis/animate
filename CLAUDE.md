@@ -2,6 +2,13 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Build Requirements
+
+- Java 21 (configured via `gradle.properties`)
+- Gradle 8.11.1+ (wrapper included)
+
+**Note:** The project uses Java 8 for source/target compatibility but requires Java 21+ to build due to Gradle compatibility requirements.
+
 ## Build Commands
 
 ```bash
@@ -14,6 +21,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 # Build fat JAR (includes all dependencies)
 ./gradlew jar
 # Output: build/libs/animate.jar
+
+# If build fails with Java version errors, stop Gradle daemons
+./gradlew --stop
 ```
 
 ## Project Overview
