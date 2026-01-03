@@ -267,7 +267,14 @@ public class Animate implements Callable<Integer> {
         logger.info("Initializing model");
         stateSpace.startTransaction();
         Trace trace = new Trace(stateSpace);
-        trace = trace.execute("$setup_constants");
+
+        // Initialize model - some models don't have constants
+        try {
+            trace = trace.execute("$setup_constants");
+        } catch (IllegalArgumentException e) {
+            // No constants to set up, continue
+            logger.debug("No setup_constants event available");
+        }
         trace = trace.execute("$initialise_machine");
         stateSpace.endTransaction();
 
