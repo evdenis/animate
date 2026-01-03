@@ -347,9 +347,12 @@ public class Animate implements Callable<Integer> {
         return 0;
     }
 
-    public static void main(String[] args) throws Exception {
+    public static int execute(String[] args) {
         Animate m = INJECTOR.getInstance(Animate.class);
-        int exitCode = new CommandLine(m).execute(args);
-        System.exit(exitCode);
+        return new CommandLine(m).execute(args);
+    }
+
+    public static void main(String[] args) {
+        System.exit(execute(args));
     }
 }
