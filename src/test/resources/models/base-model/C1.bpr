@@ -1,151 +1,315 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <org.eventb.core.prFile version="1">
-<org.eventb.core.prProof name="SpecialAdmRoles_finite_th/THM"/>
-<org.eventb.core.prProof name="SpecialAdmRolesAreFinite/THM"/>
-<org.eventb.core.prProof name="CommonRolesAreNotUserRoles/WD" org.eventb.core.confidence="1000" org.eventb.core.prFresh="u" org.eventb.core.prGoal="p0" org.eventb.core.prHyps="p1" org.eventb.core.prSets="Union">
-<org.eventb.core.lang name="L"/>
-<org.eventb.core.prRule name="r0" org.eventb.core.confidence="1000" org.eventb.core.prDisplay="Partition rewrites in hyp (partition(Accesses,{ReadA},{WriteA}))" org.eventb.core.prHyps="">
-<org.eventb.core.prAnte name="'">
-<org.eventb.core.prHypAction name="REWRITE0" org.eventb.core.prHidden="p2" org.eventb.core.prHyps="" org.eventb.core.prInfHyps="p3,p4"/>
-<org.eventb.core.prHypAction name="SELECT1" org.eventb.core.prHyps="p3,p4"/>
-<org.eventb.core.prRule name="r0" org.eventb.core.confidence="1000" org.eventb.core.prDisplay="Partition rewrites in hyp (partition(AccessRights,{Read},{Write},{Execute},{Own}))" org.eventb.core.prHyps="">
-<org.eventb.core.prAnte name="'">
-<org.eventb.core.prHypAction name="REWRITE0" org.eventb.core.prHidden="p5" org.eventb.core.prHyps="" org.eventb.core.prInfHyps="p6,p7,p8,p9,p10,p11,p12"/>
-<org.eventb.core.prHypAction name="SELECT1" org.eventb.core.prHyps="p6,p7,p8,p9,p10,p11,p12"/>
-<org.eventb.core.prRule name="r1" org.eventb.core.confidence="1000" org.eventb.core.prDisplay="type rewrites" org.eventb.core.prGoal="p0" org.eventb.core.prHyps="">
-<org.eventb.core.prAnte name="'" org.eventb.core.prGoal="p17">
-<org.eventb.core.prHypAction name="HIDE0" org.eventb.core.prHyps="p13"/>
-<org.eventb.core.prHypAction name="HIDE1" org.eventb.core.prHyps="p14"/>
-<org.eventb.core.prHypAction name="HIDE2" org.eventb.core.prHyps="p15"/>
-<org.eventb.core.prHypAction name="HIDE3" org.eventb.core.prHyps="p16"/>
-<org.eventb.core.prRule name="r2" org.eventb.core.confidence="1000" org.eventb.core.prDisplay="simplification rewrites" org.eventb.core.prGoal="p17" org.eventb.core.prHyps="">
-<org.eventb.core.prAnte name="'" org.eventb.core.prGoal="p18">
-<org.eventb.core.prRule name="r3" org.eventb.core.confidence="1000" org.eventb.core.prDisplay="∧ goal" org.eventb.core.prGoal="p18" org.eventb.core.prHyps="">
-<org.eventb.core.prAnte name="'" org.eventb.core.prGoal="p19">
-<org.eventb.core.prRule name="r4" org.eventb.core.confidence="1000" org.eventb.core.prDisplay="∀ goal (frees u)" org.eventb.core.prGoal="p19" org.eventb.core.prHyps="">
-<org.eventb.core.prAnte name="'" org.eventb.core.prGoal="p20">
-<org.eventb.core.prIdent name="u" org.eventb.core.type="Union"/>
-<org.eventb.core.prRule name="r5" org.eventb.core.confidence="1000" org.eventb.core.prDisplay="total function dom substitution in goal" org.eventb.core.prGoal="p20" org.eventb.core.prHyps="p1">
-<org.eventb.core.prAnte name="'" org.eventb.core.prGoal="p21">
-<org.eventb.core.prRule name="r1" org.eventb.core.confidence="1000" org.eventb.core.prDisplay="type rewrites" org.eventb.core.prGoal="p21" org.eventb.core.prHyps="">
-<org.eventb.core.prAnte name="'" org.eventb.core.prGoal="p22">
-<org.eventb.core.prRule name="r6" org.eventb.core.confidence="1000" org.eventb.core.prDisplay="⊤ goal" org.eventb.core.prGoal="p22" org.eventb.core.prHyps=""/>
-</org.eventb.core.prAnte>
-</org.eventb.core.prRule>
-</org.eventb.core.prAnte>
-<org.eventb.core.prString name=".pos" org.eventb.core.prSValue="1"/>
-<org.eventb.core.prExprRef name=".subst" org.eventb.core.prRef="e0"/>
-</org.eventb.core.prRule>
-</org.eventb.core.prAnte>
-</org.eventb.core.prRule>
-</org.eventb.core.prAnte>
-<org.eventb.core.prAnte name="(" org.eventb.core.prGoal="p23">
-<org.eventb.core.prRule name="r7" org.eventb.core.confidence="1000" org.eventb.core.prDisplay="functional goal" org.eventb.core.prGoal="p23" org.eventb.core.prHyps="p1"/>
-</org.eventb.core.prAnte>
-</org.eventb.core.prRule>
-</org.eventb.core.prAnte>
-</org.eventb.core.prRule>
-</org.eventb.core.prAnte>
-</org.eventb.core.prRule>
-</org.eventb.core.prAnte>
-<org.eventb.core.prString name=".pos" org.eventb.core.prSValue=""/>
-</org.eventb.core.prRule>
-</org.eventb.core.prAnte>
-<org.eventb.core.prString name=".pos" org.eventb.core.prSValue=""/>
-</org.eventb.core.prRule>
-<org.eventb.core.prIdent name="UserRoles" org.eventb.core.type="ℙ(Union×ℙ(Union))"/>
-<org.eventb.core.prPred name="p15" org.eventb.core.predicate="SpecialAdmRoles⊆Union">
-<org.eventb.core.prIdent name="SpecialAdmRoles" org.eventb.core.type="ℙ(Union)"/>
-</org.eventb.core.prPred>
-<org.eventb.core.prPred name="p22" org.eventb.core.predicate="⊤"/>
-<org.eventb.core.prPred name="p2" org.eventb.core.predicate="partition(Accesses,{ReadA},{WriteA})">
-<org.eventb.core.prIdent name="Accesses" org.eventb.core.type="ℙ(Accesses)"/>
-<org.eventb.core.prIdent name="ReadA" org.eventb.core.type="Accesses"/>
-<org.eventb.core.prIdent name="WriteA" org.eventb.core.type="Accesses"/>
-</org.eventb.core.prPred>
-<org.eventb.core.prPred name="p4" org.eventb.core.predicate="¬ReadA=WriteA">
-<org.eventb.core.prIdent name="Accesses" org.eventb.core.type="ℙ(Accesses)"/>
-<org.eventb.core.prIdent name="ReadA" org.eventb.core.type="Accesses"/>
-<org.eventb.core.prIdent name="WriteA" org.eventb.core.type="Accesses"/>
-</org.eventb.core.prPred>
-<org.eventb.core.prPred name="p5" org.eventb.core.predicate="partition(AccessRights,{Read},{Write},{Execute},{Own})">
-<org.eventb.core.prIdent name="AccessRights" org.eventb.core.type="ℙ(AccessRights)"/>
-<org.eventb.core.prIdent name="Execute" org.eventb.core.type="AccessRights"/>
-<org.eventb.core.prIdent name="Own" org.eventb.core.type="AccessRights"/>
-<org.eventb.core.prIdent name="Read" org.eventb.core.type="AccessRights"/>
-<org.eventb.core.prIdent name="Write" org.eventb.core.type="AccessRights"/>
-</org.eventb.core.prPred>
-<org.eventb.core.prPred name="p11" org.eventb.core.predicate="¬Write=Own">
-<org.eventb.core.prIdent name="AccessRights" org.eventb.core.type="ℙ(AccessRights)"/>
-<org.eventb.core.prIdent name="Own" org.eventb.core.type="AccessRights"/>
-<org.eventb.core.prIdent name="Write" org.eventb.core.type="AccessRights"/>
-</org.eventb.core.prPred>
-<org.eventb.core.prPred name="p16" org.eventb.core.predicate="CommonRoles⊆Union">
-<org.eventb.core.prIdent name="CommonRoles" org.eventb.core.type="ℙ(Union)"/>
-</org.eventb.core.prPred>
-<org.eventb.core.prPred name="p9" org.eventb.core.predicate="¬Read=Own">
-<org.eventb.core.prIdent name="AccessRights" org.eventb.core.type="ℙ(AccessRights)"/>
-<org.eventb.core.prIdent name="Own" org.eventb.core.type="AccessRights"/>
-<org.eventb.core.prIdent name="Read" org.eventb.core.type="AccessRights"/>
-</org.eventb.core.prPred>
-<org.eventb.core.prPred name="p1" org.eventb.core.predicate="UserRoles∈Union → ℙ(Union)"/>
-<org.eventb.core.prPred name="p12" org.eventb.core.predicate="¬Execute=Own">
-<org.eventb.core.prIdent name="AccessRights" org.eventb.core.type="ℙ(AccessRights)"/>
-<org.eventb.core.prIdent name="Execute" org.eventb.core.type="AccessRights"/>
-<org.eventb.core.prIdent name="Own" org.eventb.core.type="AccessRights"/>
-</org.eventb.core.prPred>
-<org.eventb.core.prPred name="p21" org.eventb.core.predicate="u∈Union">
-<org.eventb.core.prIdent name="u" org.eventb.core.type="Union"/>
-</org.eventb.core.prPred>
-<org.eventb.core.prPred name="p7" org.eventb.core.predicate="¬Read=Write">
-<org.eventb.core.prIdent name="AccessRights" org.eventb.core.type="ℙ(AccessRights)"/>
-<org.eventb.core.prIdent name="Read" org.eventb.core.type="AccessRights"/>
-<org.eventb.core.prIdent name="Write" org.eventb.core.type="AccessRights"/>
-</org.eventb.core.prPred>
-<org.eventb.core.prPred name="p8" org.eventb.core.predicate="¬Read=Execute">
-<org.eventb.core.prIdent name="AccessRights" org.eventb.core.type="ℙ(AccessRights)"/>
-<org.eventb.core.prIdent name="Execute" org.eventb.core.type="AccessRights"/>
-<org.eventb.core.prIdent name="Read" org.eventb.core.type="AccessRights"/>
-</org.eventb.core.prPred>
-<org.eventb.core.prPred name="p6" org.eventb.core.predicate="AccessRights={Read,Write,Execute,Own}">
-<org.eventb.core.prIdent name="AccessRights" org.eventb.core.type="ℙ(AccessRights)"/>
-<org.eventb.core.prIdent name="Execute" org.eventb.core.type="AccessRights"/>
-<org.eventb.core.prIdent name="Own" org.eventb.core.type="AccessRights"/>
-<org.eventb.core.prIdent name="Read" org.eventb.core.type="AccessRights"/>
-<org.eventb.core.prIdent name="Write" org.eventb.core.type="AccessRights"/>
-</org.eventb.core.prPred>
-<org.eventb.core.prPred name="p14" org.eventb.core.predicate="SRoot∈Union">
-<org.eventb.core.prIdent name="SRoot" org.eventb.core.type="Union"/>
-</org.eventb.core.prPred>
-<org.eventb.core.prPred name="p18" org.eventb.core.predicate="(∀u⦂Union·u∈dom(UserRoles))∧UserRoles∈Union ⇸ ℙ(Union)"/>
-<org.eventb.core.prPred name="p20" org.eventb.core.predicate="u∈dom(UserRoles)">
-<org.eventb.core.prIdent name="u" org.eventb.core.type="Union"/>
-</org.eventb.core.prPred>
-<org.eventb.core.prPred name="p3" org.eventb.core.predicate="Accesses={ReadA,WriteA}">
-<org.eventb.core.prIdent name="Accesses" org.eventb.core.type="ℙ(Accesses)"/>
-<org.eventb.core.prIdent name="ReadA" org.eventb.core.type="Accesses"/>
-<org.eventb.core.prIdent name="WriteA" org.eventb.core.type="Accesses"/>
-</org.eventb.core.prPred>
-<org.eventb.core.prPred name="p13" org.eventb.core.predicate="Root∈Union">
-<org.eventb.core.prIdent name="Root" org.eventb.core.type="Union"/>
-</org.eventb.core.prPred>
-<org.eventb.core.prPred name="p17" org.eventb.core.predicate="∀u⦂Union·⊤⇒u∈dom(UserRoles)∧UserRoles∈Union ⇸ ℙ(Union)"/>
-<org.eventb.core.prPred name="p23" org.eventb.core.predicate="UserRoles∈Union ⇸ ℙ(Union)"/>
-<org.eventb.core.prPred name="p0" org.eventb.core.predicate="∀u⦂Union·u∈Union⇒u∈dom(UserRoles)∧UserRoles∈Union ⇸ ℙ(Union)"/>
-<org.eventb.core.prPred name="p10" org.eventb.core.predicate="¬Write=Execute">
-<org.eventb.core.prIdent name="AccessRights" org.eventb.core.type="ℙ(AccessRights)"/>
-<org.eventb.core.prIdent name="Execute" org.eventb.core.type="AccessRights"/>
-<org.eventb.core.prIdent name="Write" org.eventb.core.type="AccessRights"/>
-</org.eventb.core.prPred>
-<org.eventb.core.prPred name="p19" org.eventb.core.predicate="∀u⦂Union·u∈dom(UserRoles)"/>
-<org.eventb.core.prExpr name="e0" org.eventb.core.expression="Union"/>
-<org.eventb.core.prReas name="r1" org.eventb.core.prRID="org.eventb.core.seqprover.typeRewrites:1"/>
-<org.eventb.core.prReas name="r5" org.eventb.core.prRID="org.eventb.core.seqprover.totalDom:2"/>
-<org.eventb.core.prReas name="r4" org.eventb.core.prRID="org.eventb.core.seqprover.allI"/>
-<org.eventb.core.prReas name="r3" org.eventb.core.prRID="org.eventb.core.seqprover.conj:0"/>
-<org.eventb.core.prReas name="r0" org.eventb.core.prRID="org.eventb.core.seqprover.partitionRewrites"/>
-<org.eventb.core.prReas name="r6" org.eventb.core.prRID="org.eventb.core.seqprover.trueGoal"/>
-<org.eventb.core.prReas name="r2" org.eventb.core.prRID="org.eventb.core.seqprover.autoRewritesL4:0"/>
-<org.eventb.core.prReas name="r7" org.eventb.core.prRID="org.eventb.core.seqprover.isFunGoal"/>
-</org.eventb.core.prProof>
+    <org.eventb.core.prProof name="SpecialAdmRoles_finite_th/THM"/>
+    <org.eventb.core.prProof name="SpecialAdmRolesAreFinite/THM"/>
+    <org.eventb.core.prProof name="CommonRolesAreNotUserRoles/WD" org.eventb.core.confidence="1000" org.eventb.core.prFresh="u" org.eventb.core.prGoal="p0" org.eventb.core.prHyps="p1" org.eventb.core.prSets="Union">
+        <org.eventb.core.lang name="L"/>
+        <org.eventb.core.prRule name="r0" org.eventb.core.confidence="1000" org.eventb.core.prDisplay="Partition rewrites in hyp (partition(Accesses,{ReadA},{WriteA}))" org.eventb.core.prHyps="">
+            <org.eventb.core.prAnte name="'">
+                <org.eventb.core.prHypAction name="REWRITE0" org.eventb.core.prHidden="p2" org.eventb.core.prHyps="" org.eventb.core.prInfHyps="p3,p4"/>
+                <org.eventb.core.prHypAction name="SELECT1" org.eventb.core.prHyps="p3,p4"/>
+                <org.eventb.core.prRule name="r0" org.eventb.core.confidence="1000" org.eventb.core.prDisplay="Partition rewrites in hyp (partition(AccessRights,{Read},{Write},{Execute},{Own}))" org.eventb.core.prHyps="">
+                    <org.eventb.core.prAnte name="'">
+                        <org.eventb.core.prHypAction name="REWRITE0" org.eventb.core.prHidden="p5" org.eventb.core.prHyps="" org.eventb.core.prInfHyps="p6,p7,p8,p9,p10,p11,p12"/>
+                        <org.eventb.core.prHypAction name="SELECT1" org.eventb.core.prHyps="p6,p7,p8,p9,p10,p11,p12"/>
+                        <org.eventb.core.prRule name="r1" org.eventb.core.confidence="1000" org.eventb.core.prDisplay="type rewrites" org.eventb.core.prGoal="p0" org.eventb.core.prHyps="">
+                            <org.eventb.core.prAnte name="'" org.eventb.core.prGoal="p17">
+                                <org.eventb.core.prHypAction name="HIDE0" org.eventb.core.prHyps="p13"/>
+                                <org.eventb.core.prHypAction name="HIDE1" org.eventb.core.prHyps="p14"/>
+                                <org.eventb.core.prHypAction name="HIDE2" org.eventb.core.prHyps="p15"/>
+                                <org.eventb.core.prHypAction name="HIDE3" org.eventb.core.prHyps="p16"/>
+                                <org.eventb.core.prRule name="r2" org.eventb.core.confidence="1000" org.eventb.core.prDisplay="simplification rewrites" org.eventb.core.prGoal="p17" org.eventb.core.prHyps="">
+                                    <org.eventb.core.prAnte name="'" org.eventb.core.prGoal="p18">
+                                        <org.eventb.core.prRule name="r3" org.eventb.core.confidence="1000" org.eventb.core.prDisplay="∧ goal" org.eventb.core.prGoal="p18" org.eventb.core.prHyps="">
+                                            <org.eventb.core.prAnte name="'" org.eventb.core.prGoal="p19">
+                                                <org.eventb.core.prRule name="r4" org.eventb.core.confidence="1000" org.eventb.core.prDisplay="∀ goal (frees u)" org.eventb.core.prGoal="p19" org.eventb.core.prHyps="">
+                                                    <org.eventb.core.prAnte name="'" org.eventb.core.prGoal="p20">
+                                                        <org.eventb.core.prIdent name="u" org.eventb.core.type="Union"/>
+                                                        <org.eventb.core.prRule name="r5" org.eventb.core.confidence="1000" org.eventb.core.prDisplay="total function dom substitution in goal" org.eventb.core.prGoal="p20" org.eventb.core.prHyps="p1">
+                                                            <org.eventb.core.prAnte name="'" org.eventb.core.prGoal="p21">
+                                                                <org.eventb.core.prRule name="r1" org.eventb.core.confidence="1000" org.eventb.core.prDisplay="type rewrites" org.eventb.core.prGoal="p21" org.eventb.core.prHyps="">
+                                                                    <org.eventb.core.prAnte name="'" org.eventb.core.prGoal="p22">
+                                                                        <org.eventb.core.prRule name="r6" org.eventb.core.confidence="1000" org.eventb.core.prDisplay="⊤ goal" org.eventb.core.prGoal="p22" org.eventb.core.prHyps=""/>
+                                                                    </org.eventb.core.prAnte>
+                                                                </org.eventb.core.prRule>
+                                                            </org.eventb.core.prAnte>
+                                                            <org.eventb.core.prString name=".pos" org.eventb.core.prSValue="1"/>
+                                                            <org.eventb.core.prExprRef name=".subst" org.eventb.core.prRef="e0"/>
+                                                        </org.eventb.core.prRule>
+                                                    </org.eventb.core.prAnte>
+                                                </org.eventb.core.prRule>
+                                            </org.eventb.core.prAnte>
+                                            <org.eventb.core.prAnte name="(" org.eventb.core.prGoal="p23">
+                                                <org.eventb.core.prRule name="r7" org.eventb.core.confidence="1000" org.eventb.core.prDisplay="functional goal" org.eventb.core.prGoal="p23" org.eventb.core.prHyps="p1"/>
+                                            </org.eventb.core.prAnte>
+                                        </org.eventb.core.prRule>
+                                    </org.eventb.core.prAnte>
+                                </org.eventb.core.prRule>
+                            </org.eventb.core.prAnte>
+                        </org.eventb.core.prRule>
+                    </org.eventb.core.prAnte>
+                    <org.eventb.core.prString name=".pos" org.eventb.core.prSValue=""/>
+                </org.eventb.core.prRule>
+            </org.eventb.core.prAnte>
+            <org.eventb.core.prString name=".pos" org.eventb.core.prSValue=""/>
+        </org.eventb.core.prRule>
+        <org.eventb.core.prIdent name="UserRoles" org.eventb.core.type="ℙ(Union×ℙ(Union))"/>
+        <org.eventb.core.prPred name="p15" org.eventb.core.predicate="SpecialAdmRoles⊆Union">
+            <org.eventb.core.prIdent name="SpecialAdmRoles" org.eventb.core.type="ℙ(Union)"/>
+        </org.eventb.core.prPred>
+        <org.eventb.core.prPred name="p22" org.eventb.core.predicate="⊤"/>
+        <org.eventb.core.prPred name="p2" org.eventb.core.predicate="partition(Accesses,{ReadA},{WriteA})">
+            <org.eventb.core.prIdent name="Accesses" org.eventb.core.type="ℙ(Accesses)"/>
+            <org.eventb.core.prIdent name="ReadA" org.eventb.core.type="Accesses"/>
+            <org.eventb.core.prIdent name="WriteA" org.eventb.core.type="Accesses"/>
+        </org.eventb.core.prPred>
+        <org.eventb.core.prPred name="p4" org.eventb.core.predicate="¬ReadA=WriteA">
+            <org.eventb.core.prIdent name="Accesses" org.eventb.core.type="ℙ(Accesses)"/>
+            <org.eventb.core.prIdent name="ReadA" org.eventb.core.type="Accesses"/>
+            <org.eventb.core.prIdent name="WriteA" org.eventb.core.type="Accesses"/>
+        </org.eventb.core.prPred>
+        <org.eventb.core.prPred name="p5" org.eventb.core.predicate="partition(AccessRights,{Read},{Write},{Execute},{Own})">
+            <org.eventb.core.prIdent name="AccessRights" org.eventb.core.type="ℙ(AccessRights)"/>
+            <org.eventb.core.prIdent name="Execute" org.eventb.core.type="AccessRights"/>
+            <org.eventb.core.prIdent name="Own" org.eventb.core.type="AccessRights"/>
+            <org.eventb.core.prIdent name="Read" org.eventb.core.type="AccessRights"/>
+            <org.eventb.core.prIdent name="Write" org.eventb.core.type="AccessRights"/>
+        </org.eventb.core.prPred>
+        <org.eventb.core.prPred name="p11" org.eventb.core.predicate="¬Write=Own">
+            <org.eventb.core.prIdent name="AccessRights" org.eventb.core.type="ℙ(AccessRights)"/>
+            <org.eventb.core.prIdent name="Own" org.eventb.core.type="AccessRights"/>
+            <org.eventb.core.prIdent name="Write" org.eventb.core.type="AccessRights"/>
+        </org.eventb.core.prPred>
+        <org.eventb.core.prPred name="p16" org.eventb.core.predicate="CommonRoles⊆Union">
+            <org.eventb.core.prIdent name="CommonRoles" org.eventb.core.type="ℙ(Union)"/>
+        </org.eventb.core.prPred>
+        <org.eventb.core.prPred name="p9" org.eventb.core.predicate="¬Read=Own">
+            <org.eventb.core.prIdent name="AccessRights" org.eventb.core.type="ℙ(AccessRights)"/>
+            <org.eventb.core.prIdent name="Own" org.eventb.core.type="AccessRights"/>
+            <org.eventb.core.prIdent name="Read" org.eventb.core.type="AccessRights"/>
+        </org.eventb.core.prPred>
+        <org.eventb.core.prPred name="p1" org.eventb.core.predicate="UserRoles∈Union → ℙ(Union)"/>
+        <org.eventb.core.prPred name="p12" org.eventb.core.predicate="¬Execute=Own">
+            <org.eventb.core.prIdent name="AccessRights" org.eventb.core.type="ℙ(AccessRights)"/>
+            <org.eventb.core.prIdent name="Execute" org.eventb.core.type="AccessRights"/>
+            <org.eventb.core.prIdent name="Own" org.eventb.core.type="AccessRights"/>
+        </org.eventb.core.prPred>
+        <org.eventb.core.prPred name="p21" org.eventb.core.predicate="u∈Union">
+            <org.eventb.core.prIdent name="u" org.eventb.core.type="Union"/>
+        </org.eventb.core.prPred>
+        <org.eventb.core.prPred name="p7" org.eventb.core.predicate="¬Read=Write">
+            <org.eventb.core.prIdent name="AccessRights" org.eventb.core.type="ℙ(AccessRights)"/>
+            <org.eventb.core.prIdent name="Read" org.eventb.core.type="AccessRights"/>
+            <org.eventb.core.prIdent name="Write" org.eventb.core.type="AccessRights"/>
+        </org.eventb.core.prPred>
+        <org.eventb.core.prPred name="p8" org.eventb.core.predicate="¬Read=Execute">
+            <org.eventb.core.prIdent name="AccessRights" org.eventb.core.type="ℙ(AccessRights)"/>
+            <org.eventb.core.prIdent name="Execute" org.eventb.core.type="AccessRights"/>
+            <org.eventb.core.prIdent name="Read" org.eventb.core.type="AccessRights"/>
+        </org.eventb.core.prPred>
+        <org.eventb.core.prPred name="p6" org.eventb.core.predicate="AccessRights={Read,Write,Execute,Own}">
+            <org.eventb.core.prIdent name="AccessRights" org.eventb.core.type="ℙ(AccessRights)"/>
+            <org.eventb.core.prIdent name="Execute" org.eventb.core.type="AccessRights"/>
+            <org.eventb.core.prIdent name="Own" org.eventb.core.type="AccessRights"/>
+            <org.eventb.core.prIdent name="Read" org.eventb.core.type="AccessRights"/>
+            <org.eventb.core.prIdent name="Write" org.eventb.core.type="AccessRights"/>
+        </org.eventb.core.prPred>
+        <org.eventb.core.prPred name="p14" org.eventb.core.predicate="SRoot∈Union">
+            <org.eventb.core.prIdent name="SRoot" org.eventb.core.type="Union"/>
+        </org.eventb.core.prPred>
+        <org.eventb.core.prPred name="p18" org.eventb.core.predicate="(∀u⦂Union·u∈dom(UserRoles))∧UserRoles∈Union ⇸ ℙ(Union)"/>
+        <org.eventb.core.prPred name="p20" org.eventb.core.predicate="u∈dom(UserRoles)">
+            <org.eventb.core.prIdent name="u" org.eventb.core.type="Union"/>
+        </org.eventb.core.prPred>
+        <org.eventb.core.prPred name="p3" org.eventb.core.predicate="Accesses={ReadA,WriteA}">
+            <org.eventb.core.prIdent name="Accesses" org.eventb.core.type="ℙ(Accesses)"/>
+            <org.eventb.core.prIdent name="ReadA" org.eventb.core.type="Accesses"/>
+            <org.eventb.core.prIdent name="WriteA" org.eventb.core.type="Accesses"/>
+        </org.eventb.core.prPred>
+        <org.eventb.core.prPred name="p13" org.eventb.core.predicate="Root∈Union">
+            <org.eventb.core.prIdent name="Root" org.eventb.core.type="Union"/>
+        </org.eventb.core.prPred>
+        <org.eventb.core.prPred name="p17" org.eventb.core.predicate="∀u⦂Union·⊤⇒u∈dom(UserRoles)∧UserRoles∈Union ⇸ ℙ(Union)"/>
+        <org.eventb.core.prPred name="p23" org.eventb.core.predicate="UserRoles∈Union ⇸ ℙ(Union)"/>
+        <org.eventb.core.prPred name="p0" org.eventb.core.predicate="∀u⦂Union·u∈Union⇒u∈dom(UserRoles)∧UserRoles∈Union ⇸ ℙ(Union)"/>
+        <org.eventb.core.prPred name="p10" org.eventb.core.predicate="¬Write=Execute">
+            <org.eventb.core.prIdent name="AccessRights" org.eventb.core.type="ℙ(AccessRights)"/>
+            <org.eventb.core.prIdent name="Execute" org.eventb.core.type="AccessRights"/>
+            <org.eventb.core.prIdent name="Write" org.eventb.core.type="AccessRights"/>
+        </org.eventb.core.prPred>
+        <org.eventb.core.prPred name="p19" org.eventb.core.predicate="∀u⦂Union·u∈dom(UserRoles)"/>
+        <org.eventb.core.prExpr name="e0" org.eventb.core.expression="Union"/>
+        <org.eventb.core.prReas name="r1" org.eventb.core.prRID="org.eventb.core.seqprover.typeRewrites:1"/>
+        <org.eventb.core.prReas name="r5" org.eventb.core.prRID="org.eventb.core.seqprover.totalDom:2"/>
+        <org.eventb.core.prReas name="r4" org.eventb.core.prRID="org.eventb.core.seqprover.allI"/>
+        <org.eventb.core.prReas name="r3" org.eventb.core.prRID="org.eventb.core.seqprover.conj:0"/>
+        <org.eventb.core.prReas name="r0" org.eventb.core.prRID="org.eventb.core.seqprover.partitionRewrites"/>
+        <org.eventb.core.prReas name="r6" org.eventb.core.prRID="org.eventb.core.seqprover.trueGoal"/>
+        <org.eventb.core.prReas name="r2" org.eventb.core.prRID="org.eventb.core.seqprover.autoRewritesL4:0"/>
+        <org.eventb.core.prReas name="r7" org.eventb.core.prRID="org.eventb.core.seqprover.isFunGoal"/>
+    </org.eventb.core.prProof>
+    <org.eventb.core.prProof name="InductionAxiom/THM" org.eventb.core.confidence="0" org.eventb.core.prFresh="s" org.eventb.core.prGoal="p0" org.eventb.core.prHyps="p1" org.eventb.core.prSets="Union">
+        <org.eventb.core.lang name="L"/>
+        <org.eventb.core.prRule name="r0" org.eventb.core.confidence="1000" org.eventb.core.prDisplay="Partition rewrites in hyp (partition(SpecialAdmRoles,{EntitiesAR},{SubjectsAR},{UsersAR},{RolesAR},{ARolesAR}))" org.eventb.core.prHyps="">
+            <org.eventb.core.prAnte name="'">
+                <org.eventb.core.prHypAction name="REWRITE0" org.eventb.core.prHidden="p1" org.eventb.core.prHyps="" org.eventb.core.prInfHyps="p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12"/>
+                <org.eventb.core.prHypAction name="SELECT1" org.eventb.core.prHyps="p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12"/>
+                <org.eventb.core.prRule name="r0" org.eventb.core.confidence="1000" org.eventb.core.prDisplay="Partition rewrites in hyp (partition(Accesses,{ReadA},{WriteA}))" org.eventb.core.prHyps="">
+                    <org.eventb.core.prAnte name="'">
+                        <org.eventb.core.prHypAction name="REWRITE0" org.eventb.core.prHidden="p13" org.eventb.core.prHyps="" org.eventb.core.prInfHyps="p14,p15"/>
+                        <org.eventb.core.prHypAction name="SELECT1" org.eventb.core.prHyps="p14,p15"/>
+                        <org.eventb.core.prRule name="r0" org.eventb.core.confidence="1000" org.eventb.core.prDisplay="Partition rewrites in hyp (partition(AccessRights,{Read},{Write},{Execute},{Own}))" org.eventb.core.prHyps="">
+                            <org.eventb.core.prAnte name="'">
+                                <org.eventb.core.prHypAction name="REWRITE0" org.eventb.core.prHidden="p16" org.eventb.core.prHyps="" org.eventb.core.prInfHyps="p17,p18,p19,p20,p21,p22,p23"/>
+                                <org.eventb.core.prHypAction name="SELECT1" org.eventb.core.prHyps="p17,p18,p19,p20,p21,p22,p23"/>
+                                <org.eventb.core.prRule name="r1" org.eventb.core.confidence="1000" org.eventb.core.prDisplay="type rewrites" org.eventb.core.prHyps="">
+                                    <org.eventb.core.prAnte name="'">
+                                        <org.eventb.core.prHypAction name="HIDE0" org.eventb.core.prHyps="p24"/>
+                                        <org.eventb.core.prHypAction name="HIDE1" org.eventb.core.prHyps="p25"/>
+                                        <org.eventb.core.prHypAction name="HIDE2" org.eventb.core.prHyps="p26"/>
+                                        <org.eventb.core.prHypAction name="HIDE3" org.eventb.core.prHyps="p27"/>
+                                        <org.eventb.core.prRule name="r2" org.eventb.core.confidence="1000" org.eventb.core.prDisplay="∀ goal (frees s)" org.eventb.core.prGoal="p0" org.eventb.core.prHyps="">
+                                            <org.eventb.core.prAnte name="'" org.eventb.core.prGoal="p28">
+                                                <org.eventb.core.prIdent name="s" org.eventb.core.type="ℙ(ℤ)"/>
+                                                <org.eventb.core.prRule name="r3" org.eventb.core.confidence="1000" org.eventb.core.prDisplay="⇒ goal" org.eventb.core.prGoal="p28" org.eventb.core.prHyps="">
+                                                    <org.eventb.core.prAnte name="'" org.eventb.core.prGoal="p32" org.eventb.core.prHyps="p29,p30,p31">
+                                                        <org.eventb.core.prRule name="r4" org.eventb.core.confidence="1000" org.eventb.core.prDisplay="eh with SpecialAdmRoles={EntitiesAR,SubjectsAR,UsersAR,RolesAR,ARolesAR}" org.eventb.core.prHyps="p2">
+                                                            <org.eventb.core.prAnte name="'">
+                                                                <org.eventb.core.prHypAction name="FORWARD_INF0" org.eventb.core.prHyps="p33" org.eventb.core.prInfHyps="p34"/>
+                                                                <org.eventb.core.prHypAction name="DESELECT1" org.eventb.core.prHyps="p33"/>
+                                                                <org.eventb.core.prHypAction name="HIDE2" org.eventb.core.prHyps="p2"/>
+                                                                <org.eventb.core.prRule name="r5" org.eventb.core.confidence="1000" org.eventb.core.prDisplay="simplification rewrites" org.eventb.core.prHyps="">
+                                                                    <org.eventb.core.prAnte name="'">
+                                                                        <org.eventb.core.prHypAction name="HIDE0" org.eventb.core.prHyps="p34"/>
+                                                                    </org.eventb.core.prAnte>
+                                                                </org.eventb.core.prRule>
+                                                            </org.eventb.core.prAnte>
+                                                        </org.eventb.core.prRule>
+                                                    </org.eventb.core.prAnte>
+                                                </org.eventb.core.prRule>
+                                            </org.eventb.core.prAnte>
+                                        </org.eventb.core.prRule>
+                                    </org.eventb.core.prAnte>
+                                </org.eventb.core.prRule>
+                            </org.eventb.core.prAnte>
+                            <org.eventb.core.prString name=".pos" org.eventb.core.prSValue=""/>
+                        </org.eventb.core.prRule>
+                    </org.eventb.core.prAnte>
+                    <org.eventb.core.prString name=".pos" org.eventb.core.prSValue=""/>
+                </org.eventb.core.prRule>
+            </org.eventb.core.prAnte>
+            <org.eventb.core.prString name=".pos" org.eventb.core.prSValue=""/>
+        </org.eventb.core.prRule>
+        <org.eventb.core.prIdent name="ARolesAR" org.eventb.core.type="Union"/>
+        <org.eventb.core.prIdent name="EntitiesAR" org.eventb.core.type="Union"/>
+        <org.eventb.core.prIdent name="RolesAR" org.eventb.core.type="Union"/>
+        <org.eventb.core.prIdent name="SpecialAdmRoles" org.eventb.core.type="ℙ(Union)"/>
+        <org.eventb.core.prIdent name="SubjectsAR" org.eventb.core.type="Union"/>
+        <org.eventb.core.prIdent name="UsersAR" org.eventb.core.type="Union"/>
+        <org.eventb.core.prPred name="p6" org.eventb.core.predicate="¬EntitiesAR=ARolesAR"/>
+        <org.eventb.core.prPred name="p33" org.eventb.core.predicate="finite(SpecialAdmRoles)"/>
+        <org.eventb.core.prPred name="p7" org.eventb.core.predicate="¬SubjectsAR=UsersAR"/>
+        <org.eventb.core.prPred name="p22" org.eventb.core.predicate="¬Write=Own">
+            <org.eventb.core.prIdent name="AccessRights" org.eventb.core.type="ℙ(AccessRights)"/>
+            <org.eventb.core.prIdent name="Own" org.eventb.core.type="AccessRights"/>
+            <org.eventb.core.prIdent name="Write" org.eventb.core.type="AccessRights"/>
+        </org.eventb.core.prPred>
+        <org.eventb.core.prPred name="p23" org.eventb.core.predicate="¬Execute=Own">
+            <org.eventb.core.prIdent name="AccessRights" org.eventb.core.type="ℙ(AccessRights)"/>
+            <org.eventb.core.prIdent name="Execute" org.eventb.core.type="AccessRights"/>
+            <org.eventb.core.prIdent name="Own" org.eventb.core.type="AccessRights"/>
+        </org.eventb.core.prPred>
+        <org.eventb.core.prPred name="p29" org.eventb.core.predicate="s⊆ℕ">
+            <org.eventb.core.prIdent name="s" org.eventb.core.type="ℙ(ℤ)"/>
+        </org.eventb.core.prPred>
+        <org.eventb.core.prPred name="p17" org.eventb.core.predicate="AccessRights={Read,Write,Execute,Own}">
+            <org.eventb.core.prIdent name="AccessRights" org.eventb.core.type="ℙ(AccessRights)"/>
+            <org.eventb.core.prIdent name="Execute" org.eventb.core.type="AccessRights"/>
+            <org.eventb.core.prIdent name="Own" org.eventb.core.type="AccessRights"/>
+            <org.eventb.core.prIdent name="Read" org.eventb.core.type="AccessRights"/>
+            <org.eventb.core.prIdent name="Write" org.eventb.core.type="AccessRights"/>
+        </org.eventb.core.prPred>
+        <org.eventb.core.prPred name="p30" org.eventb.core.predicate="0∈s">
+            <org.eventb.core.prIdent name="s" org.eventb.core.type="ℙ(ℤ)"/>
+        </org.eventb.core.prPred>
+        <org.eventb.core.prPred name="p24" org.eventb.core.predicate="Root∈Union">
+            <org.eventb.core.prIdent name="Root" org.eventb.core.type="Union"/>
+        </org.eventb.core.prPred>
+        <org.eventb.core.prPred name="p27" org.eventb.core.predicate="CommonRole∈Union">
+            <org.eventb.core.prIdent name="CommonRole" org.eventb.core.type="Union"/>
+        </org.eventb.core.prPred>
+        <org.eventb.core.prPred name="p34" org.eventb.core.predicate="finite({EntitiesAR,SubjectsAR,UsersAR,RolesAR,ARolesAR})"/>
+        <org.eventb.core.prPred name="p26" org.eventb.core.predicate="SpecialAdmRoles⊆Union"/>
+        <org.eventb.core.prPred name="p2" org.eventb.core.predicate="SpecialAdmRoles={EntitiesAR,SubjectsAR,UsersAR,RolesAR,ARolesAR}"/>
+        <org.eventb.core.prPred name="p11" org.eventb.core.predicate="¬UsersAR=ARolesAR"/>
+        <org.eventb.core.prPred name="p13" org.eventb.core.predicate="partition(Accesses,{ReadA},{WriteA})">
+            <org.eventb.core.prIdent name="Accesses" org.eventb.core.type="ℙ(Accesses)"/>
+            <org.eventb.core.prIdent name="ReadA" org.eventb.core.type="Accesses"/>
+            <org.eventb.core.prIdent name="WriteA" org.eventb.core.type="Accesses"/>
+        </org.eventb.core.prPred>
+        <org.eventb.core.prPred name="p15" org.eventb.core.predicate="¬ReadA=WriteA">
+            <org.eventb.core.prIdent name="Accesses" org.eventb.core.type="ℙ(Accesses)"/>
+            <org.eventb.core.prIdent name="ReadA" org.eventb.core.type="Accesses"/>
+            <org.eventb.core.prIdent name="WriteA" org.eventb.core.type="Accesses"/>
+        </org.eventb.core.prPred>
+        <org.eventb.core.prPred name="p9" org.eventb.core.predicate="¬SubjectsAR=ARolesAR"/>
+        <org.eventb.core.prPred name="p4" org.eventb.core.predicate="¬EntitiesAR=UsersAR"/>
+        <org.eventb.core.prPred name="p16" org.eventb.core.predicate="partition(AccessRights,{Read},{Write},{Execute},{Own})">
+            <org.eventb.core.prIdent name="AccessRights" org.eventb.core.type="ℙ(AccessRights)"/>
+            <org.eventb.core.prIdent name="Execute" org.eventb.core.type="AccessRights"/>
+            <org.eventb.core.prIdent name="Own" org.eventb.core.type="AccessRights"/>
+            <org.eventb.core.prIdent name="Read" org.eventb.core.type="AccessRights"/>
+            <org.eventb.core.prIdent name="Write" org.eventb.core.type="AccessRights"/>
+        </org.eventb.core.prPred>
+        <org.eventb.core.prPred name="p32" org.eventb.core.predicate="ℕ⊆s">
+            <org.eventb.core.prIdent name="s" org.eventb.core.type="ℙ(ℤ)"/>
+        </org.eventb.core.prPred>
+        <org.eventb.core.prPred name="p20" org.eventb.core.predicate="¬Read=Own">
+            <org.eventb.core.prIdent name="AccessRights" org.eventb.core.type="ℙ(AccessRights)"/>
+            <org.eventb.core.prIdent name="Own" org.eventb.core.type="AccessRights"/>
+            <org.eventb.core.prIdent name="Read" org.eventb.core.type="AccessRights"/>
+        </org.eventb.core.prPred>
+        <org.eventb.core.prPred name="p0" org.eventb.core.predicate="∀s⦂ℙ(ℤ)·s⊆ℕ∧0∈s∧(∀n⦂ℤ·n∈s⇒n+1∈s)⇒ℕ⊆s"/>
+        <org.eventb.core.prPred name="p10" org.eventb.core.predicate="¬UsersAR=RolesAR"/>
+        <org.eventb.core.prPred name="p28" org.eventb.core.predicate="s⊆ℕ∧0∈s∧(∀n⦂ℤ·n∈s⇒n+1∈s)⇒ℕ⊆s">
+            <org.eventb.core.prIdent name="s" org.eventb.core.type="ℙ(ℤ)"/>
+        </org.eventb.core.prPred>
+        <org.eventb.core.prPred name="p8" org.eventb.core.predicate="¬SubjectsAR=RolesAR"/>
+        <org.eventb.core.prPred name="p31" org.eventb.core.predicate="∀n⦂ℤ·n∈s⇒n+1∈s">
+            <org.eventb.core.prIdent name="s" org.eventb.core.type="ℙ(ℤ)"/>
+        </org.eventb.core.prPred>
+        <org.eventb.core.prPred name="p1" org.eventb.core.predicate="partition(SpecialAdmRoles,{EntitiesAR},{SubjectsAR},{UsersAR},{RolesAR},{ARolesAR})"/>
+        <org.eventb.core.prPred name="p18" org.eventb.core.predicate="¬Read=Write">
+            <org.eventb.core.prIdent name="AccessRights" org.eventb.core.type="ℙ(AccessRights)"/>
+            <org.eventb.core.prIdent name="Read" org.eventb.core.type="AccessRights"/>
+            <org.eventb.core.prIdent name="Write" org.eventb.core.type="AccessRights"/>
+        </org.eventb.core.prPred>
+        <org.eventb.core.prPred name="p19" org.eventb.core.predicate="¬Read=Execute">
+            <org.eventb.core.prIdent name="AccessRights" org.eventb.core.type="ℙ(AccessRights)"/>
+            <org.eventb.core.prIdent name="Execute" org.eventb.core.type="AccessRights"/>
+            <org.eventb.core.prIdent name="Read" org.eventb.core.type="AccessRights"/>
+        </org.eventb.core.prPred>
+        <org.eventb.core.prPred name="p25" org.eventb.core.predicate="SRoot∈Union">
+            <org.eventb.core.prIdent name="SRoot" org.eventb.core.type="Union"/>
+        </org.eventb.core.prPred>
+        <org.eventb.core.prPred name="p14" org.eventb.core.predicate="Accesses={ReadA,WriteA}">
+            <org.eventb.core.prIdent name="Accesses" org.eventb.core.type="ℙ(Accesses)"/>
+            <org.eventb.core.prIdent name="ReadA" org.eventb.core.type="Accesses"/>
+            <org.eventb.core.prIdent name="WriteA" org.eventb.core.type="Accesses"/>
+        </org.eventb.core.prPred>
+        <org.eventb.core.prPred name="p12" org.eventb.core.predicate="¬RolesAR=ARolesAR"/>
+        <org.eventb.core.prPred name="p5" org.eventb.core.predicate="¬EntitiesAR=RolesAR"/>
+        <org.eventb.core.prPred name="p3" org.eventb.core.predicate="¬EntitiesAR=SubjectsAR"/>
+        <org.eventb.core.prPred name="p21" org.eventb.core.predicate="¬Write=Execute">
+            <org.eventb.core.prIdent name="AccessRights" org.eventb.core.type="ℙ(AccessRights)"/>
+            <org.eventb.core.prIdent name="Execute" org.eventb.core.type="AccessRights"/>
+            <org.eventb.core.prIdent name="Write" org.eventb.core.type="AccessRights"/>
+        </org.eventb.core.prPred>
+        <org.eventb.core.prReas name="r1" org.eventb.core.prRID="org.eventb.core.seqprover.typeRewrites:1"/>
+        <org.eventb.core.prReas name="r2" org.eventb.core.prRID="org.eventb.core.seqprover.allI"/>
+        <org.eventb.core.prReas name="r3" org.eventb.core.prRID="org.eventb.core.seqprover.impI"/>
+        <org.eventb.core.prReas name="r4" org.eventb.core.prRID="org.eventb.core.seqprover.eqL2:1"/>
+        <org.eventb.core.prReas name="r5" org.eventb.core.prRID="org.eventb.core.seqprover.autoRewritesL5:0"/>
+        <org.eventb.core.prReas name="r0" org.eventb.core.prRID="org.eventb.core.seqprover.partitionRewrites"/>
+    </org.eventb.core.prProof>
 </org.eventb.core.prFile>

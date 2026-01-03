@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<org.eventb.core.poFile org.eventb.core.poStamp="0">
+<org.eventb.core.poFile org.eventb.core.poStamp="1">
     <org.eventb.core.poPredicateSet name="ABSHYP" org.eventb.core.poStamp="0">
         <org.eventb.core.poIdentifier name="Union" org.eventb.core.type="ℙ(Union)"/>
         <org.eventb.core.poIdentifier name="AccessRights" org.eventb.core.type="ℙ(AccessRights)"/>
@@ -21,7 +21,13 @@
         <org.eventb.core.poIdentifier name="Own" org.eventb.core.type="AccessRights"/>
         <org.eventb.core.poIdentifier name="SRoot" org.eventb.core.type="Union"/>
     </org.eventb.core.poPredicateSet>
-    <org.eventb.core.poPredicateSet name="ALLHYP" org.eventb.core.parentSet="/base-model/C1.bpo|org.eventb.core.poFile#C1|org.eventb.core.poPredicateSet#ABSHYP" org.eventb.core.poStamp="0">
+    <org.eventb.core.poSequent name="InductionAxiom/THM" org.eventb.core.accurate="true" org.eventb.core.poDesc="Theorem" org.eventb.core.poStamp="1">
+        <org.eventb.core.poPredicateSet name="SEQHYP" org.eventb.core.parentSet="/base-model/C1.bpo|org.eventb.core.poFile#C1|org.eventb.core.poPredicateSet#HYP\/"/>
+        <org.eventb.core.poPredicate name="SEQHYQ" org.eventb.core.predicate="∀s⦂ℙ(ℤ)·s⊆ℕ∧0∈s∧(∀n⦂ℤ·n∈s⇒n+1∈s)⇒ℕ⊆s" org.eventb.core.source="/base-model/C1.buc|org.eventb.core.contextFile#C1|org.eventb.core.axiom#axm10"/>
+        <org.eventb.core.poSource name="SEQHYR" org.eventb.core.poRole="DEFAULT" org.eventb.core.source="/base-model/C1.buc|org.eventb.core.contextFile#C1|org.eventb.core.axiom#axm10"/>
+        <org.eventb.core.poSelHint name="SEQHYS" org.eventb.core.poSelHintFst="/base-model/C1.bpo|org.eventb.core.poFile#C1|org.eventb.core.poPredicateSet#ABSHYP" org.eventb.core.poSelHintSnd="/base-model/C1.bpo|org.eventb.core.poFile#C1|org.eventb.core.poPredicateSet#HYP\/"/>
+    </org.eventb.core.poSequent>
+    <org.eventb.core.poPredicateSet name="HYP/" org.eventb.core.parentSet="/base-model/C1.bpo|org.eventb.core.poFile#C1|org.eventb.core.poPredicateSet#ABSHYP" org.eventb.core.poStamp="0">
         <org.eventb.core.poPredicate name="PRD0" org.eventb.core.predicate="finite(Union)" org.eventb.core.source="/base-model/C1.buc|org.eventb.core.contextFile#C1|org.eventb.core.axiom#axm1"/>
         <org.eventb.core.poPredicate name="PRD1" org.eventb.core.predicate="Root∈Union" org.eventb.core.source="/base-model/C1.buc|org.eventb.core.contextFile#C1|org.eventb.core.axiom#axm2"/>
         <org.eventb.core.poPredicate name="PRD2" org.eventb.core.predicate="SRoot∈Union" org.eventb.core.source="/base-model/C1.buc|org.eventb.core.contextFile#C1|org.eventb.core.axiom#axm3"/>
@@ -31,6 +37,8 @@
         <org.eventb.core.poPredicate name="PRD6" org.eventb.core.predicate="partition(Accesses,{ReadA},{WriteA})" org.eventb.core.source="/base-model/C1.buc|org.eventb.core.contextFile#C1|org.eventb.core.axiom#axm7"/>
         <org.eventb.core.poPredicate name="PRD7" org.eventb.core.predicate="partition(AccessRights,{Read},{Write},{Execute},{Own})" org.eventb.core.source="/base-model/C1.buc|org.eventb.core.contextFile#C1|org.eventb.core.axiom#axm8"/>
         <org.eventb.core.poPredicate name="PRD8" org.eventb.core.predicate="CommonRole∈Union" org.eventb.core.source="/base-model/C1.buc|org.eventb.core.contextFile#C1|org.eventb.core.axiom#axm9"/>
+    </org.eventb.core.poPredicateSet>
+    <org.eventb.core.poPredicateSet name="ALLHYP" org.eventb.core.parentSet="/base-model/C1.bpo|org.eventb.core.poFile#C1|org.eventb.core.poPredicateSet#HYP\/" org.eventb.core.poStamp="1">
         <org.eventb.core.poPredicate name="PRD9" org.eventb.core.predicate="∀s⦂ℙ(ℤ)·s⊆ℕ∧0∈s∧(∀n⦂ℤ·n∈s⇒n+1∈s)⇒ℕ⊆s" org.eventb.core.source="/base-model/C1.buc|org.eventb.core.contextFile#C1|org.eventb.core.axiom#axm10"/>
     </org.eventb.core.poPredicateSet>
 </org.eventb.core.poFile>
