@@ -85,11 +85,12 @@ public class AnimateCliTest {
                 modelFile.getAbsolutePath()
             };
 
-            Animate.main(args);
+            int exitCode = Animate.execute(args);
 
             String output = outContent.toString();
             assertTrue("Output should contain animation information",
                 output.length() > 0);
+            assertEquals("Exit code should be 0", 0, exitCode);
 
             System.setOut(originalOut);
             System.out.println("  ✓ CLI animation completed");
@@ -116,11 +117,12 @@ public class AnimateCliTest {
                 modelFile.getAbsolutePath()
             };
 
-            Animate.main(args);
+            int exitCode = Animate.execute(args);
 
             String output = outContent.toString();
             assertTrue("Output should contain animation information",
                 output.length() > 0);
+            assertEquals("Exit code should be 0", 0, exitCode);
 
             System.setOut(originalOut);
             System.out.println("  ✓ Invariant checking completed");
