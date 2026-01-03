@@ -12,7 +12,7 @@ A command-line tool for animating Event-B models using the ProB model checker.
 
 ## Requirements
 
-- Java 8 or later
+- Java 21 or later
 - Gradle
 
 ## Building
