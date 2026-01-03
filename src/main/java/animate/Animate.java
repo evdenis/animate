@@ -325,7 +325,7 @@ public class Animate implements Callable<Integer> {
         Trace trace = start(stateSpace);
 
         if (jsonTrace != null) {
-            JsonMetadata metadata = new JsonMetadataBuilder("Trace", 5)
+            JsonMetadata metadata = new JsonMetadataBuilder("Trace", 6)
                     .withSavedNow()
                     .withCreator("animate")
                     .withProBCliVersion("version")
