@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<org.eventb.core.contextFile org.eventb.core.configuration="org.eventb.core.fwd" org.eventb.texttools.text_lastmodified="1506077582558" org.eventb.texttools.text_representation="context C1 // название контекста&#10;&#10;&#10;sets Union&#10;     Names // NAMES: множество возможных имён сущностей, ролей, административных ролей&#10;     Accesses // Rr: множество видов прав доступа&#10;     AccessRights // Ra: множество видов доступа&#10;&#10;&#10;constants Root // ROOT: корневая сущность-контейнер&#10;          SRoot&#10;          SpecialAdmRoles // ADMIN_ROLES: множество специальных административных ролей&#10;          EntitiesAR // административная роль entities_admin_role&#10;          SubjectsAR // административная роль subjects_admin_role&#10;          UsersAR // административная роль users_admin_role&#10;          RolesAR // административная роль roles_admin_role&#10;          ARolesAR // административная роль admin_roles_admin_role&#10;          ReadA // доступ на чтение&#10;          WriteA // доступ на запись&#10;          Read // право доступа на чтение&#10;          Write // право доступа на запись&#10;          Execute // право доступа на выполнение&#10;          Own // право доступа владения&#10;          CommonRole&#10;&#10;axioms&#10;  @UnionIsFinite finite(Union)&#10;  @RootType Root∈Union&#10;  @SRootType SRoot∈Union&#10;  @SpecialAdmRolesType SpecialAdmRoles⊆Union&#10;  @SpecialAdmRolesContent partition(SpecialAdmRoles, {EntitiesAR}, {SubjectsAR}, {UsersAR}, {RolesAR}, {ARolesAR})&#10;  @SpecialAdmRolesAreFinite finite(SpecialAdmRoles)&#10;  @AccessesPartition partition(Accesses, {ReadA}, {WriteA})&#10;  @AccessRightsPartition partition(AccessRights, {Read}, {Write}, {Execute}, {Own})&#10;  @CommonRoleType CommonRole∈Union&#10;  @InductionAxiom ∀s·s⊆ℕ ∧ 0∈s ∧ (∀n·n∈s ⇒ n+1∈s) ⇒ ℕ⊆s&#10;end&#10;" version="3">
+<org.eventb.core.carrierSet name="set1" org.eventb.core.comment="Artificial set of all possible elements of the model" org.eventb.core.identifier="Union"/>
+<org.eventb.core.carrierSet name="set2" org.eventb.core.comment="Set of all possible names for entities and roles" org.eventb.core.identifier="Names"/>
+<org.eventb.core.carrierSet name="set3" org.eventb.core.comment="Set of all possible accesses" org.eventb.core.identifier="Accesses"/>
+<org.eventb.core.carrierSet name="set4" org.eventb.core.comment="Set of all possible access rights (permissions)" org.eventb.core.identifier="AccessRights"/>
+<org.eventb.core.constant name="cst1" org.eventb.core.comment="Linux &quot;/&quot; root directory" org.eventb.core.identifier="Root"/>
+<org.eventb.core.constant name="cst2" org.eventb.core.comment="Artificial root process - doesn't exist in the real OS" org.eventb.core.identifier="SRoot"/>
+<org.eventb.core.constant name="cst3" org.eventb.core.comment="Set of special administrative roles" org.eventb.core.identifier="SpecialAdmRoles"/>
+<org.eventb.core.constant name="cst4" org.eventb.core.comment="Role from the SAR set" org.eventb.core.identifier="EntitiesAR"/>
+<org.eventb.core.constant name="cst5" org.eventb.core.comment="-" org.eventb.core.identifier="SubjectsAR"/>
+<org.eventb.core.constant name="cst6" org.eventb.core.comment="-" org.eventb.core.identifier="UsersAR"/>
+<org.eventb.core.constant name="cst7" org.eventb.core.comment="-" org.eventb.core.identifier="RolesAR"/>
+<org.eventb.core.constant name="cst8" org.eventb.core.comment="-" org.eventb.core.identifier="ARolesAR"/>
+<org.eventb.core.constant name="cst9" org.eventb.core.comment="Read access" org.eventb.core.identifier="ReadA"/>
+<org.eventb.core.constant name="cst10" org.eventb.core.comment="Write access" org.eventb.core.identifier="WriteA"/>
+<org.eventb.core.constant name="cst11" org.eventb.core.comment="Read access right" org.eventb.core.identifier="Read"/>
+<org.eventb.core.constant name="cst12" org.eventb.core.comment="Write access right" org.eventb.core.identifier="Write"/>
+<org.eventb.core.constant name="cst13" org.eventb.core.comment="Execute access right" org.eventb.core.identifier="Execute"/>
+<org.eventb.core.constant name="cst14" org.eventb.core.comment="Own access right" org.eventb.core.identifier="Own"/>
+<org.eventb.core.constant name="cst15" org.eventb.core.comment="Role that is common for all user accounts" org.eventb.core.identifier="CommonRole"/>
+<org.eventb.core.axiom name="axm1" org.eventb.core.label="UnionIsFinite" org.eventb.core.predicate="finite(Union)"/>
+<org.eventb.core.axiom name="axm2" org.eventb.core.label="RootType" org.eventb.core.predicate="Root ∈ Union"/>
+<org.eventb.core.axiom name="axm3" org.eventb.core.label="SRootType" org.eventb.core.predicate="SRoot ∈ Union"/>
+<org.eventb.core.axiom name="axm4" org.eventb.core.label="SpecialAdmRolesType" org.eventb.core.predicate="SpecialAdmRoles ⊆ Union"/>
+<org.eventb.core.axiom name="axm5" org.eventb.core.label="SpecialAdmRolesContent" org.eventb.core.predicate="partition(SpecialAdmRoles, {EntitiesAR}, {SubjectsAR}, {UsersAR}, {RolesAR}, {ARolesAR})"/>
+<org.eventb.core.axiom name="axm6" org.eventb.core.label="SpecialAdmRolesAreFinite" org.eventb.core.predicate="finite(SpecialAdmRoles)"/>
+<org.eventb.core.axiom name="axm7" org.eventb.core.label="AccessesPartition" org.eventb.core.predicate="partition(Accesses, {ReadA}, {WriteA})"/>
+<org.eventb.core.axiom name="axm8" org.eventb.core.label="AccessRightsPartition" org.eventb.core.predicate="partition(AccessRights, {Read}, {Write}, {Execute}, {Own})"/>
+<org.eventb.core.axiom name="axm9" org.eventb.core.label="CommonRoleType" org.eventb.core.predicate="CommonRole ∈ Union"/>
+<org.eventb.core.axiom name="axm10" org.eventb.core.label="InductionAxiom" org.eventb.core.predicate="∀s · s ⊆ ℕ ∧ 0 ∈ s ∧ (∀n · n ∈ s ⇒ n + 1 ∈ s) ⇒ ℕ ⊆ s"/>
+</org.eventb.core.contextFile>

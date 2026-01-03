@@ -44,7 +44,8 @@ public class AnimateCliTest {
         for (Object[] model : models) {
             String name = (String) model[0];
             // Get the highest numbered model from each directory (most refined)
-            if (name.contains("binary-search") && name.contains("M3.bum") ||
+            if (name.contains("base-model") && name.contains("M1.bum") ||
+                name.contains("binary-search") && name.contains("M3.bum") ||
                 name.contains("cars-on-bridge") && name.contains("M3.bum") ||
                 name.contains("file-system") && name.contains("M0.bum") ||
                 name.contains("traffic-light") && name.contains("M2.bum")) {

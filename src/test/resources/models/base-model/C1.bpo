@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<org.eventb.core.poFile org.eventb.core.poStamp="0">
+    <org.eventb.core.poPredicateSet name="ABSHYP" org.eventb.core.poStamp="0">
+        <org.eventb.core.poIdentifier name="Union" org.eventb.core.type="ℙ(Union)"/>
+        <org.eventb.core.poIdentifier name="AccessRights" org.eventb.core.type="ℙ(AccessRights)"/>
+        <org.eventb.core.poIdentifier name="Names" org.eventb.core.type="ℙ(Names)"/>
+        <org.eventb.core.poIdentifier name="Accesses" org.eventb.core.type="ℙ(Accesses)"/>
+        <org.eventb.core.poIdentifier name="CommonRole" org.eventb.core.type="Union"/>
+        <org.eventb.core.poIdentifier name="EntitiesAR" org.eventb.core.type="Union"/>
+        <org.eventb.core.poIdentifier name="WriteA" org.eventb.core.type="Accesses"/>
+        <org.eventb.core.poIdentifier name="Write" org.eventb.core.type="AccessRights"/>
+        <org.eventb.core.poIdentifier name="Execute" org.eventb.core.type="AccessRights"/>
+        <org.eventb.core.poIdentifier name="SubjectsAR" org.eventb.core.type="Union"/>
+        <org.eventb.core.poIdentifier name="Root" org.eventb.core.type="Union"/>
+        <org.eventb.core.poIdentifier name="ARolesAR" org.eventb.core.type="Union"/>
+        <org.eventb.core.poIdentifier name="Read" org.eventb.core.type="AccessRights"/>
+        <org.eventb.core.poIdentifier name="ReadA" org.eventb.core.type="Accesses"/>
+        <org.eventb.core.poIdentifier name="SpecialAdmRoles" org.eventb.core.type="ℙ(Union)"/>
+        <org.eventb.core.poIdentifier name="UsersAR" org.eventb.core.type="Union"/>
+        <org.eventb.core.poIdentifier name="RolesAR" org.eventb.core.type="Union"/>
+        <org.eventb.core.poIdentifier name="Own" org.eventb.core.type="AccessRights"/>
+        <org.eventb.core.poIdentifier name="SRoot" org.eventb.core.type="Union"/>
+    </org.eventb.core.poPredicateSet>
+    <org.eventb.core.poPredicateSet name="ALLHYP" org.eventb.core.parentSet="/base-model/C1.bpo|org.eventb.core.poFile#C1|org.eventb.core.poPredicateSet#ABSHYP" org.eventb.core.poStamp="0">
+        <org.eventb.core.poPredicate name="PRD0" org.eventb.core.predicate="finite(Union)" org.eventb.core.source="/base-model/C1.buc|org.eventb.core.contextFile#C1|org.eventb.core.axiom#axm1"/>
+        <org.eventb.core.poPredicate name="PRD1" org.eventb.core.predicate="Root∈Union" org.eventb.core.source="/base-model/C1.buc|org.eventb.core.contextFile#C1|org.eventb.core.axiom#axm2"/>
+        <org.eventb.core.poPredicate name="PRD2" org.eventb.core.predicate="SRoot∈Union" org.eventb.core.source="/base-model/C1.buc|org.eventb.core.contextFile#C1|org.eventb.core.axiom#axm3"/>
+        <org.eventb.core.poPredicate name="PRD3" org.eventb.core.predicate="SpecialAdmRoles⊆Union" org.eventb.core.source="/base-model/C1.buc|org.eventb.core.contextFile#C1|org.eventb.core.axiom#axm4"/>
+        <org.eventb.core.poPredicate name="PRD4" org.eventb.core.predicate="partition(SpecialAdmRoles,{EntitiesAR},{SubjectsAR},{UsersAR},{RolesAR},{ARolesAR})" org.eventb.core.source="/base-model/C1.buc|org.eventb.core.contextFile#C1|org.eventb.core.axiom#axm5"/>
+        <org.eventb.core.poPredicate name="PRD5" org.eventb.core.predicate="finite(SpecialAdmRoles)" org.eventb.core.source="/base-model/C1.buc|org.eventb.core.contextFile#C1|org.eventb.core.axiom#axm6"/>
+        <org.eventb.core.poPredicate name="PRD6" org.eventb.core.predicate="partition(Accesses,{ReadA},{WriteA})" org.eventb.core.source="/base-model/C1.buc|org.eventb.core.contextFile#C1|org.eventb.core.axiom#axm7"/>
+        <org.eventb.core.poPredicate name="PRD7" org.eventb.core.predicate="partition(AccessRights,{Read},{Write},{Execute},{Own})" org.eventb.core.source="/base-model/C1.buc|org.eventb.core.contextFile#C1|org.eventb.core.axiom#axm8"/>
+        <org.eventb.core.poPredicate name="PRD8" org.eventb.core.predicate="CommonRole∈Union" org.eventb.core.source="/base-model/C1.buc|org.eventb.core.contextFile#C1|org.eventb.core.axiom#axm9"/>
+        <org.eventb.core.poPredicate name="PRD9" org.eventb.core.predicate="∀s⦂ℙ(ℤ)·s⊆ℕ∧0∈s∧(∀n⦂ℤ·n∈s⇒n+1∈s)⇒ℕ⊆s" org.eventb.core.source="/base-model/C1.buc|org.eventb.core.contextFile#C1|org.eventb.core.axiom#axm10"/>
+    </org.eventb.core.poPredicateSet>
+</org.eventb.core.poFile>
