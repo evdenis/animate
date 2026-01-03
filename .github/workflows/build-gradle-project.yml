@@ -44,4 +44,4 @@ jobs:
       uses: actions/upload-artifact@v6
       with:
         name: animate.jar
-        path: build/libs/animate.jar
+        path: build/libs/animate-*.jar
