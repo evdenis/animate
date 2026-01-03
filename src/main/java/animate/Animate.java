@@ -264,42 +264,49 @@ public class Animate implements Callable<Integer> {
             put("invariant", invariant);
         }};
 
-        logger.info("Initializing model");
-        stateSpace.startTransaction();
-        Trace trace = new Trace(stateSpace);
+        // Check if any visualization commands are specified
+        boolean hasVisualizationCmd = machine != null || events != null || properties != null || invariant != null;
 
-        // Initialize model - some models don't have constants
-        try {
-            trace = trace.execute("$setup_constants");
-        } catch (IllegalArgumentException e) {
-            // No constants to set up, continue
-            logger.debug("No setup_constants event available");
-        }
-        trace = trace.execute("$initialise_machine");
-        stateSpace.endTransaction();
+        Trace trace = null;
+        if (hasVisualizationCmd) {
+            logger.info("Initializing model");
+            stateSpace.startTransaction();
+            trace = new Trace(stateSpace);
 
-        boolean anyCmd = false;
-        for (Map.Entry<String, Path> el : visualizationCommand.entrySet()) {
-            Path path = el.getValue();
-            if (path != null) {
-                anyCmd = true;
-                logger.info("Saving {} to {}", el.getKey(), path);
-                // machine_hierarchy, event_hierarchy, properties, invariant
-                DotVisualizationCommand cmd = DotVisualizationCommand.getByName(el.getKey(), trace);
-                String extension = MoreFiles.getFileExtension(path);
-                if (extension.equals("dot")) {
-                    cmd.visualizeAsDotToFile(path, new ArrayList<>());
-                } else if (extension.equals("svg")) {
-                    cmd.visualizeAsSvgToFile(path, new ArrayList<>());
-                } else {
-                    System.err.println("Unknown extension " + extension);
-                    err = 1;
+            // Initialize model - some models don't have constants
+            try {
+                trace = trace.execute("$setup_constants");
+            } catch (IllegalArgumentException e) {
+                // No constants to set up, continue
+                logger.debug("No setup_constants event available");
+            }
+            try {
+                trace = trace.execute("$initialise_machine");
+            } catch (Exception e) {
+                System.err.println("Warning: Could not fully initialize model: " + e.getMessage());
+            }
+            stateSpace.endTransaction();
+
+            for (Map.Entry<String, Path> el : visualizationCommand.entrySet()) {
+                Path path = el.getValue();
+                if (path != null) {
+                    logger.info("Saving {} to {}", el.getKey(), path);
+                    // machine_hierarchy, event_hierarchy, properties, invariant
+                    DotVisualizationCommand cmd = DotVisualizationCommand.getByName(el.getKey(), trace);
+                    String extension = MoreFiles.getFileExtension(path);
+                    if (extension.equals("dot")) {
+                        cmd.visualizeAsDotToFile(path, new ArrayList<>());
+                    } else if (extension.equals("svg")) {
+                        cmd.visualizeAsSvgToFile(path, new ArrayList<>());
+                    } else {
+                        System.err.println("Unknown extension " + extension);
+                        err = 1;
+                    }
                 }
             }
         }
 
         if (eventb != null) {
-            anyCmd = true;
             logger.info("Saving B model to {}", eventb);
             try {
                 eventb_save(stateSpace, eventb.toString(), true);
@@ -309,7 +316,7 @@ public class Animate implements Callable<Integer> {
             }
         }
 
-        if (!anyCmd) {
+        if (!hasVisualizationCmd && eventb == null) {
             EventBModel model = (EventBModel) stateSpace.getModel();
             System.out.print(model.calculateDependencies().getGraph());
         }
