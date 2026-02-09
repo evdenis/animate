@@ -256,6 +256,22 @@ public class Animate implements Callable<Integer> {
         }
     }
 
+    private int saveVisualization(String name, Path path, Trace trace) {
+        if (path == null) return 0;
+        logger.info("Saving {} to {}", name, path);
+        DotVisualizationCommand cmd = DotVisualizationCommand.getByName(name, trace);
+        String extension = MoreFiles.getFileExtension(path);
+        if (extension.equals("dot")) {
+            cmd.visualizeAsDotToFile(path, new ArrayList<>());
+        } else if (extension.equals("svg")) {
+            cmd.visualizeAsSvgToFile(path, new ArrayList<>());
+        } else {
+            System.err.println("Unknown extension " + extension);
+            return 1;
+        }
+        return 0;
+    }
+
     @Command(description = "Dump information about the model")
     public Integer info(@Option(names = {"-m", "--machine"}, paramLabel = "machine.dot", description = "save machine hierarchy graph in dot or svg")
                         final Path machine,
@@ -273,20 +289,12 @@ public class Animate implements Callable<Integer> {
         if (stateSpace == null) return 1;
 
         try {
-            Map<String, Path> visualizationCommand = new HashMap<>();
-            visualizationCommand.put("machine_hierarchy", machine);
-            visualizationCommand.put("event_hierarchy", events);
-            visualizationCommand.put("properties", properties);
-            visualizationCommand.put("invariant", invariant);
-
-            // Check if any visualization commands are specified
             boolean hasVisualizationCmd = machine != null || events != null || properties != null || invariant != null;
 
-            Trace trace = null;
             if (hasVisualizationCmd) {
                 logger.info("Initializing model");
                 stateSpace.startTransaction();
-                trace = new Trace(stateSpace);
+                Trace trace = new Trace(stateSpace);
 
                 // Initialize model - some models don't have constants
                 try {
@@ -302,23 +310,10 @@ public class Animate implements Callable<Integer> {
                 }
                 stateSpace.endTransaction();
 
-                for (Map.Entry<String, Path> el : visualizationCommand.entrySet()) {
-                    Path path = el.getValue();
-                    if (path != null) {
-                        logger.info("Saving {} to {}", el.getKey(), path);
-                        // machine_hierarchy, event_hierarchy, properties, invariant
-                        DotVisualizationCommand cmd = DotVisualizationCommand.getByName(el.getKey(), trace);
-                        String extension = MoreFiles.getFileExtension(path);
-                        if (extension.equals("dot")) {
-                            cmd.visualizeAsDotToFile(path, new ArrayList<>());
-                        } else if (extension.equals("svg")) {
-                            cmd.visualizeAsSvgToFile(path, new ArrayList<>());
-                        } else {
-                            System.err.println("Unknown extension " + extension);
-                            err = 1;
-                        }
-                    }
-                }
+                err |= saveVisualization("machine_hierarchy", machine, trace);
+                err |= saveVisualization("event_hierarchy", events, trace);
+                err |= saveVisualization("properties", properties, trace);
+                err |= saveVisualization("invariant", invariant, trace);
             }
 
             if (eventb != null) {
