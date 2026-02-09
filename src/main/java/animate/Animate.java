@@ -120,11 +120,11 @@ public class Animate implements Callable<Integer> {
     }
 
     // Same as api.eventb_save, but pretty-printed
-    private void eventbSave(final StateSpace s, final String path, final boolean useIndentation) throws IOException {
+    private void eventbSave(final StateSpace s, final String path) throws IOException {
         final EventBModelTranslator translator = new EventBModelTranslator((EventBModel) s.getModel());
 
         try (final FileOutputStream fos = new FileOutputStream(path)) {
-            final PrologTermOutput pto = new PrologTermOutput(fos, useIndentation);
+            final PrologTermOutput pto = new PrologTermOutput(fos, true);
             pto.openTerm("package");
             translator.printProlog(pto);
             pto.closeTerm();
@@ -327,7 +327,7 @@ public class Animate implements Callable<Integer> {
             if (eventb != null) {
                 logger.info("Saving B model to {}", eventb);
                 try {
-                    eventbSave(stateSpace, eventb.toString(), true);
+                    eventbSave(stateSpace, eventb.toString());
                 } catch (IOException e) {
                     logger.error("Error saving model", e);
                     System.err.println("Error saving model: " + e.getMessage());
