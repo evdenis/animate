@@ -50,7 +50,7 @@ public class Animate implements Callable<Integer> {
     private static final String INITIALISE_MACHINE_EVENT = "$initialise_machine";
 
     private final Api api;
-    private final TraceManager trace_manager;
+    private final TraceManager traceManager;
 
     private static final Logger logger = (Logger) LoggerFactory.getLogger(Animate.class);
 
@@ -70,9 +70,9 @@ public class Animate implements Callable<Integer> {
     boolean debug;
 
     @Inject
-    public Animate(Api api, TraceManager trace_manager) {
+    public Animate(Api api, TraceManager traceManager) {
         this.api = api;
-        this.trace_manager = trace_manager;
+        this.traceManager = traceManager;
     }
 
     public void printCoverage(StateSpace stateSpace) {
@@ -110,21 +110,21 @@ public class Animate implements Callable<Integer> {
                 .collect(Collectors.toList());
         List<AbstractEvalResult> results = state.eval(invariants);
 
-        List<String> violated_invariants = IntStream
+        List<String> violatedInvariants = IntStream
                 .range(0, results.size())
                 .filter(i -> results.get(i) != EvalResult.TRUE)
                 .mapToObj(i -> invariants.get(i).toString())
                 .collect(Collectors.toList());
 
-        return violated_invariants;
+        return violatedInvariants;
     }
 
     // Same as api.eventb_save, but pretty-printed
-    public void eventb_save(final StateSpace s, final String path, final boolean use_indentation) throws IOException {
+    public void eventbSave(final StateSpace s, final String path, final boolean useIndentation) throws IOException {
         final EventBModelTranslator translator = new EventBModelTranslator((EventBModel) s.getModel());
 
         try (final FileOutputStream fos = new FileOutputStream(path)) {
-            final PrologTermOutput pto = new PrologTermOutput(fos, use_indentation);
+            final PrologTermOutput pto = new PrologTermOutput(fos, useIndentation);
             pto.openTerm("package");
             translator.printProlog(pto);
             pto.closeTerm();
@@ -154,7 +154,7 @@ public class Animate implements Callable<Integer> {
         }
     }
 
-    public StateSpace load_model() throws IOException {
+    public StateSpace loadModel() throws IOException {
         validateInput();
 
         logger.info("Load Event-B Machine");
@@ -200,12 +200,12 @@ public class Animate implements Callable<Integer> {
         try {
             System.out.println("Animation steps:");
             for (int i = 0; i < steps; i++) {
-                Trace new_trace = trace.anyEvent(null);
-                if (new_trace == trace) {
+                Trace newTrace = trace.anyEvent(null);
+                if (newTrace == trace) {
                     System.err.println("Error: Can't find an event to execute from this state (deadlock)");
                     break;
                 }
-                trace = new_trace;
+                trace = newTrace;
 
                 Transition transition = trace.getCurrent().getTransition().evaluate(FormulaExpand.EXPAND);
                 System.out.println(transition.getPrettyRep());
@@ -234,7 +234,7 @@ public class Animate implements Callable<Integer> {
 
         StateSpace stateSpace;
         try {
-            stateSpace = load_model();
+            stateSpace = loadModel();
         } catch (Exception e) {
             logger.error("Error loading model", e);
             System.err.println("Error loading model: " + e.getMessage());
@@ -268,7 +268,7 @@ public class Animate implements Callable<Integer> {
 
         StateSpace stateSpace;
         try {
-            stateSpace = load_model();
+            stateSpace = loadModel();
         } catch (Exception e) {
             logger.error("Error loading model", e);
             System.err.println("Error loading model: " + e.getMessage());
@@ -327,7 +327,7 @@ public class Animate implements Callable<Integer> {
             if (eventb != null) {
                 logger.info("Saving B model to {}", eventb);
                 try {
-                    eventb_save(stateSpace, eventb.toString(), true);
+                    eventbSave(stateSpace, eventb.toString(), true);
                 } catch (IOException e) {
                     logger.error("Error saving model", e);
                     System.err.println("Error saving model: " + e.getMessage());
@@ -352,7 +352,7 @@ public class Animate implements Callable<Integer> {
 
         StateSpace stateSpace;
         try {
-            stateSpace = load_model();
+            stateSpace = loadModel();
         } catch (Exception e) {
             logger.error("Error loading model", e);
             System.err.println("Error loading model: " + e.getMessage());
@@ -372,7 +372,7 @@ public class Animate implements Callable<Integer> {
             logger.info("Saving animation trace to {}", jsonTrace);
 
             try {
-                trace_manager.save(jsonTrace, abstractJsonFile);
+                traceManager.save(jsonTrace, abstractJsonFile);
             } catch (IOException e) {
                 logger.error("Error saving trace", e);
                 System.err.println("Error saving trace: " + e.getMessage());
