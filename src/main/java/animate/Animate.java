@@ -1,8 +1,8 @@
 package animate;
 
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 import java.util.concurrent.Callable;
@@ -55,7 +55,7 @@ public class Animate implements Callable<Integer> {
     private static final Logger logger = (Logger) LoggerFactory.getLogger(Animate.class);
 
     @Parameters(description = "path to model.bum file", scope = ScopeType.INHERIT)
-    File model;
+    Path model;
     @Option(names = { "-s", "--steps" }, defaultValue = "5", description = "number of random steps (default: ${DEFAULT-VALUE})")
     int steps;
     @Option(names = { "-z", "--size" }, defaultValue = "4", description = "default size for ProB sets (default: ${DEFAULT-VALUE})")
@@ -137,14 +137,14 @@ public class Animate implements Callable<Integer> {
         if (model == null) {
             throw new IllegalArgumentException("Model file is required");
         }
-        if (!model.exists()) {
-            throw new IllegalArgumentException("Model file does not exist: " + model.getPath());
+        if (!Files.exists(model)) {
+            throw new IllegalArgumentException("Model file does not exist: " + model);
         }
-        if (!model.isFile()) {
-            throw new IllegalArgumentException("Model path is not a file: " + model.getPath());
+        if (!Files.isRegularFile(model)) {
+            throw new IllegalArgumentException("Model path is not a file: " + model);
         }
-        if (!model.canRead()) {
-            throw new IllegalArgumentException("Model file is not readable: " + model.getPath());
+        if (!Files.isReadable(model)) {
+            throw new IllegalArgumentException("Model file is not readable: " + model);
         }
         if (steps <= 0) {
             throw new IllegalArgumentException("Number of steps must be positive, got: " + steps);
@@ -176,7 +176,7 @@ public class Animate implements Callable<Integer> {
             prefs.put("PERFORMANCE_INFO", "true");
         }
 
-        stateSpace = api.eventb_load(model.getPath(), prefs);
+        stateSpace = api.eventb_load(model.toString(), prefs);
 
         GetVersionCommand version = new GetVersionCommand();
         stateSpace.execute(version);
