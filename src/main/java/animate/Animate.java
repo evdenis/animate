@@ -91,23 +91,6 @@ public class Animate implements Callable<Integer> {
         }
     }
 
-    static class InvariantsViolation extends Exception {
-        public InvariantsViolation() {
-        }
-
-        public InvariantsViolation(String message) {
-            super(message);
-        }
-    }
-
-    static class DeadlockedState extends Exception {
-        public DeadlockedState() {
-        }
-
-        public DeadlockedState(String message) {
-            super(message);
-        }
-    }
 
     public List<String> findViolatedInvariants(StateSpace stateSpace, State state) {
         Object mainComponent = stateSpace.getMainComponent();
@@ -216,26 +199,21 @@ public class Animate implements Callable<Integer> {
 
         try {
             System.out.println("Animation steps:");
-            try {
-                for (int i = 0; i < steps; i++) {
-                    Trace new_trace = trace.anyEvent(null);
-                    if (new_trace == trace)
-                        throw new DeadlockedState("Can't find an event to execute from this state (deadlock)");
-                    trace = new_trace;
-
-
-                    Transition transition = trace.getCurrent().getTransition().evaluate(FormulaExpand.EXPAND);
-                    System.out.println(transition.getPrettyRep());
-                    if (checkInv && !trace.getCurrentState().isInvariantOk()) {
-                        throw new InvariantsViolation();
-                    }
+            for (int i = 0; i < steps; i++) {
+                Trace new_trace = trace.anyEvent(null);
+                if (new_trace == trace) {
+                    System.err.println("Error: Can't find an event to execute from this state (deadlock)");
+                    break;
                 }
-            } catch (InvariantsViolation e) {
-                List<String> inv = findViolatedInvariants(stateSpace, trace.getCurrentState());
-                System.err.println("Error: violated invariants:\n\t - " + String.join("\n\t - ", inv));
-            } catch (Exception e) {
-                logger.error("Error during animation", e);
-                System.err.println("Error: " + e.getMessage());
+                trace = new_trace;
+
+                Transition transition = trace.getCurrent().getTransition().evaluate(FormulaExpand.EXPAND);
+                System.out.println(transition.getPrettyRep());
+                if (checkInv && !trace.getCurrentState().isInvariantOk()) {
+                    List<String> inv = findViolatedInvariants(stateSpace, trace.getCurrentState());
+                    System.err.println("Error: violated invariants:\n\t - " + String.join("\n\t - ", inv));
+                    break;
+                }
             }
             System.out.println();
 
