@@ -195,6 +195,17 @@ public class Animate implements Callable<Integer> {
         }
     }
 
+    private StateSpace initAndLoadModel() {
+        initLogging();
+        try {
+            return loadModel();
+        } catch (Exception e) {
+            logger.error("Error loading model", e);
+            System.err.println("Error loading model: " + e.getMessage());
+            return null;
+        }
+    }
+
     public Trace start(final StateSpace stateSpace) {
         stateSpace.startTransaction();
         Trace trace = new Trace(stateSpace);
@@ -232,16 +243,8 @@ public class Animate implements Callable<Integer> {
     @Command(description = "Replay json trace")
     public Integer replay(@Option(names = {"-t", "--trace"}, required = true, paramLabel = "trace.json", description = "Path to a json trace")
                           final Path jsonTrace){
-        initLogging();
-
-        StateSpace stateSpace;
-        try {
-            stateSpace = loadModel();
-        } catch (Exception e) {
-            logger.error("Error loading model", e);
-            System.err.println("Error loading model: " + e.getMessage());
-            return 1;
-        }
+        StateSpace stateSpace = initAndLoadModel();
+        if (stateSpace == null) return 1;
 
         try {
             System.out.println("Starting trace replay. Use --debug to view steps.");
@@ -266,16 +269,8 @@ public class Animate implements Callable<Integer> {
                         final Path eventb) {
         int err = 0;
 
-        initLogging();
-
-        StateSpace stateSpace;
-        try {
-            stateSpace = loadModel();
-        } catch (Exception e) {
-            logger.error("Error loading model", e);
-            System.err.println("Error loading model: " + e.getMessage());
-            return 1;
-        }
+        StateSpace stateSpace = initAndLoadModel();
+        if (stateSpace == null) return 1;
 
         try {
             Map<String, Path> visualizationCommand = new HashMap<>();
@@ -350,16 +345,8 @@ public class Animate implements Callable<Integer> {
 
     @Override
     public Integer call() {
-        initLogging();
-
-        StateSpace stateSpace;
-        try {
-            stateSpace = loadModel();
-        } catch (Exception e) {
-            logger.error("Error loading model", e);
-            System.err.println("Error loading model: " + e.getMessage());
-            return 1;
-        }
+        StateSpace stateSpace = initAndLoadModel();
+        if (stateSpace == null) return 1;
 
         try {
             Trace trace = start(stateSpace);
