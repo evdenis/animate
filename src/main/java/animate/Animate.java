@@ -70,9 +70,9 @@ public class Animate implements Callable<Integer> {
     boolean debug;
 
     @Inject
-    public Animate(Api api) {
+    public Animate(Api api, TraceManager trace_manager) {
         this.api = api;
-        this.trace_manager = INJECTOR.getInstance(TraceManager.class);
+        this.trace_manager = trace_manager;
     }
 
     public void printCoverage(StateSpace stateSpace) {
