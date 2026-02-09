@@ -359,30 +359,32 @@ public class Animate implements Callable<Integer> {
             return 1;
         }
 
-        Trace trace = start(stateSpace);
+        try {
+            Trace trace = start(stateSpace);
 
-        if (jsonTrace != null) {
-            JsonMetadata metadata = new JsonMetadataBuilder("Trace", 6)
-                    .withSavedNow()
-                    .withCreator("animate")
-                    .withProBCliVersion("version")
-                    .withModelName(stateSpace.getMainComponent().toString())
-                    .build();
-            TraceJsonFile abstractJsonFile = new TraceJsonFile(trace, metadata);
-            logger.info("Saving animation trace to {}", jsonTrace);
+            if (jsonTrace != null) {
+                JsonMetadata metadata = new JsonMetadataBuilder("Trace", 6)
+                        .withSavedNow()
+                        .withCreator("animate")
+                        .withProBCliVersion("version")
+                        .withModelName(stateSpace.getMainComponent().toString())
+                        .build();
+                TraceJsonFile abstractJsonFile = new TraceJsonFile(trace, metadata);
+                logger.info("Saving animation trace to {}", jsonTrace);
 
-            try {
-                traceManager.save(jsonTrace, abstractJsonFile);
-            } catch (IOException e) {
-                logger.error("Error saving trace", e);
-                System.err.println("Error saving trace: " + e.getMessage());
-                return 1;
+                try {
+                    traceManager.save(jsonTrace, abstractJsonFile);
+                } catch (IOException e) {
+                    logger.error("Error saving trace", e);
+                    System.err.println("Error saving trace: " + e.getMessage());
+                    return 1;
+                }
             }
+
+            return 0;
+        } finally {
+            stateSpace.kill();
         }
-
-        stateSpace.kill();
-
-        return 0;
     }
 
     public static int execute(String[] args) {
