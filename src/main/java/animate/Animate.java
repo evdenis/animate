@@ -92,7 +92,6 @@ public class Animate implements Callable<Integer> {
         }
     }
 
-
     private List<String> findViolatedInvariants(StateSpace stateSpace, State state) {
         Object mainComponent = stateSpace.getMainComponent();
         if (mainComponent == null) {
@@ -160,8 +159,6 @@ public class Animate implements Callable<Integer> {
 
         logger.info("Load Event-B Machine");
 
-        StateSpace stateSpace;
-
         Map<String, String> prefs = new HashMap<>();
         prefs.put("MEMOIZE_FUNCTIONS", "true");
         prefs.put("SYMBOLIC", "true");
@@ -177,7 +174,7 @@ public class Animate implements Callable<Integer> {
             prefs.put("PERFORMANCE_INFO", "true");
         }
 
-        stateSpace = api.eventb_load(model.toString(), prefs);
+        StateSpace stateSpace = api.eventb_load(model.toString(), prefs);
 
         GetVersionCommand version = new GetVersionCommand();
         stateSpace.execute(version);
