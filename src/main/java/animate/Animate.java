@@ -51,6 +51,7 @@ public class Animate implements Callable<Integer> {
 
     private final Api api;
     private final TraceManager traceManager;
+    private String probVersionString;
 
     private static final Logger logger = (Logger) LoggerFactory.getLogger(Animate.class);
 
@@ -180,7 +181,8 @@ public class Animate implements Callable<Integer> {
 
         GetVersionCommand version = new GetVersionCommand();
         stateSpace.execute(version);
-        logger.info("ProB Version: " + version.getVersionString() + "\n");
+        probVersionString = version.getVersionString();
+        logger.info("ProB Version: " + probVersionString + "\n");
 
         return stateSpace;
     }
@@ -366,7 +368,7 @@ public class Animate implements Callable<Integer> {
                 JsonMetadata metadata = new JsonMetadataBuilder("Trace", 6)
                         .withSavedNow()
                         .withCreator("animate")
-                        .withProBCliVersion("version")
+                        .withProBCliVersion(probVersionString)
                         .withModelName(stateSpace.getMainComponent().toString())
                         .build();
                 TraceJsonFile abstractJsonFile = new TraceJsonFile(trace, metadata);
