@@ -75,7 +75,7 @@ public class Animate implements Callable<Integer> {
         this.traceManager = traceManager;
     }
 
-    public void printCoverage(StateSpace stateSpace) {
+    private void printCoverage(StateSpace stateSpace) {
         ComputeCoverageCommand cmd = new ComputeCoverageCommand();
         stateSpace.execute(cmd);
         ComputeCoverageResult coverage = cmd.getResult();
@@ -92,7 +92,7 @@ public class Animate implements Callable<Integer> {
     }
 
 
-    public List<String> findViolatedInvariants(StateSpace stateSpace, State state) {
+    private List<String> findViolatedInvariants(StateSpace stateSpace, State state) {
         Object mainComponent = stateSpace.getMainComponent();
         if (mainComponent == null) {
             logger.warn("Main component is null, cannot check invariants");
@@ -120,7 +120,7 @@ public class Animate implements Callable<Integer> {
     }
 
     // Same as api.eventb_save, but pretty-printed
-    public void eventbSave(final StateSpace s, final String path, final boolean useIndentation) throws IOException {
+    private void eventbSave(final StateSpace s, final String path, final boolean useIndentation) throws IOException {
         final EventBModelTranslator translator = new EventBModelTranslator((EventBModel) s.getModel());
 
         try (final FileOutputStream fos = new FileOutputStream(path)) {
@@ -154,7 +154,7 @@ public class Animate implements Callable<Integer> {
         }
     }
 
-    public StateSpace loadModel() throws IOException {
+    private StateSpace loadModel() throws IOException {
         validateInput();
 
         logger.info("Load Event-B Machine");
@@ -185,7 +185,7 @@ public class Animate implements Callable<Integer> {
         return stateSpace;
     }
 
-    public void initLogging() {
+    private void initLogging() {
         if (!debug) {
             Logger root = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
             root.setLevel(Level.WARN);
