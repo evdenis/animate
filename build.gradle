@@ -4,12 +4,15 @@ apply plugin: 'application'
 
 version = '2.0'
 
-sourceCompatibility = 11
-targetCompatibility = 11
-
+java {
+	sourceCompatibility = JavaVersion.VERSION_11
+	targetCompatibility = JavaVersion.VERSION_11
+}
 
 def prob_version = "4.15.0"
-mainClassName = "animate/Animate"
+application {
+	mainClass = "animate.Animate"
+}
 
 
 repositories {
