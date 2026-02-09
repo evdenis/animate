@@ -9,7 +9,7 @@ java {
 	targetCompatibility = JavaVersion.VERSION_11
 }
 
-def prob_version = "4.15.0"
+def prob_version = "4.15.1"
 application {
 	mainClass = "animate.Animate"
 }
