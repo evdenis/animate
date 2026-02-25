@@ -59,9 +59,11 @@ Export options:
 - `-i, --invariant <file>` - Save invariant graph (.dot or .svg)
 - `-b, --bmodel <file>` - Dump prolog model to .eventb file
 
-## GitHub Action
+## CI Integration
 
-Use `animate` in your CI pipelines without building from source:
+Use `animate` in your CI pipelines without building from source.
+
+### GitHub Actions
 
 ```yaml
 - uses: evdenis/animate@v2
@@ -69,7 +71,7 @@ Use `animate` in your CI pipelines without building from source:
     args: 'path/to/model.bum'
 ```
 
-### Inputs
+#### Inputs
 
 | Input | Description | Required | Default |
 |-------|-------------|----------|---------|
@@ -77,7 +79,7 @@ Use `animate` in your CI pipelines without building from source:
 | `version` | Release version tag (e.g., `v2.0`) | No | `latest` |
 | `java-version` | Java version to use (must be 21 or later) | No | `21` |
 
-### Examples
+#### Examples
 
 ```yaml
 # Check invariants with 20 steps
@@ -95,6 +97,53 @@ Use `animate` in your CI pipelines without building from source:
   with:
     args: 'path/to/model.bum'
     version: 'v1.0'
+```
+
+### GitLab CI
+
+Include the reusable template and extend the `.animate` hidden job:
+
+```yaml
+include:
+  - remote: 'https://raw.githubusercontent.com/evdenis/animate/v2.0/.gitlab-ci-template.yml'
+
+animate-model:
+  extends: .animate
+  variables:
+    ANIMATE_ARGS: 'path/to/model.bum'
+```
+
+#### Variables
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `ANIMATE_ARGS` | Arguments passed to the animate CLI | `''` |
+| `ANIMATE_VERSION` | Release version tag (e.g., `v2.0`) | `latest` |
+
+#### Examples
+
+```yaml
+include:
+  - remote: 'https://raw.githubusercontent.com/evdenis/animate/v2.0/.gitlab-ci-template.yml'
+
+# Check invariants with 20 steps
+animate-check:
+  extends: .animate
+  variables:
+    ANIMATE_ARGS: '--steps 20 --invariants path/to/model.bum'
+
+# Replay a trace
+animate-replay:
+  extends: .animate
+  variables:
+    ANIMATE_ARGS: 'replay -t tests/trace.json models/system.bum'
+
+# Pin to a specific release
+animate-pinned:
+  extends: .animate
+  variables:
+    ANIMATE_ARGS: 'path/to/model.bum'
+    ANIMATE_VERSION: 'v1.0'
 ```
 
 ## License
