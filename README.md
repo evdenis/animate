@@ -66,7 +66,7 @@ Use `animate` in your CI pipelines without building from source.
 ### GitHub Actions
 
 ```yaml
-- uses: evdenis/animate@v2
+- uses: evdenis/animate@v3
   with:
     args: 'path/to/model.bum'
 ```
@@ -83,17 +83,17 @@ Use `animate` in your CI pipelines without building from source.
 
 ```yaml
 # Check invariants with 20 steps
-- uses: evdenis/animate@v2
+- uses: evdenis/animate@v3
   with:
     args: '--steps 20 --invariants path/to/model.bum'
 
 # Replay a trace
-- uses: evdenis/animate@v2
+- uses: evdenis/animate@v3
   with:
     args: 'replay -t tests/trace.json models/system.bum'
 
 # Pin to a specific release
-- uses: evdenis/animate@v2
+- uses: evdenis/animate@v3
   with:
     args: 'path/to/model.bum'
     version: 'v1.0'
@@ -105,7 +105,7 @@ Include the reusable template and extend the `.animate` hidden job:
 
 ```yaml
 include:
-  - remote: 'https://raw.githubusercontent.com/evdenis/animate/v2.0/.gitlab-ci-template.yml'
+  - remote: 'https://raw.githubusercontent.com/evdenis/animate/v3.0/.gitlab-ci-template.yml'
 
 animate-model:
   extends: .animate
@@ -124,7 +124,7 @@ animate-model:
 
 ```yaml
 include:
-  - remote: 'https://raw.githubusercontent.com/evdenis/animate/v2.0/.gitlab-ci-template.yml'
+  - remote: 'https://raw.githubusercontent.com/evdenis/animate/v3.0/.gitlab-ci-template.yml'
 
 # Check invariants with 20 steps
 animate-check:
