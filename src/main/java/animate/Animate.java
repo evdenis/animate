@@ -1,20 +1,12 @@
 package animate;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.*;
-import java.util.concurrent.Callable;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.Logger;
 import com.google.common.io.MoreFiles;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Stage;
-
 import de.prob.animator.command.ComputeCoverageCommand;
 import de.prob.animator.command.ComputeCoverageCommand.ComputeCoverageResult;
 import de.prob.animator.command.GetVersionCommand;
@@ -31,349 +23,400 @@ import de.prob.model.eventb.translate.EventBModelTranslator;
 import de.prob.prolog.output.PrologTermOutput;
 import de.prob.scripting.Api;
 import de.prob.statespace.*;
-
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.*;
+import java.util.concurrent.Callable;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import org.slf4j.LoggerFactory;
-import ch.qos.logback.classic.Level;
-import ch.qos.logback.classic.Logger;
-
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 import picocli.CommandLine.ScopeType;
 
-@Command(name = "animate", sortOptions = false, version = "animate @VERSION@",  subcommands = {CommandLine.HelpCommand.class})
+@Command(
+    name = "animate",
+    sortOptions = false,
+    version = "animate @VERSION@",
+    subcommands = {CommandLine.HelpCommand.class})
 public class Animate implements Callable<Integer> {
 
-    private static final Injector INJECTOR = Guice.createInjector(Stage.PRODUCTION, new Config());
-    private static final String SETUP_CONSTANTS_EVENT = "$setup_constants";
-    private static final String INITIALISE_MACHINE_EVENT = "$initialise_machine";
+  private static final Injector INJECTOR = Guice.createInjector(Stage.PRODUCTION, new Config());
+  private static final String SETUP_CONSTANTS_EVENT = "$setup_constants";
+  private static final String INITIALISE_MACHINE_EVENT = "$initialise_machine";
 
-    private final Api api;
-    private final TraceManager traceManager;
-    private String probVersionString;
+  private final Api api;
+  private final TraceManager traceManager;
+  private String probVersionString;
 
-    private static final Logger logger = (Logger) LoggerFactory.getLogger(Animate.class);
+  private static final Logger logger = (Logger) LoggerFactory.getLogger(Animate.class);
 
-    @Parameters(description = "path to model.bum file", scope = ScopeType.INHERIT)
-    Path model;
-    @Option(names = { "-s", "--steps" }, defaultValue = "5", description = "number of random steps (default: ${DEFAULT-VALUE})")
-    int steps;
-    @Option(names = { "-z", "--size" }, defaultValue = "4", description = "default size for ProB sets (default: ${DEFAULT-VALUE})")
-    int size;
-    @Option(names = {"-i", "--invariants"}, description = "check invariants (default: ${DEFAULT-VALUE})")
-    boolean checkInv;
-    @Option(names = "--perf", description = "print ProB performance info (default: ${DEFAULT-VALUE})")
-    boolean perf;
-    @Option(names = "--save", paramLabel = "trace.json", description = "save animation trace in json to a file")
-    Path jsonTrace;
-    @Option(names = "--debug", description = "enable debug log (default: ${DEFAULT-VALUE})", scope = ScopeType.INHERIT)
-    boolean debug;
+  @Parameters(description = "path to model.bum file", scope = ScopeType.INHERIT)
+  Path model;
 
-    @Inject
-    public Animate(Api api, TraceManager traceManager) {
-        this.api = api;
-        this.traceManager = traceManager;
+  @Option(
+      names = {"-s", "--steps"},
+      defaultValue = "5",
+      description = "number of random steps (default: ${DEFAULT-VALUE})")
+  int steps;
+
+  @Option(
+      names = {"-z", "--size"},
+      defaultValue = "4",
+      description = "default size for ProB sets (default: ${DEFAULT-VALUE})")
+  int size;
+
+  @Option(
+      names = {"-i", "--invariants"},
+      description = "check invariants (default: ${DEFAULT-VALUE})")
+  boolean checkInv;
+
+  @Option(names = "--perf", description = "print ProB performance info (default: ${DEFAULT-VALUE})")
+  boolean perf;
+
+  @Option(
+      names = "--save",
+      paramLabel = "trace.json",
+      description = "save animation trace in json to a file")
+  Path jsonTrace;
+
+  @Option(
+      names = "--debug",
+      description = "enable debug log (default: ${DEFAULT-VALUE})",
+      scope = ScopeType.INHERIT)
+  boolean debug;
+
+  @Inject
+  public Animate(Api api, TraceManager traceManager) {
+    this.api = api;
+    this.traceManager = traceManager;
+  }
+
+  private void printCoverage(StateSpace stateSpace) {
+    ComputeCoverageCommand cmd = new ComputeCoverageCommand();
+    stateSpace.execute(cmd);
+    ComputeCoverageResult coverage = cmd.getResult();
+    List<String> ops = coverage.getOps();
+    List<String> uncovered = coverage.getUncovered();
+
+    System.out.println("Coverage properties:\n\t - " + String.join("\n\t - ", coverage.getNodes()));
+    if (!ops.isEmpty()) {
+      System.out.println("Covered operations:\n\t - " + String.join("\n\t - ", ops));
+    }
+    if (!uncovered.isEmpty()) {
+      System.out.println("Uncovered operations:\n\t - " + String.join("\n\t - ", uncovered));
+    }
+  }
+
+  private List<String> findViolatedInvariants(StateSpace stateSpace, State state) {
+    Object mainComponent = stateSpace.getMainComponent();
+    if (mainComponent == null) {
+      logger.warn("Main component is null, cannot check invariants");
+      return Collections.emptyList();
+    }
+    if (!(mainComponent instanceof EventBMachine)) {
+      logger.warn(
+          "Main component is not an EventBMachine: {}, cannot check invariants",
+          mainComponent.getClass().getName());
+      return Collections.emptyList();
     }
 
-    private void printCoverage(StateSpace stateSpace) {
-        ComputeCoverageCommand cmd = new ComputeCoverageCommand();
-        stateSpace.execute(cmd);
-        ComputeCoverageResult coverage = cmd.getResult();
-        List<String> ops = coverage.getOps();
-        List<String> uncovered = coverage.getUncovered();
+    List<IEvalElement> invariants =
+        ((EventBMachine) mainComponent)
+            .getAllInvariants().stream().map(i -> i.getPredicate()).collect(Collectors.toList());
+    List<AbstractEvalResult> results = state.eval(invariants);
 
-        System.out.println("Coverage properties:\n\t - " + String.join("\n\t - ", coverage.getNodes()));
-        if (!ops.isEmpty()) {
-            System.out.println("Covered operations:\n\t - " + String.join("\n\t - ", ops));
-        }
-        if (!uncovered.isEmpty()) {
-            System.out.println("Uncovered operations:\n\t - " + String.join("\n\t - ", uncovered));
-        }
+    List<String> violatedInvariants =
+        IntStream.range(0, results.size())
+            .filter(i -> results.get(i) != EvalResult.TRUE)
+            .mapToObj(i -> invariants.get(i).toString())
+            .collect(Collectors.toList());
+
+    return violatedInvariants;
+  }
+
+  // Same as api.eventb_save, but pretty-printed
+  private void eventbSave(final StateSpace s, final String path) throws IOException {
+    final EventBModelTranslator translator = new EventBModelTranslator((EventBModel) s.getModel());
+
+    try (final FileOutputStream fos = new FileOutputStream(path)) {
+      final PrologTermOutput pto = new PrologTermOutput(fos, true);
+      pto.openTerm("package");
+      translator.printProlog(pto);
+      pto.closeTerm();
+      pto.fullstop();
+      pto.flush();
+    }
+  }
+
+  private void validateInput() throws IllegalArgumentException {
+    if (model == null) {
+      throw new IllegalArgumentException("Model file is required");
+    }
+    if (!Files.exists(model)) {
+      throw new IllegalArgumentException("Model file does not exist: " + model);
+    }
+    if (!Files.isRegularFile(model)) {
+      throw new IllegalArgumentException("Model path is not a file: " + model);
+    }
+    if (!Files.isReadable(model)) {
+      throw new IllegalArgumentException("Model file is not readable: " + model);
+    }
+    if (steps <= 0) {
+      throw new IllegalArgumentException("Number of steps must be positive, got: " + steps);
+    }
+    if (size <= 0) {
+      throw new IllegalArgumentException("Default set size must be positive, got: " + size);
+    }
+  }
+
+  private StateSpace loadModel() throws IOException {
+    validateInput();
+
+    logger.info("Load Event-B Machine");
+
+    Map<String, String> prefs = new HashMap<>();
+    prefs.put("MEMOIZE_FUNCTIONS", "true");
+    prefs.put("SYMBOLIC", "true");
+    prefs.put("TRACE_INFO", "true");
+    prefs.put("TRY_FIND_ABORT", "true");
+    prefs.put("SYMMETRY_MODE", "hash");
+    prefs.put("DEFAULT_SETSIZE", String.valueOf(size));
+    prefs.put("COMPRESSION", "true");
+    prefs.put("CLPFD", "true");
+    prefs.put("PROOF_INFO", "true");
+    prefs.put("OPERATION_REUSE", "true");
+    if (perf) {
+      prefs.put("PERFORMANCE_INFO", "true");
     }
 
-    private List<String> findViolatedInvariants(StateSpace stateSpace, State state) {
-        Object mainComponent = stateSpace.getMainComponent();
-        if (mainComponent == null) {
-            logger.warn("Main component is null, cannot check invariants");
-            return Collections.emptyList();
+    StateSpace stateSpace = api.eventb_load(model.toString(), prefs);
+
+    GetVersionCommand version = new GetVersionCommand();
+    stateSpace.execute(version);
+    probVersionString = version.getVersionString();
+    logger.info("ProB Version: " + probVersionString + "\n");
+
+    return stateSpace;
+  }
+
+  private void initLogging() {
+    if (!debug) {
+      Logger root = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
+      root.setLevel(Level.WARN);
+      logger.setLevel(Level.INFO);
+    }
+  }
+
+  private StateSpace initAndLoadModel() {
+    initLogging();
+    try {
+      return loadModel();
+    } catch (Exception e) {
+      logger.error("Error loading model", e);
+      System.err.println("Error loading model: " + e.getMessage());
+      return null;
+    }
+  }
+
+  public Trace start(final StateSpace stateSpace) {
+    stateSpace.startTransaction();
+    Trace trace = new Trace(stateSpace);
+
+    try {
+      System.out.println("Animation steps:");
+      for (int i = 0; i < steps; i++) {
+        Trace newTrace = trace.anyEvent(null);
+        if (newTrace == trace) {
+          System.err.println("Error: Can't find an event to execute from this state (deadlock)");
+          break;
         }
-        if (!(mainComponent instanceof EventBMachine)) {
-            logger.warn("Main component is not an EventBMachine: {}, cannot check invariants", mainComponent.getClass().getName());
-            return Collections.emptyList();
+        trace = newTrace;
+
+        Transition transition = trace.getCurrent().getTransition().evaluate(FormulaExpand.EXPAND);
+        System.out.println(transition.getPrettyRep());
+        if (checkInv && !trace.getCurrentState().isInvariantOk()) {
+          List<String> inv = findViolatedInvariants(stateSpace, trace.getCurrentState());
+          System.err.println("Error: violated invariants:\n\t - " + String.join("\n\t - ", inv));
+          break;
         }
+      }
+      System.out.println();
 
-        List<IEvalElement> invariants = ((EventBMachine) mainComponent)
-                .getAllInvariants()
-                .stream()
-                .map(i -> i.getPredicate())
-                .collect(Collectors.toList());
-        List<AbstractEvalResult> results = state.eval(invariants);
-
-        List<String> violatedInvariants = IntStream
-                .range(0, results.size())
-                .filter(i -> results.get(i) != EvalResult.TRUE)
-                .mapToObj(i -> invariants.get(i).toString())
-                .collect(Collectors.toList());
-
-        return violatedInvariants;
+      System.out.println("Current state:\n" + trace.getCurrentState().getStateRep());
+      System.out.println();
+      printCoverage(stateSpace);
+    } finally {
+      stateSpace.endTransaction();
     }
 
-    // Same as api.eventb_save, but pretty-printed
-    private void eventbSave(final StateSpace s, final String path) throws IOException {
-        final EventBModelTranslator translator = new EventBModelTranslator((EventBModel) s.getModel());
+    return trace;
+  }
 
-        try (final FileOutputStream fos = new FileOutputStream(path)) {
-            final PrologTermOutput pto = new PrologTermOutput(fos, true);
-            pto.openTerm("package");
-            translator.printProlog(pto);
-            pto.closeTerm();
-            pto.fullstop();
-            pto.flush();
-        }
+  @Command(description = "Replay json trace")
+  public Integer replay(
+      @Option(
+              names = {"-t", "--trace"},
+              required = true,
+              paramLabel = "trace.json",
+              description = "Path to a json trace")
+          final Path jsonTrace) {
+    StateSpace stateSpace = initAndLoadModel();
+    if (stateSpace == null) return 1;
+
+    try {
+      System.out.println("Starting trace replay. Use --debug to view steps.");
+      ReplayedTrace trace = TraceReplay.replayTraceFile(stateSpace, jsonTrace);
+      System.out.println("Trace replay status: " + trace.getReplayStatus());
+      return 0;
+    } finally {
+      stateSpace.kill();
     }
+  }
 
-    private void validateInput() throws IllegalArgumentException {
-        if (model == null) {
-            throw new IllegalArgumentException("Model file is required");
-        }
-        if (!Files.exists(model)) {
-            throw new IllegalArgumentException("Model file does not exist: " + model);
-        }
-        if (!Files.isRegularFile(model)) {
-            throw new IllegalArgumentException("Model path is not a file: " + model);
-        }
-        if (!Files.isReadable(model)) {
-            throw new IllegalArgumentException("Model file is not readable: " + model);
-        }
-        if (steps <= 0) {
-            throw new IllegalArgumentException("Number of steps must be positive, got: " + steps);
-        }
-        if (size <= 0) {
-            throw new IllegalArgumentException("Default set size must be positive, got: " + size);
-        }
+  private int saveVisualization(String name, Path path, Trace trace) {
+    if (path == null) return 0;
+    logger.info("Saving {} to {}", name, path);
+    DotVisualizationCommand cmd = DotVisualizationCommand.getByName(name, trace);
+    String extension = MoreFiles.getFileExtension(path);
+    if (extension.equals("dot")) {
+      cmd.visualizeAsDotToFile(path, new ArrayList<>());
+    } else if (extension.equals("svg")) {
+      cmd.visualizeAsSvgToFile(path, new ArrayList<>());
+    } else {
+      System.err.println("Unknown extension " + extension);
+      return 1;
     }
+    return 0;
+  }
 
-    private StateSpace loadModel() throws IOException {
-        validateInput();
+  @Command(description = "Dump information about the model")
+  public Integer info(
+      @Option(
+              names = {"-m", "--machine"},
+              paramLabel = "machine.dot",
+              description = "save machine hierarchy graph in dot or svg")
+          final Path machine,
+      @Option(
+              names = {"-e", "--events"},
+              paramLabel = "events.dot",
+              description = "save events hierarchy graph in dot or svg")
+          final Path events,
+      @Option(
+              names = {"-p", "--properties"},
+              paramLabel = "properties.dot",
+              description = "save properties graph in dot or svg")
+          final Path properties,
+      @Option(
+              names = {"-i", "--invariant"},
+              paramLabel = "invariant.dot",
+              description = "save invariant graph in dot or svg")
+          final Path invariant,
+      @Option(
+              names = {"-b", "--bmodel"},
+              paramLabel = "model.eventb",
+              description = "dump prolog model to .eventb file")
+          final Path eventb) {
+    int err = 0;
 
-        logger.info("Load Event-B Machine");
+    StateSpace stateSpace = initAndLoadModel();
+    if (stateSpace == null) return 1;
 
-        Map<String, String> prefs = new HashMap<>();
-        prefs.put("MEMOIZE_FUNCTIONS", "true");
-        prefs.put("SYMBOLIC", "true");
-        prefs.put("TRACE_INFO", "true");
-        prefs.put("TRY_FIND_ABORT", "true");
-        prefs.put("SYMMETRY_MODE", "hash");
-        prefs.put("DEFAULT_SETSIZE", String.valueOf(size));
-        prefs.put("COMPRESSION", "true");
-        prefs.put("CLPFD", "true");
-        prefs.put("PROOF_INFO", "true");
-        prefs.put("OPERATION_REUSE", "true");
-        if (perf) {
-            prefs.put("PERFORMANCE_INFO", "true");
-        }
+    try {
+      boolean hasVisualizationCmd =
+          machine != null || events != null || properties != null || invariant != null;
 
-        StateSpace stateSpace = api.eventb_load(model.toString(), prefs);
-
-        GetVersionCommand version = new GetVersionCommand();
-        stateSpace.execute(version);
-        probVersionString = version.getVersionString();
-        logger.info("ProB Version: " + probVersionString + "\n");
-
-        return stateSpace;
-    }
-
-    private void initLogging() {
-        if (!debug) {
-            Logger root = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
-            root.setLevel(Level.WARN);
-            logger.setLevel(Level.INFO);
-        }
-    }
-
-    private StateSpace initAndLoadModel() {
-        initLogging();
-        try {
-            return loadModel();
-        } catch (Exception e) {
-            logger.error("Error loading model", e);
-            System.err.println("Error loading model: " + e.getMessage());
-            return null;
-        }
-    }
-
-    public Trace start(final StateSpace stateSpace) {
+      if (hasVisualizationCmd) {
+        logger.info("Initializing model");
         stateSpace.startTransaction();
         Trace trace = new Trace(stateSpace);
 
+        // Initialize model - some models don't have constants
         try {
-            System.out.println("Animation steps:");
-            for (int i = 0; i < steps; i++) {
-                Trace newTrace = trace.anyEvent(null);
-                if (newTrace == trace) {
-                    System.err.println("Error: Can't find an event to execute from this state (deadlock)");
-                    break;
-                }
-                trace = newTrace;
-
-                Transition transition = trace.getCurrent().getTransition().evaluate(FormulaExpand.EXPAND);
-                System.out.println(transition.getPrettyRep());
-                if (checkInv && !trace.getCurrentState().isInvariantOk()) {
-                    List<String> inv = findViolatedInvariants(stateSpace, trace.getCurrentState());
-                    System.err.println("Error: violated invariants:\n\t - " + String.join("\n\t - ", inv));
-                    break;
-                }
-            }
-            System.out.println();
-
-            System.out.println("Current state:\n" + trace.getCurrentState().getStateRep());
-            System.out.println();
-            printCoverage(stateSpace);
-        } finally {
-            stateSpace.endTransaction();
+          trace = trace.execute(SETUP_CONSTANTS_EVENT);
+        } catch (IllegalArgumentException e) {
+          // No constants to set up, continue
+          logger.debug("No setup_constants event available");
         }
-
-        return trace;
-    }
-
-    @Command(description = "Replay json trace")
-    public Integer replay(@Option(names = {"-t", "--trace"}, required = true, paramLabel = "trace.json", description = "Path to a json trace")
-                          final Path jsonTrace){
-        StateSpace stateSpace = initAndLoadModel();
-        if (stateSpace == null) return 1;
-
         try {
-            System.out.println("Starting trace replay. Use --debug to view steps.");
-            ReplayedTrace trace = TraceReplay.replayTraceFile(stateSpace, jsonTrace);
-            System.out.println("Trace replay status: " + trace.getReplayStatus());
-            return 0;
-        } finally {
-            stateSpace.kill();
+          trace = trace.execute(INITIALISE_MACHINE_EVENT);
+        } catch (Exception e) {
+          System.err.println("Warning: Could not fully initialize model: " + e.getMessage());
         }
+        stateSpace.endTransaction();
+
+        err |= saveVisualization("machine_hierarchy", machine, trace);
+        err |= saveVisualization("event_hierarchy", events, trace);
+        err |= saveVisualization("properties", properties, trace);
+        err |= saveVisualization("invariant", invariant, trace);
+      }
+
+      if (eventb != null) {
+        logger.info("Saving B model to {}", eventb);
+        try {
+          eventbSave(stateSpace, eventb.toString());
+        } catch (IOException e) {
+          logger.error("Error saving model", e);
+          System.err.println("Error saving model: " + e.getMessage());
+          err = 1;
+        }
+      }
+
+      if (!hasVisualizationCmd && eventb == null) {
+        EventBModel model = (EventBModel) stateSpace.getModel();
+        System.out.print(model.calculateDependencies().getGraph());
+      }
+    } finally {
+      stateSpace.kill();
     }
 
-    private int saveVisualization(String name, Path path, Trace trace) {
-        if (path == null) return 0;
-        logger.info("Saving {} to {}", name, path);
-        DotVisualizationCommand cmd = DotVisualizationCommand.getByName(name, trace);
-        String extension = MoreFiles.getFileExtension(path);
-        if (extension.equals("dot")) {
-            cmd.visualizeAsDotToFile(path, new ArrayList<>());
-        } else if (extension.equals("svg")) {
-            cmd.visualizeAsSvgToFile(path, new ArrayList<>());
-        } else {
-            System.err.println("Unknown extension " + extension);
-            return 1;
-        }
-        return 0;
-    }
+    return err;
+  }
 
-    @Command(description = "Dump information about the model")
-    public Integer info(@Option(names = {"-m", "--machine"}, paramLabel = "machine.dot", description = "save machine hierarchy graph in dot or svg")
-                        final Path machine,
-                        @Option(names = {"-e", "--events"}, paramLabel = "events.dot", description = "save events hierarchy graph in dot or svg")
-                        final Path events,
-                        @Option(names = {"-p", "--properties"}, paramLabel = "properties.dot", description = "save properties graph in dot or svg")
-                        final Path properties,
-                        @Option(names = {"-i", "--invariant"}, paramLabel = "invariant.dot", description = "save invariant graph in dot or svg")
-                        final Path invariant,
-                        @Option(names = {"-b", "--bmodel"}, paramLabel = "model.eventb", description = "dump prolog model to .eventb file")
-                        final Path eventb) {
-        int err = 0;
+  @Override
+  public Integer call() {
+    StateSpace stateSpace = initAndLoadModel();
+    if (stateSpace == null) return 1;
 
-        StateSpace stateSpace = initAndLoadModel();
-        if (stateSpace == null) return 1;
+    try {
+      Trace trace = start(stateSpace);
+
+      if (jsonTrace != null) {
+        JsonMetadata metadata =
+            new JsonMetadataBuilder("Trace", 6)
+                .withSavedNow()
+                .withCreator("animate")
+                .withProBCliVersion(probVersionString)
+                .withModelName(stateSpace.getMainComponent().toString())
+                .build();
+        TraceJsonFile abstractJsonFile = new TraceJsonFile(trace, metadata);
+        logger.info("Saving animation trace to {}", jsonTrace);
 
         try {
-            boolean hasVisualizationCmd = machine != null || events != null || properties != null || invariant != null;
-
-            if (hasVisualizationCmd) {
-                logger.info("Initializing model");
-                stateSpace.startTransaction();
-                Trace trace = new Trace(stateSpace);
-
-                // Initialize model - some models don't have constants
-                try {
-                    trace = trace.execute(SETUP_CONSTANTS_EVENT);
-                } catch (IllegalArgumentException e) {
-                    // No constants to set up, continue
-                    logger.debug("No setup_constants event available");
-                }
-                try {
-                    trace = trace.execute(INITIALISE_MACHINE_EVENT);
-                } catch (Exception e) {
-                    System.err.println("Warning: Could not fully initialize model: " + e.getMessage());
-                }
-                stateSpace.endTransaction();
-
-                err |= saveVisualization("machine_hierarchy", machine, trace);
-                err |= saveVisualization("event_hierarchy", events, trace);
-                err |= saveVisualization("properties", properties, trace);
-                err |= saveVisualization("invariant", invariant, trace);
-            }
-
-            if (eventb != null) {
-                logger.info("Saving B model to {}", eventb);
-                try {
-                    eventbSave(stateSpace, eventb.toString());
-                } catch (IOException e) {
-                    logger.error("Error saving model", e);
-                    System.err.println("Error saving model: " + e.getMessage());
-                    err = 1;
-                }
-            }
-
-            if (!hasVisualizationCmd && eventb == null) {
-                EventBModel model = (EventBModel) stateSpace.getModel();
-                System.out.print(model.calculateDependencies().getGraph());
-            }
-        } finally {
-            stateSpace.kill();
+          traceManager.save(jsonTrace, abstractJsonFile);
+        } catch (IOException e) {
+          logger.error("Error saving trace", e);
+          System.err.println("Error saving trace: " + e.getMessage());
+          return 1;
         }
+      }
 
-        return err;
+      return 0;
+    } finally {
+      stateSpace.kill();
     }
+  }
 
-    @Override
-    public Integer call() {
-        StateSpace stateSpace = initAndLoadModel();
-        if (stateSpace == null) return 1;
+  public static int execute(String[] args) {
+    Animate m = INJECTOR.getInstance(Animate.class);
+    return new CommandLine(m).execute(args);
+  }
 
-        try {
-            Trace trace = start(stateSpace);
-
-            if (jsonTrace != null) {
-                JsonMetadata metadata = new JsonMetadataBuilder("Trace", 6)
-                        .withSavedNow()
-                        .withCreator("animate")
-                        .withProBCliVersion(probVersionString)
-                        .withModelName(stateSpace.getMainComponent().toString())
-                        .build();
-                TraceJsonFile abstractJsonFile = new TraceJsonFile(trace, metadata);
-                logger.info("Saving animation trace to {}", jsonTrace);
-
-                try {
-                    traceManager.save(jsonTrace, abstractJsonFile);
-                } catch (IOException e) {
-                    logger.error("Error saving trace", e);
-                    System.err.println("Error saving trace: " + e.getMessage());
-                    return 1;
-                }
-            }
-
-            return 0;
-        } finally {
-            stateSpace.kill();
-        }
-    }
-
-    public static int execute(String[] args) {
-        Animate m = INJECTOR.getInstance(Animate.class);
-        return new CommandLine(m).execute(args);
-    }
-
-    public static void main(String[] args) {
-        System.exit(execute(args));
-    }
+  public static void main(String[] args) {
+    System.exit(execute(args));
+  }
 }
