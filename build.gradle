@@ -5,8 +5,8 @@ apply plugin: 'application'
 version = '2.0'
 
 java {
-	sourceCompatibility = JavaVersion.VERSION_11
-	targetCompatibility = JavaVersion.VERSION_11
+	sourceCompatibility = JavaVersion.VERSION_21
+	targetCompatibility = JavaVersion.VERSION_21
 }
 
 def prob_version = "4.15.1"
@@ -18,8 +18,8 @@ application {
 repositories {
 	mavenCentral()
 	maven {
-		name "snapshot"
-		url "https://oss.sonatype.org/content/repositories/snapshots/"
+		name = "snapshot"
+		url = "https://oss.sonatype.org/content/repositories/snapshots/"
 	}
 }
 
@@ -32,24 +32,24 @@ dependencies {
 	testImplementation 'org.hamcrest:hamcrest:3.0'
 }
 
-tasks.withType(JavaCompile) {
+tasks.withType(JavaCompile).configureEach {
 	options.deprecation = true
 }
 
 test {
 	testLogging {
 		events "passed", "skipped", "failed"
-		exceptionFormat "full"
+		exceptionFormat = "full"
 		showStandardStreams = true
 	}
 }
 
 jar {
-	duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 	manifest {
 		attributes('Main-Class': 'animate.Animate')
 	}
-	from {
-		configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+	from configurations.runtimeClasspath.elements.map { elements ->
+		elements.collect { it.asFile.isDirectory() ? it.asFile : zipTree(it.asFile) }
 	}
 }
