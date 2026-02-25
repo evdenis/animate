@@ -1,0 +1,51 @@
+name: 'Animate Event-B'
+description: 'Animate Event-B models using the ProB 2.0 model checker'
+
+branding:
+  icon: 'play-circle'
+  color: 'blue'
+
+inputs:
+  args:
+    description: >
+      Arguments passed to the animate CLI. Examples:
+        "path/to/model.bum"
+        "--steps 10 --invariants path/to/model.bum"
+        "replay -t trace.json path/to/model.bum"
+        "info -m machine.svg path/to/model.bum"
+    required: true
+  version:
+    description: 'Release version tag to use (e.g., "v2.0"). Defaults to latest release.'
+    required: false
+    default: 'latest'
+  java-version:
+    description: 'Java version to use (must be 21 or later)'
+    required: false
+    default: '21'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Set up JDK
+      uses: actions/setup-java@v5
+      with:
+        distribution: 'temurin'
+        java-version: ${{ inputs.java-version }}
+
+    - name: Download animate
+      shell: bash
+      env:
+        VERSION: ${{ inputs.version }}
+      run: |
+        if [ "$VERSION" = "latest" ]; then
+          url="https://github.com/evdenis/animate/releases/latest/download/animate.jar"
+        else
+          url="https://github.com/evdenis/animate/releases/download/${VERSION}/animate.jar"
+        fi
+        curl -sL --fail -o "${{ runner.temp }}/animate.jar" "$url"
+
+    - name: Run animate
+      shell: bash
+      env:
+        ANIMATE_ARGS: ${{ inputs.args }}
+      run: java -jar "${{ runner.temp }}/animate.jar" $ANIMATE_ARGS
