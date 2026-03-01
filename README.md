@@ -116,45 +116,56 @@ Include the reusable template and extend the `.animate` hidden job:
 
 ```yaml
 include:
-  - remote: 'https://raw.githubusercontent.com/evdenis/animate/v3.0/.gitlab-ci-template.yml'
+  - remote: 'https://raw.githubusercontent.com/evdenis/animate/v4.0/.gitlab-ci-template.yml'
 
 animate-model:
   extends: .animate
   variables:
-    ANIMATE_ARGS: 'path/to/model.bum'
+    ANIMATE_MODEL_PATH: 'path/to/model.bum'
 ```
 
 #### Variables
 
 | Variable | Description | Default |
 |----------|-------------|---------|
-| `ANIMATE_ARGS` | Arguments passed to the animate CLI | `''` |
-| `ANIMATE_VERSION` | Release version tag (e.g., `v2.0`) | `latest` |
+| `ANIMATE_MODEL_PATH` | Path to model `.bum`, `.zip`, or directory (required) | `''` |
+| `ANIMATE_COMMAND` | Subcommand: `animate` or `replay` | `animate` |
+| `ANIMATE_STEPS` | Number of random animation steps (animate) | `''` |
+| `ANIMATE_SIZE` | Default size for ProB sets (animate) | `''` |
+| `ANIMATE_INVARIANTS` | Check invariants during animation (animate) | `false` |
+| `ANIMATE_SAVE` | Save animation trace to JSON file (animate) | `''` |
+| `ANIMATE_TRACE` | Path to JSON trace file (replay, required) | `''` |
+| `ANIMATE_ARGS` | Extra args appended to the assembled command | `''` |
+| `ANIMATE_VERSION` | Release version tag (e.g., `v4.0`) | `latest` |
 
 #### Examples
 
 ```yaml
 include:
-  - remote: 'https://raw.githubusercontent.com/evdenis/animate/v3.0/.gitlab-ci-template.yml'
+  - remote: 'https://raw.githubusercontent.com/evdenis/animate/v4.0/.gitlab-ci-template.yml'
 
 # Check invariants with 20 steps
 animate-check:
   extends: .animate
   variables:
-    ANIMATE_ARGS: '--steps 20 --invariants path/to/model.bum'
+    ANIMATE_MODEL_PATH: 'path/to/model.bum'
+    ANIMATE_STEPS: '20'
+    ANIMATE_INVARIANTS: 'true'
 
 # Replay a trace
 animate-replay:
   extends: .animate
   variables:
-    ANIMATE_ARGS: 'replay -t tests/trace.json models/system.bum'
+    ANIMATE_MODEL_PATH: 'models/system.bum'
+    ANIMATE_COMMAND: 'replay'
+    ANIMATE_TRACE: 'tests/trace.json'
 
 # Pin to a specific release
 animate-pinned:
   extends: .animate
   variables:
-    ANIMATE_ARGS: 'path/to/model.bum'
-    ANIMATE_VERSION: 'v1.0'
+    ANIMATE_MODEL_PATH: 'path/to/model.bum'
+    ANIMATE_VERSION: 'v4.0'
 ```
 
 ## License

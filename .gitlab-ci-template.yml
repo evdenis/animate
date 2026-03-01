@@ -1,8 +1,15 @@
 .animate:
   image: eclipse-temurin:21-jdk
   variables:
-    ANIMATE_VERSION: 'latest'
+    ANIMATE_MODEL_PATH: ''
+    ANIMATE_COMMAND: 'animate'
+    ANIMATE_STEPS: ''
+    ANIMATE_SIZE: ''
+    ANIMATE_INVARIANTS: 'false'
+    ANIMATE_SAVE: ''
+    ANIMATE_TRACE: ''
     ANIMATE_ARGS: ''
+    ANIMATE_VERSION: 'latest'
   before_script:
     - |
       if [ "$ANIMATE_VERSION" = "latest" ]; then
@@ -12,4 +19,55 @@
       fi
       curl -sL --fail -o /tmp/animate.jar "$url"
   script:
-    - java -jar /tmp/animate.jar $ANIMATE_ARGS
+    - |
+      if [ -z "$ANIMATE_MODEL_PATH" ]; then
+        echo "ERROR: ANIMATE_MODEL_PATH is required but not set" >&2
+        exit 1
+      fi
+
+      cli_args=()
+
+      if [ "$ANIMATE_COMMAND" = "replay" ]; then
+        cli_args+=("replay")
+        if [ -z "$ANIMATE_TRACE" ]; then
+          echo "ERROR: ANIMATE_TRACE is required when ANIMATE_COMMAND is 'replay'" >&2
+          exit 1
+        fi
+        cli_args+=("-t" "$ANIMATE_TRACE")
+        if [ -n "$ANIMATE_STEPS" ] || [ -n "$ANIMATE_SIZE" ] || [ "$ANIMATE_INVARIANTS" = "true" ] || [ -n "$ANIMATE_SAVE" ]; then
+          echo "WARNING: ANIMATE_STEPS, ANIMATE_SIZE, ANIMATE_INVARIANTS, and ANIMATE_SAVE are ignored when ANIMATE_COMMAND is 'replay'" >&2
+        fi
+      elif [ "$ANIMATE_COMMAND" = "animate" ]; then
+        if [ -n "$ANIMATE_STEPS" ]; then
+          if ! [[ "$ANIMATE_STEPS" =~ ^[0-9]+$ ]]; then
+            echo "ERROR: ANIMATE_STEPS must be a positive integer, got '$ANIMATE_STEPS'" >&2
+            exit 1
+          fi
+          cli_args+=("--steps" "$ANIMATE_STEPS")
+        fi
+        if [ -n "$ANIMATE_SIZE" ]; then
+          if ! [[ "$ANIMATE_SIZE" =~ ^[0-9]+$ ]]; then
+            echo "ERROR: ANIMATE_SIZE must be a positive integer, got '$ANIMATE_SIZE'" >&2
+            exit 1
+          fi
+          cli_args+=("--size" "$ANIMATE_SIZE")
+        fi
+        if [ "$ANIMATE_INVARIANTS" = "true" ]; then
+          cli_args+=("--invariants")
+        fi
+        if [ -n "$ANIMATE_SAVE" ]; then
+          cli_args+=("--save" "$ANIMATE_SAVE")
+        fi
+      else
+        echo "ERROR: Unknown ANIMATE_COMMAND '$ANIMATE_COMMAND'. Must be 'animate' or 'replay'." >&2
+        exit 1
+      fi
+
+      if [ -n "$ANIMATE_ARGS" ]; then
+        # shellcheck disable=SC2086
+        cli_args+=($ANIMATE_ARGS)
+      fi
+
+      cli_args+=("$ANIMATE_MODEL_PATH")
+
+      java -jar /tmp/animate.jar "${cli_args[@]}"
