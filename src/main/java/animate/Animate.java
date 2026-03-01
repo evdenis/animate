@@ -35,7 +35,13 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import org.slf4j.LoggerFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
@@ -165,11 +171,11 @@ public class Animate implements Callable<Integer> {
     if (!Files.exists(model)) {
       throw new IllegalArgumentException("Model file does not exist: " + model);
     }
-    if (!Files.isRegularFile(model)) {
-      throw new IllegalArgumentException("Model path is not a file: " + model);
+    if (!Files.isRegularFile(model) && !Files.isDirectory(model)) {
+      throw new IllegalArgumentException("Model path is not a file or directory: " + model);
     }
     if (!Files.isReadable(model)) {
-      throw new IllegalArgumentException("Model file is not readable: " + model);
+      throw new IllegalArgumentException("Model path is not readable: " + model);
     }
     if (steps <= 0) {
       throw new IllegalArgumentException("Number of steps must be positive, got: " + steps);
@@ -179,7 +185,73 @@ public class Animate implements Callable<Integer> {
     }
   }
 
+  private Path findMostRefinedBum(List<Path> bumFiles) throws IOException {
+    Map<String, String> refinesTarget = new HashMap<>();
+    Map<String, Path> pathByName = new HashMap<>();
+
+    for (Path bumFile : bumFiles) {
+      String fileName = bumFile.getFileName().toString();
+      String machineName = fileName.substring(0, fileName.length() - ".bum".length());
+      pathByName.put(machineName, bumFile);
+
+      try {
+        Document doc =
+            DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(bumFile.toFile());
+        NodeList refines = doc.getElementsByTagName("org.eventb.core.refinesMachine");
+        if (refines.getLength() > 0) {
+          Element refEl = (Element) refines.item(0);
+          String target = refEl.getAttribute("org.eventb.core.target");
+          if (!target.isEmpty()) {
+            refinesTarget.put(machineName, target);
+          }
+        }
+      } catch (ParserConfigurationException | SAXException e) {
+        throw new IOException("Failed to parse .bum file: " + bumFile, e);
+      }
+    }
+
+    Set<String> refinedByOthers = new HashSet<>(refinesTarget.values());
+    List<String> leaves =
+        pathByName.keySet().stream()
+            .filter(name -> !refinedByOthers.contains(name))
+            .collect(Collectors.toList());
+
+    if (leaves.isEmpty()) {
+      throw new IOException("Circular refinement detected among .bum files in zip archive");
+    }
+    if (leaves.size() > 1) {
+      throw new IOException(
+          "Multiple independent refinement chains found in zip archive, "
+              + "cannot auto-select. Leaf machines: "
+              + leaves.stream().sorted().collect(Collectors.joining(", ")));
+    }
+
+    return pathByName.get(leaves.get(0));
+  }
+
+  private Path resolveDirectory(Path dir) throws IOException {
+    List<Path> bumFiles;
+    try (var stream = Files.walk(dir)) {
+      bumFiles = stream.filter(p -> p.toString().endsWith(".bum")).collect(Collectors.toList());
+    }
+
+    if (bumFiles.isEmpty()) {
+      throw new IOException("No .bum file found in directory: " + dir);
+    }
+    if (bumFiles.size() == 1) {
+      return bumFiles.get(0);
+    }
+
+    Path selected = findMostRefinedBum(bumFiles);
+    logger.info(
+        "Multiple .bum files found, auto-selected most refined: {}", selected.getFileName());
+    return selected;
+  }
+
   private Path resolveModel() throws IOException {
+    if (Files.isDirectory(model)) {
+      return resolveDirectory(model);
+    }
     if (!model.toString().endsWith(".zip")) {
       return model;
     }
@@ -212,9 +284,10 @@ public class Animate implements Callable<Integer> {
       throw new IOException("No .bum file found in zip archive: " + model);
     }
     if (bumFiles.size() > 1) {
-      throw new IOException(
-          "Multiple .bum files found in zip archive: "
-              + bumFiles.stream().map(Path::toString).collect(Collectors.joining(", ")));
+      Path selected = findMostRefinedBum(bumFiles);
+      logger.info(
+          "Multiple .bum files found, auto-selected most refined: {}", selected.getFileName());
+      return selected;
     }
 
     return bumFiles.get(0);
@@ -252,6 +325,8 @@ public class Animate implements Callable<Integer> {
     }
 
     Path resolvedModel = resolveModel();
+    String machineName = resolvedModel.getFileName().toString().replaceFirst("\\.bum$", "");
+    System.out.println("Machine: " + machineName);
     StateSpace stateSpace = api.eventb_load(resolvedModel.toString(), prefs);
 
     GetVersionCommand version = new GetVersionCommand();

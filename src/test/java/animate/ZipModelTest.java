@@ -68,6 +68,25 @@ public class ZipModelTest {
     }
   }
 
+  @Test(timeout = 60000)
+  public void testDirectoryWithMultipleBumFiles() throws Exception {
+    Path dir = Paths.get("src/test/resources/models/cars-on-bridge");
+
+    ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+    PrintStream originalOut = System.out;
+
+    try {
+      System.setOut(new PrintStream(outContent));
+      int exitCode = Animate.execute(new String[] {"--steps", "3", dir.toString()});
+      System.setOut(originalOut);
+
+      assertEquals("Exit code should be 0 (auto-selected most refined machine)", 0, exitCode);
+      assertTrue("Output should contain animation information", outContent.toString().length() > 0);
+    } finally {
+      System.setOut(originalOut);
+    }
+  }
+
   @Test(timeout = 30000)
   public void testZipWithNoBumFile() throws Exception {
     Path zipFile = Files.createTempFile("animate-test-nobum-", ".zip");
