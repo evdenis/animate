@@ -2,7 +2,6 @@ package animate;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
-import com.google.common.io.MoreFiles;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
@@ -11,19 +10,13 @@ import de.prob.animator.command.ComputeCoverageCommand;
 import de.prob.animator.command.ComputeCoverageCommand.ComputeCoverageResult;
 import de.prob.animator.command.GetVersionCommand;
 import de.prob.animator.domainobjects.*;
-import de.prob.check.tracereplay.ReplayedTrace;
-import de.prob.check.tracereplay.TraceReplay;
 import de.prob.check.tracereplay.json.TraceManager;
 import de.prob.check.tracereplay.json.storage.TraceJsonFile;
 import de.prob.json.JsonMetadata;
 import de.prob.json.JsonMetadataBuilder;
 import de.prob.model.eventb.EventBMachine;
-import de.prob.model.eventb.EventBModel;
-import de.prob.model.eventb.translate.EventBModelTranslator;
-import de.prob.prolog.output.PrologTermOutput;
 import de.prob.scripting.Api;
 import de.prob.statespace.*;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -42,16 +35,14 @@ import picocli.CommandLine.ScopeType;
     name = "animate",
     sortOptions = false,
     version = "animate @VERSION@",
-    subcommands = {CommandLine.HelpCommand.class})
+    subcommands = {CommandLine.HelpCommand.class, ReplayCommand.class, InfoCommand.class})
 public class Animate implements Callable<Integer> {
 
   private static final Injector INJECTOR = Guice.createInjector(Stage.PRODUCTION, new Config());
-  private static final String SETUP_CONSTANTS_EVENT = "$setup_constants";
-  private static final String INITIALISE_MACHINE_EVENT = "$initialise_machine";
 
   private final Api api;
   private final TraceManager traceManager;
-  private final ModelResolver modelResolver = new ModelResolver();
+  final ModelResolver modelResolver = new ModelResolver();
   private String probVersionString;
 
   private static final Logger logger = (Logger) LoggerFactory.getLogger(Animate.class);
@@ -140,20 +131,6 @@ public class Animate implements Callable<Integer> {
     return violatedInvariants;
   }
 
-  // Same as api.eventb_save, but pretty-printed
-  private void eventbSave(final StateSpace s, final String path) throws IOException {
-    final EventBModelTranslator translator = new EventBModelTranslator((EventBModel) s.getModel());
-
-    try (final FileOutputStream fos = new FileOutputStream(path)) {
-      final PrologTermOutput pto = new PrologTermOutput(fos, true);
-      pto.openTerm("package");
-      translator.printProlog(pto);
-      pto.closeTerm();
-      pto.fullstop();
-      pto.flush();
-    }
-  }
-
   private void validateInput() throws IllegalArgumentException {
     if (model == null) {
       throw new IllegalArgumentException("Model file is required");
@@ -216,7 +193,7 @@ public class Animate implements Callable<Integer> {
     }
   }
 
-  private StateSpace initAndLoadModel() {
+  StateSpace initAndLoadModel() {
     initLogging();
     try {
       return loadModel();
@@ -260,128 +237,6 @@ public class Animate implements Callable<Integer> {
     }
 
     return trace;
-  }
-
-  @Command(description = "Replay json trace")
-  public Integer replay(
-      @Option(
-              names = {"-t", "--trace"},
-              required = true,
-              paramLabel = "trace.json",
-              description = "Path to a json trace")
-          final Path jsonTrace) {
-    StateSpace stateSpace = initAndLoadModel();
-    if (stateSpace == null) return 1;
-
-    try {
-      System.out.println("Starting trace replay. Use --debug to view steps.");
-      ReplayedTrace trace = TraceReplay.replayTraceFile(stateSpace, jsonTrace);
-      System.out.println("Trace replay status: " + trace.getReplayStatus());
-      return 0;
-    } finally {
-      stateSpace.kill();
-      modelResolver.cleanupTempDir();
-    }
-  }
-
-  private int saveVisualization(String name, Path path, Trace trace) {
-    if (path == null) return 0;
-    logger.info("Saving {} to {}", name, path);
-    DotVisualizationCommand cmd = DotVisualizationCommand.getByName(name, trace);
-    String extension = MoreFiles.getFileExtension(path);
-    if (extension.equals("dot")) {
-      cmd.visualizeAsDotToFile(path, new ArrayList<>());
-    } else if (extension.equals("svg")) {
-      cmd.visualizeAsSvgToFile(path, new ArrayList<>());
-    } else {
-      System.err.println("Unknown extension " + extension);
-      return 1;
-    }
-    return 0;
-  }
-
-  @Command(description = "Dump information about the model")
-  public Integer info(
-      @Option(
-              names = {"-m", "--machine"},
-              paramLabel = "machine.dot",
-              description = "save machine hierarchy graph in dot or svg")
-          final Path machine,
-      @Option(
-              names = {"-e", "--events"},
-              paramLabel = "events.dot",
-              description = "save events hierarchy graph in dot or svg")
-          final Path events,
-      @Option(
-              names = {"-p", "--properties"},
-              paramLabel = "properties.dot",
-              description = "save properties graph in dot or svg")
-          final Path properties,
-      @Option(
-              names = {"-i", "--invariant"},
-              paramLabel = "invariant.dot",
-              description = "save invariant graph in dot or svg")
-          final Path invariant,
-      @Option(
-              names = {"-b", "--bmodel"},
-              paramLabel = "model.eventb",
-              description = "dump prolog model to .eventb file")
-          final Path eventb) {
-    int err = 0;
-
-    StateSpace stateSpace = initAndLoadModel();
-    if (stateSpace == null) return 1;
-
-    try {
-      boolean hasVisualizationCmd =
-          machine != null || events != null || properties != null || invariant != null;
-
-      if (hasVisualizationCmd) {
-        logger.info("Initializing model");
-        stateSpace.startTransaction();
-        Trace trace = new Trace(stateSpace);
-
-        // Initialize model - some models don't have constants
-        try {
-          trace = trace.execute(SETUP_CONSTANTS_EVENT);
-        } catch (IllegalArgumentException e) {
-          // No constants to set up, continue
-          logger.debug("No setup_constants event available");
-        }
-        try {
-          trace = trace.execute(INITIALISE_MACHINE_EVENT);
-        } catch (Exception e) {
-          System.err.println("Warning: Could not fully initialize model: " + e.getMessage());
-        }
-        stateSpace.endTransaction();
-
-        err |= saveVisualization("machine_hierarchy", machine, trace);
-        err |= saveVisualization("event_hierarchy", events, trace);
-        err |= saveVisualization("properties", properties, trace);
-        err |= saveVisualization("invariant", invariant, trace);
-      }
-
-      if (eventb != null) {
-        logger.info("Saving B model to {}", eventb);
-        try {
-          eventbSave(stateSpace, eventb.toString());
-        } catch (IOException e) {
-          logger.error("Error saving model", e);
-          System.err.println("Error saving model: " + e.getMessage());
-          err = 1;
-        }
-      }
-
-      if (!hasVisualizationCmd && eventb == null) {
-        EventBModel model = (EventBModel) stateSpace.getModel();
-        System.out.print(model.calculateDependencies().getGraph());
-      }
-    } finally {
-      stateSpace.kill();
-      modelResolver.cleanupTempDir();
-    }
-
-    return err;
   }
 
   @Override
