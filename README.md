@@ -66,37 +66,48 @@ Use `animate` in your CI pipelines without building from source.
 ### GitHub Actions
 
 ```yaml
-- uses: evdenis/animate@v3
+- uses: evdenis/animate@v4
   with:
-    args: 'path/to/model.bum'
+    model-path: 'path/to/model.bum'
 ```
 
 #### Inputs
 
 | Input | Description | Required | Default |
 |-------|-------------|----------|---------|
-| `args` | Arguments passed to the animate CLI | Yes | — |
-| `version` | Release version tag (e.g., `v2.0`) | No | `latest` |
+| `model-path` | Path to model `.bum`, `.zip`, or directory | Yes | — |
+| `command` | Subcommand: `animate` or `replay` | No | `animate` |
+| `steps` | Number of random animation steps (animate) | No | — |
+| `size` | Default size for ProB sets (animate) | No | — |
+| `invariants` | Check invariants during animation (animate) | No | `false` |
+| `save` | Save animation trace to JSON file (animate) | No | — |
+| `trace` | Path to JSON trace file (replay, required) | No | — |
+| `args` | Extra args appended to the assembled command | No | — |
+| `version` | Release version tag (e.g., `v3.0`) | No | `latest` |
 | `java-version` | Java version to use (must be 21 or later) | No | `21` |
 
 #### Examples
 
 ```yaml
 # Check invariants with 20 steps
-- uses: evdenis/animate@v3
+- uses: evdenis/animate@v4
   with:
-    args: '--steps 20 --invariants path/to/model.bum'
+    model-path: 'path/to/model.bum'
+    steps: 20
+    invariants: true
 
 # Replay a trace
-- uses: evdenis/animate@v3
+- uses: evdenis/animate@v4
   with:
-    args: 'replay -t tests/trace.json models/system.bum'
+    model-path: 'models/system.bum'
+    command: 'replay'
+    trace: 'tests/trace.json'
 
 # Pin to a specific release
-- uses: evdenis/animate@v3
+- uses: evdenis/animate@v4
   with:
-    args: 'path/to/model.bum'
-    version: 'v1.0'
+    model-path: 'path/to/model.bum'
+    version: 'v4.0'
 ```
 
 ### GitLab CI

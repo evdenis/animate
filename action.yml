@@ -6,16 +6,39 @@ branding:
   color: 'blue'
 
 inputs:
-  args:
-    description: >
-      Arguments passed to the animate CLI. Examples:
-        "path/to/model.bum"
-        "--steps 10 --invariants path/to/model.bum"
-        "replay -t trace.json path/to/model.bum"
-        "info -m machine.svg path/to/model.bum"
+  model-path:
+    description: 'Path to the Event-B model (.bum file, .zip archive, or directory)'
     required: true
+  command:
+    description: 'Subcommand to run: "animate" or "replay"'
+    required: false
+    default: 'animate'
+  steps:
+    description: 'Number of random animation steps (animate command)'
+    required: false
+    default: ''
+  size:
+    description: 'Default size for ProB sets (animate command)'
+    required: false
+    default: ''
+  invariants:
+    description: 'Check invariants during animation (animate command)'
+    required: false
+    default: 'false'
+  save:
+    description: 'Save animation trace to JSON file (animate command)'
+    required: false
+    default: ''
+  trace:
+    description: 'Path to JSON trace file (replay command, required when command is "replay")'
+    required: false
+    default: ''
+  args:
+    description: 'Extra arguments appended to the assembled command'
+    required: false
+    default: ''
   version:
-    description: 'Release version tag to use (e.g., "v2.0"). Defaults to latest release.'
+    description: 'Release version tag to use (e.g., "v3.0"). Defaults to latest release.'
     required: false
     default: 'latest'
   java-version:
@@ -47,5 +70,58 @@ runs:
     - name: Run animate
       shell: bash
       env:
-        ANIMATE_ARGS: ${{ inputs.args }}
-      run: java -jar "${{ runner.temp }}/animate.jar" $ANIMATE_ARGS
+        INPUT_COMMAND: ${{ inputs.command }}
+        INPUT_MODEL_PATH: ${{ inputs.model-path }}
+        INPUT_STEPS: ${{ inputs.steps }}
+        INPUT_SIZE: ${{ inputs.size }}
+        INPUT_INVARIANTS: ${{ inputs.invariants }}
+        INPUT_SAVE: ${{ inputs.save }}
+        INPUT_TRACE: ${{ inputs.trace }}
+        INPUT_ARGS: ${{ inputs.args }}
+      run: |
+        cli_args=()
+
+        if [ "$INPUT_COMMAND" = "replay" ]; then
+          cli_args+=("replay")
+          if [ -z "$INPUT_TRACE" ]; then
+            echo "::error::Input 'trace' is required when command is 'replay'"
+            exit 1
+          fi
+          cli_args+=("-t" "$INPUT_TRACE")
+          if [ -n "$INPUT_STEPS" ] || [ -n "$INPUT_SIZE" ] || [ "$INPUT_INVARIANTS" = "true" ] || [ -n "$INPUT_SAVE" ]; then
+            echo "::warning::Inputs 'steps', 'size', 'invariants', and 'save' are ignored when command is 'replay'"
+          fi
+        elif [ "$INPUT_COMMAND" = "animate" ]; then
+          if [ -n "$INPUT_STEPS" ]; then
+            if ! [[ "$INPUT_STEPS" =~ ^[0-9]+$ ]]; then
+              echo "::error::Input 'steps' must be a positive integer, got '$INPUT_STEPS'"
+              exit 1
+            fi
+            cli_args+=("--steps" "$INPUT_STEPS")
+          fi
+          if [ -n "$INPUT_SIZE" ]; then
+            if ! [[ "$INPUT_SIZE" =~ ^[0-9]+$ ]]; then
+              echo "::error::Input 'size' must be a positive integer, got '$INPUT_SIZE'"
+              exit 1
+            fi
+            cli_args+=("--size" "$INPUT_SIZE")
+          fi
+          if [ "$INPUT_INVARIANTS" = "true" ]; then
+            cli_args+=("--invariants")
+          fi
+          if [ -n "$INPUT_SAVE" ]; then
+            cli_args+=("--save" "$INPUT_SAVE")
+          fi
+        else
+          echo "::error::Unknown command '$INPUT_COMMAND'. Must be 'animate' or 'replay'."
+          exit 1
+        fi
+
+        if [ -n "$INPUT_ARGS" ]; then
+          # shellcheck disable=SC2086
+          cli_args+=($INPUT_ARGS)
+        fi
+
+        cli_args+=("$INPUT_MODEL_PATH")
+
+        java -jar "${{ runner.temp }}/animate.jar" "${cli_args[@]}"
