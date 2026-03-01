@@ -14,6 +14,26 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
+      - name: Verify version consistency
+        run: |
+          TAG="${{ github.ref_name }}"
+          TAG_VERSION="${TAG#v}"
+
+          GRADLE_VERSION=$(grep -oP "^version = '\K[^']+" build.gradle)
+          if [ "$GRADLE_VERSION" != "$TAG_VERSION" ]; then
+            echo "::error::build.gradle version '$GRADLE_VERSION' does not match tag '$TAG' (expected '$TAG_VERSION')"
+            exit 1
+          fi
+
+          README_COUNT=$(grep -c "$TAG" README.md || true)
+          if [ "$README_COUNT" -ne 9 ]; then
+            echo "::error::Expected 9 occurrences of '$TAG' in README.md, found $README_COUNT"
+            grep -n "$TAG" README.md || true
+            exit 1
+          fi
+
+          echo "Version check passed: build.gradle=$GRADLE_VERSION, README.md full=$README_COUNT"
+
       - name: Set up JDK 21
         uses: actions/setup-java@v5
         with:

@@ -66,7 +66,7 @@ Use `animate` in your CI pipelines without building from source.
 ### GitHub Actions
 
 ```yaml
-- uses: evdenis/animate@v4
+- uses: evdenis/animate@v4.0
   with:
     model-path: 'path/to/model.bum'
 ```
@@ -90,21 +90,21 @@ Use `animate` in your CI pipelines without building from source.
 
 ```yaml
 # Check invariants with 20 steps
-- uses: evdenis/animate@v4
+- uses: evdenis/animate@v4.0
   with:
     model-path: 'path/to/model.bum'
     steps: 20
     invariants: true
 
 # Replay a trace
-- uses: evdenis/animate@v4
+- uses: evdenis/animate@v4.0
   with:
     model-path: 'models/system.bum'
     command: 'replay'
     trace: 'tests/trace.json'
 
 # Pin to a specific release
-- uses: evdenis/animate@v4
+- uses: evdenis/animate@v4.0
   with:
     model-path: 'path/to/model.bum'
     version: 'v4.0'
