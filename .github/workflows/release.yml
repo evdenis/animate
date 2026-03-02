@@ -32,7 +32,7 @@ jobs:
       - name: Rename JAR
         run: mv build/libs/animate-*.jar build/libs/animate.jar
 
-      - name: Upload to release
+      - name: Create release
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release upload ${{ github.ref_name }} build/libs/animate.jar
+        run: gh release create ${{ github.ref_name }} build/libs/animate.jar --generate-notes
