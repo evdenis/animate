@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FindBugsFilter>
+  <!-- Path.getFileName() and Path.getParent() are safe in these contexts
+       because the paths are always well-formed (from zip entries, resolved
+       model files, or temp directories). -->
+  <Match>
+    <Class name="animate.Animate" />
+    <Method name="loadModel" />
+    <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
+  </Match>
+  <Match>
+    <Class name="animate.ModelResolver" />
+    <Or>
+      <Method name="resolve" />
+      <Method name="findMostRefinedBum" />
+    </Or>
+    <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
+  </Match>
+</FindBugsFilter>

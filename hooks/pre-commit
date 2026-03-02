@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+echo "Running pre-commit checks (formatting + static analysis)..."
+./gradlew spotlessCheck spotbugsMain --no-daemon --quiet
