@@ -18,8 +18,9 @@ apply plugin: 'com.github.spotbugs'
 version = '4.0'
 
 java {
-	sourceCompatibility = JavaVersion.VERSION_21
-	targetCompatibility = JavaVersion.VERSION_21
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
 }
 
 def prob_version = "4.15.1"
