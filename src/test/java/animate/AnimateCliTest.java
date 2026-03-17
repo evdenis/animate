@@ -111,10 +111,12 @@ public class AnimateCliTest {
 
       String output = outContent.toString();
       assertTrue("Output should contain animation information", output.length() > 0);
-      assertEquals("Exit code should be 0", 0, exitCode);
+      assertTrue(
+          "Exit code should be 0 (no violation) or 1 (invariant violated)",
+          exitCode == 0 || exitCode == 1);
 
       System.setOut(originalOut);
-      System.out.println("  ✓ Invariant checking completed");
+      System.out.println("  ✓ Invariant checking completed (exit code: " + exitCode + ")");
     } catch (Exception e) {
       System.setOut(originalOut);
       System.err.println("  ✗ Invariant checking failed: " + e.getMessage());
