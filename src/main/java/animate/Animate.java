@@ -205,9 +205,12 @@ public class Animate implements Callable<Integer> {
     }
   }
 
+  boolean invariantViolated;
+
   public Trace start(final StateSpace stateSpace) {
     stateSpace.startTransaction();
     Trace trace = new Trace(stateSpace);
+    invariantViolated = false;
 
     try {
       System.out.println("Animation steps:");
@@ -224,6 +227,7 @@ public class Animate implements Callable<Integer> {
         if (checkInv && !trace.getCurrentState().isInvariantOk()) {
           List<String> inv = findViolatedInvariants(stateSpace, trace.getCurrentState());
           System.err.println("Error: violated invariants:\n\t - " + String.join("\n\t - ", inv));
+          invariantViolated = true;
           break;
         }
       }
@@ -267,7 +271,7 @@ public class Animate implements Callable<Integer> {
         }
       }
 
-      return 0;
+      return invariantViolated ? 1 : 0;
     } finally {
       stateSpace.kill();
       modelResolver.cleanupTempDir();
