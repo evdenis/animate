@@ -66,7 +66,7 @@ Use `animate` in your CI pipelines without building from source.
 ### GitHub Actions
 
 ```yaml
-- uses: evdenis/animate@v4.0
+- uses: evdenis/animate@v4.1
   with:
     model-path: 'path/to/model.bum'
 ```
@@ -90,24 +90,24 @@ Use `animate` in your CI pipelines without building from source.
 
 ```yaml
 # Check invariants with 20 steps
-- uses: evdenis/animate@v4.0
+- uses: evdenis/animate@v4.1
   with:
     model-path: 'path/to/model.bum'
     steps: 20
     invariants: true
 
 # Replay a trace
-- uses: evdenis/animate@v4.0
+- uses: evdenis/animate@v4.1
   with:
     model-path: 'models/system.bum'
     command: 'replay'
     trace: 'tests/trace.json'
 
 # Pin to a specific release
-- uses: evdenis/animate@v4.0
+- uses: evdenis/animate@v4.1
   with:
     model-path: 'path/to/model.bum'
-    version: 'v4.0'
+    version: 'v4.1'
 ```
 
 ### GitLab CI
@@ -116,7 +116,7 @@ Include the reusable template and extend the `.animate` hidden job:
 
 ```yaml
 include:
-  - remote: 'https://raw.githubusercontent.com/evdenis/animate/v4.0/.gitlab-ci-template.yml'
+  - remote: 'https://raw.githubusercontent.com/evdenis/animate/v4.1/.gitlab-ci-template.yml'
 
 animate-model:
   extends: .animate
@@ -136,13 +136,13 @@ animate-model:
 | `ANIMATE_SAVE` | Save animation trace to JSON file (animate) | `''` |
 | `ANIMATE_TRACE` | Path to JSON trace file (replay, required) | `''` |
 | `ANIMATE_ARGS` | Extra args appended to the assembled command | `''` |
-| `ANIMATE_VERSION` | Release version tag (e.g., `v4.0`) | `latest` |
+| `ANIMATE_VERSION` | Release version tag (e.g., `v4.1`) | `latest` |
 
 #### Examples
 
 ```yaml
 include:
-  - remote: 'https://raw.githubusercontent.com/evdenis/animate/v4.0/.gitlab-ci-template.yml'
+  - remote: 'https://raw.githubusercontent.com/evdenis/animate/v4.1/.gitlab-ci-template.yml'
 
 # Check invariants with 20 steps
 animate-check:
@@ -165,7 +165,7 @@ animate-pinned:
   extends: .animate
   variables:
     ANIMATE_MODEL_PATH: 'path/to/model.bum'
-    ANIMATE_VERSION: 'v4.0'
+    ANIMATE_VERSION: 'v4.1'
 ```
 
 ## License
