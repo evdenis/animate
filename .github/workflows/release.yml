@@ -21,17 +21,23 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          run_id=$(gh run list \
-            --workflow build-gradle-project.yml \
-            --commit "${{ github.sha }}" \
-            --status success \
-            --json databaseId \
-            --jq '.[0].databaseId')
-          if [ -z "$run_id" ]; then
-            echo "ERROR: No successful Build and Test run found for commit ${{ github.sha }}"
-            exit 1
-          fi
-          gh run download "$run_id" --name animate.jar
+          for attempt in $(seq 1 15); do
+            run_id=$(gh run list \
+              --workflow build-gradle-project.yml \
+              --commit "${{ github.sha }}" \
+              --status success \
+              --json databaseId \
+              --jq '.[0].databaseId')
+            if [ -n "$run_id" ]; then
+              echo "Found successful build run: $run_id"
+              gh run download "$run_id" --name animate.jar
+              exit 0
+            fi
+            echo "Attempt $attempt/15: waiting for build to complete..."
+            sleep 30
+          done
+          echo "ERROR: No successful build found for commit ${{ github.sha }} after 15 attempts"
+          exit 1
 
       - name: Rename JAR
         run: mv animate-*.jar animate.jar
