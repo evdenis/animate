@@ -1,0 +1,60 @@
+[changelog]
+header = """# Changelog
+
+All notable changes to this project will be documented in this file.
+
+"""
+body = """
+{% if version -%}
+    ## [{{ version | trim_start_matches(pat="v") }}] - {{ timestamp | date(format="%Y-%m-%d") }}
+{% for group, commits in commits | group_by(attribute="group") %}
+    ### {{ group | striptags | trim }}
+    {% for commit in commits %}
+        - {{ commit.message | upper_first }}\
+    {% endfor %}
+{% endfor %}
+{% endif -%}
+"""
+footer = ""
+trim = true
+
+[git]
+conventional_commits = true
+filter_unconventional = false
+commit_preprocessors = [
+    # Fix non-standard prefixes to conventional commit types
+    { pattern = '^animate: ([Ff]ix\b)', replace = 'fix: $1' },
+    { pattern = '^animate: ([Rr]efactor|[Rr]eformat|[Rr]ename|[Ss]implify|[Ee]xtract)', replace = 'refactor: $1' },
+    { pattern = '^animate: ([Tt]est)', replace = '$1' },
+    { pattern = '^animate:', replace = 'feat:' },
+    { pattern = '^gr(ad|ac)le:', replace = 'build:' },
+    { pattern = '^java:', replace = 'build:' },
+    { pattern = '^(project|release):', replace = 'chore:' },
+    { pattern = '^(github|actions?):', replace = 'ci:' },
+    # Strip commit body and trailers, keep only the subject line
+    { pattern = '\n[\s\S]*', replace = '' },
+]
+commit_parsers = [
+    # Skip
+    { message = "^chore: Bump version", skip = true },
+    { message = "^chore: Release", skip = true },
+    { message = "^feat: Release", skip = true },
+    { message = "^feat: Bump version", skip = true },
+    { message = "^$", skip = true },
+    { message = "empty commit", skip = true },
+    # Group
+    { message = "^feat", group = "<!-- 0 -->Features" },
+    { message = "^fix", group = "<!-- 1 -->Bug Fixes" },
+    { message = "^refactor", group = "<!-- 2 -->Refactoring" },
+    { message = "^doc", group = "<!-- 3 -->Documentation" },
+    { message = "^test", group = "<!-- 4 -->Testing" },
+    { message = "^build\\(deps\\)", group = "<!-- 5 -->Dependencies" },
+    { message = "^build", group = "<!-- 6 -->Build" },
+    { message = "^ci", group = "<!-- 7 -->CI/CD" },
+    { message = "^chore", group = "<!-- 8 -->Miscellaneous" },
+    { message = "^perf", group = "<!-- 9 -->Performance" },
+    # Catch-all
+    { message = ".*", group = "<!-- 10 -->Other" },
+]
+tag_pattern = "v[0-9].*"
+sort_commits = "oldest"

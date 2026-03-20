@@ -13,6 +13,16 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Generate release notes
+        uses: orhun/git-cliff-action@v4
+        with:
+          config: cliff.toml
+          args: --latest --strip header
+        env:
+          OUTPUT: RELEASE_NOTES.md
 
       - name: Verify version consistency
         run: scripts/check-version.sh "${{ github.ref_name }}"
@@ -45,4 +55,4 @@ jobs:
       - name: Create release
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release create ${{ github.ref_name }} animate.jar --generate-notes --title "Animate ${{ github.ref_name }}"
+        run: gh release create ${{ github.ref_name }} animate.jar --notes-file RELEASE_NOTES.md --title "Animate ${{ github.ref_name }}"
