@@ -26,8 +26,12 @@ class ModelResolver {
   private Path tempDir;
 
   Path resolve(Path model) throws IOException {
+    return resolve(model, null);
+  }
+
+  Path resolve(Path model, String machineName) throws IOException {
     if (Files.isDirectory(model)) {
-      return resolveDirectory(model);
+      return resolveDirectory(model, machineName);
     }
     if (!model.toString().endsWith(".zip")) {
       return model;
@@ -57,39 +61,45 @@ class ModelResolver {
       }
     }
 
-    if (bumFiles.isEmpty()) {
-      throw new IOException("No .bum file found in zip archive: " + model);
-    }
-    if (bumFiles.size() > 1) {
-      Path selected = findMostRefinedBum(bumFiles);
-      logger.info(
-          "Multiple .bum files found, auto-selected most refined: {}", selected.getFileName());
-      return selected;
-    }
-
-    return bumFiles.get(0);
+    return selectBumFile(bumFiles, machineName, "zip archive: " + model);
   }
 
-  private Path resolveDirectory(Path dir) throws IOException {
+  private Path resolveDirectory(Path dir, String machineName) throws IOException {
     List<Path> bumFiles;
     try (var stream = Files.walk(dir)) {
       bumFiles = stream.filter(p -> p.toString().endsWith(".bum")).collect(Collectors.toList());
     }
 
+    return selectBumFile(bumFiles, machineName, "directory: " + dir);
+  }
+
+  private Path selectBumFile(List<Path> bumFiles, String machineName, String source)
+      throws IOException {
     if (bumFiles.isEmpty()) {
-      throw new IOException("No .bum file found in directory: " + dir);
+      throw new IOException("No .bum file found in " + source);
+    }
+    if (machineName != null) {
+      return findByName(bumFiles, machineName, source);
     }
     if (bumFiles.size() == 1) {
       return bumFiles.get(0);
     }
-
-    Path selected = findMostRefinedBum(bumFiles);
+    Path selected = findMostRefinedBum(bumFiles, source);
     logger.info(
         "Multiple .bum files found, auto-selected most refined: {}", selected.getFileName());
     return selected;
   }
 
-  private Path findMostRefinedBum(List<Path> bumFiles) throws IOException {
+  private Path findByName(List<Path> bumFiles, String machineName, String source)
+      throws IOException {
+    String target = machineName + ".bum";
+    return bumFiles.stream()
+        .filter(p -> p.getFileName().toString().equals(target))
+        .findFirst()
+        .orElseThrow(() -> new IOException("Machine '" + machineName + "' not found in " + source));
+  }
+
+  private Path findMostRefinedBum(List<Path> bumFiles, String source) throws IOException {
     Map<String, String> refinesTarget = new HashMap<>();
     Map<String, Path> pathByName = new HashMap<>();
 
@@ -121,12 +131,13 @@ class ModelResolver {
             .collect(Collectors.toList());
 
     if (leaves.isEmpty()) {
-      throw new IOException("Circular refinement detected among .bum files in zip archive");
+      throw new IOException("Circular refinement detected among .bum files in " + source);
     }
     if (leaves.size() > 1) {
       throw new IOException(
-          "Multiple independent refinement chains found in zip archive, "
-              + "cannot auto-select. Leaf machines: "
+          "Multiple independent refinement chains found in "
+              + source
+              + ", cannot auto-select. Leaf machines: "
               + leaves.stream().sorted().collect(Collectors.joining(", ")));
     }
 

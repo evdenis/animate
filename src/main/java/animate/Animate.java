@@ -71,6 +71,12 @@ public class Animate implements Callable<Integer> {
   boolean perf;
 
   @Option(
+      names = {"-m", "--machine"},
+      paramLabel = "<name>",
+      description = "machine to animate (default: auto-select most refined)")
+  String machineName;
+
+  @Option(
       names = "--save",
       paramLabel = "trace.json",
       description = "save animation trace in json to a file")
@@ -172,9 +178,9 @@ public class Animate implements Callable<Integer> {
       prefs.put("PERFORMANCE_INFO", "true");
     }
 
-    Path resolvedModel = modelResolver.resolve(model);
-    String machineName = resolvedModel.getFileName().toString().replaceFirst("\\.bum$", "");
-    System.out.println("Machine: " + machineName);
+    Path resolvedModel = modelResolver.resolve(model, machineName);
+    String resolvedMachineName = resolvedModel.getFileName().toString().replaceFirst("\\.bum$", "");
+    System.out.println("Machine: " + resolvedMachineName);
     StateSpace stateSpace = api.eventb_load(resolvedModel.toString(), prefs);
 
     GetVersionCommand version = new GetVersionCommand();
